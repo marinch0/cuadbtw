@@ -1,0 +1,64 @@
+<ion-menu contentId="main-content" >
+  <ion-header>
+
+    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+      <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
+        <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+        <ion-label>{{ p.title }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-header>
+  
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Mis Casos Especiales</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding"> 
+    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime  presentation="date" id="datetime" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada"></ion-datetime>
+        <ion-button (click)="filtrar(casoscre)">filtro</ion-button>
+      </ng-template>
+    </ion-modal>
+    
+    <ion-datetime-button datetime="datetime1" style="margin-top: 5px;"></ion-datetime-button>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime  presentation="date" id="datetime1" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada2"></ion-datetime>
+        <ion-button (click)="filtrar(casoscre)">filtro</ion-button>
+      </ng-template>
+      
+    </ion-modal>
+
+    <ion-card style="margin-top: 2%;" *ngFor="let casData of casData">
+      <ion-card-header>
+        <ion-card-title>{{casData.numeroservicio}}</ion-card-title>
+        <h5 style="margin-left: 70%;">{{casData.nombreestado}}</h5>
+        <ion-card-subtitle>{{casData.tiempo}} Minutos</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <h5>descripcion:</h5>{{casData.descripcion}}
+        <h5>Justificacion:</h5>{{casData.justificacion}}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
+      <ion-fab-button (click)="home()">
+        <ion-icon name="archive"  size="large"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+  </ion-content>
+</div>

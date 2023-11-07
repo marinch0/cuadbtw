@@ -1,0 +1,81 @@
+<ion-menu contentId="main-content">
+  <ion-header>
+
+    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+      <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
+        <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+        <ion-label>{{ p.title }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-header>
+  
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Labores Operacion</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"> 
+    <ion-tabs>
+      <ion-tab-bar slot="top">
+        <ion-tab-button  (click)="labores()">
+          <ion-icon name="archive"></ion-icon>
+          labores
+        </ion-tab-button>
+        <ion-tab-button (click)="consumos()">
+          <ion-icon name="library"></ion-icon>
+          consumos
+        </ion-tab-button>
+        
+        <ion-tab-button  (click)="desplaza()">
+          <ion-icon name="paper-plane"></ion-icon>
+          desplazamientos
+        </ion-tab-button>
+        <ion-tab-button  (click)="casos()">
+          <ion-icon name="warning"></ion-icon>
+          casos especiales
+        </ion-tab-button>
+    
+      </ion-tab-bar>
+    </ion-tabs>
+
+    <ion-item style="margin-top: 15%;">
+      <ion-select label="Labor"  label-placement="fixed" placeholder="labor a realizar" [(ngModel)]="cant">
+        <ion-select-option  value="{{laboress.id}}" *ngFor="let laboress of laboress">{{laboress.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-fab style="margin-top: 2%;margin-left: 40%;">
+      <ion-fab-button (click)="agregar(crealabor)">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <br>
+    <br>
+    <br>
+
+    <ion-card *ngFor="let datalabores of datalabores" style="z-index: 0;">
+      <ion-card-content>
+        <h5>{{datalabores.nombre}}</h5>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
+      <ion-fab-button (click)="home()">
+        <ion-icon name="home"  size="large"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+  </ion-content>
+</div>
+
+
+
+ 
+
+
+
+

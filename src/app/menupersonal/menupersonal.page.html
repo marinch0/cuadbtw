@@ -1,0 +1,83 @@
+<ion-menu contentId="main-content">
+  <ion-header>
+
+    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+      <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
+        <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+        <ion-label>{{ p.title }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-header>
+  
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu Personal</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"> 
+
+    <ion-card >
+      <ion-card-header>
+        <ion-card-title>Menu Personal Cuadrillas</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content >
+        <ion-button fill="outline" style="width: 100%;" color="dark" (click)="desplaz()">
+          Mis Desplazamientos
+          <ion-icon slot="start" name="compass-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    
+      <ion-card-content>
+        <ion-button fill="outline" style="width: 100%;"color="dark" (click)="consum()">
+          Mis Consumos
+          <ion-icon slot="start" name="archive-outline" ></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    
+      <ion-card-content>
+        <ion-button fill="outline" style="width: 100%;"color="dark" (click)="servfin()">
+          Mis Operaciones
+          <ion-icon slot="start" name="bag-check-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    
+      <ion-card-content>
+        <ion-button fill="outline" style="width: 100%;" color="dark" (click)="casoesp()">
+          Mis Casos Especiales
+          <ion-icon slot="start" name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    
+      <ion-card-content>
+        <ion-button fill="outline" style="width: 100%;" color="dark" (click)="gendes()">
+          Generar Desplazamiento
+          <ion-icon slot="start" name="rocket-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+
+      <ion-card-content>
+        <ion-button fill="outline" style="width: 100%;" color="dark" (click)="gencases()">
+          Generar Caso Especial
+          <ion-icon slot="start" name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+
+      <ion-card-content>
+        <ion-button fill="outline" style="width: 100%;" color="dark" (click)="labores()">
+          Mis Labores
+          <ion-icon slot="start" name="build-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</div>
+
+
+
+

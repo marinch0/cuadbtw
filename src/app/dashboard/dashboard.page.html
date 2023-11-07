@@ -1,0 +1,129 @@
+<ion-menu contentId="main-content">
+  <ion-header>
+
+    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+      <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
+        <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+        <ion-label>{{ p.title }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-header>
+  
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Dashboard</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"> 
+
+    <ion-header>
+
+    </ion-header>
+
+    <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime presentation="date" id="datetime" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada" ></ion-datetime>
+        <ion-button (click)="datgraf(credgraf)" >filtro</ion-button>
+      </ng-template>
+    </ion-modal>
+    
+    <ion-datetime-button datetime="datetime1" style="margin-top: 15px; "></ion-datetime-button>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime presentation="date" id="datetime1" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada2"></ion-datetime>
+        <ion-button (click)="datgraf(credgraf)" >filtro</ion-button>
+      </ng-template>
+      
+    </ion-modal>
+    
+    <br>
+    <ion-content>
+      <canvas
+  class="chart"
+  baseChart
+  [data]="barChartData"
+  [options]="barChartOptions"
+  [type]="barChartType"
+  (chartHover)="chartHovered($event)"
+  (chartClick)="chartClicked($event)"
+>
+</canvas>
+<ion-button (click)="randomize()" >filtro</ion-button>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      Fecha
+    </ion-col>
+    <ion-col>
+      Estimado
+    </ion-col>
+    <ion-col>
+      Meta
+    </ion-col>
+  </ion-row>
+
+  <ion-row  >
+    <ion-col>
+      10/10/2023
+    </ion-col>
+    <ion-col>
+      15
+    </ion-col>
+    <ion-col>
+      16
+    </ion-col>
+  </ion-row>
+
+  <ion-row >
+    <ion-col>
+      15/10/2023
+    </ion-col>
+    <ion-col>
+      15
+    </ion-col>
+    <ion-col>
+      20
+    </ion-col>
+  </ion-row>
+
+  <ion-row >
+    <ion-col>
+      21/10/2023
+    </ion-col>
+    <ion-col>
+      15
+    </ion-col>
+    <ion-col>
+      17
+    </ion-col>
+  </ion-row>
+
+  <ion-row >
+    <ion-col>
+      25/10/2023
+    </ion-col>
+    <ion-col>
+      15
+    </ion-col>
+    <ion-col>
+      15
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+    </ion-content>
+
+
+    
+
+  </ion-content>
+</div>

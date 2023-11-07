@@ -1,20 +1,17 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content >
+  <ion-card >
+    <ion-card-header style="margin-bottom: 10%;margin-top: 10%;">
+      <img [src]="imageUrl" alt="Mi imagen" />
+      <ion-card-title>INGRESO CUADRILLAS </ion-card-title>
+      <ion-card-subtitle>App Cuadrillas Bitwan</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input label="Usuario" label-placement="floating" fill="outline" placeholder="Enter text" #alias></ion-input>
+      <br>
+      <br>
+      <ion-input label="Contraseña" type="password" label-placement="floating" fill="outline" placeholder="Enter text" #password></ion-input>
+    </ion-card-content>
+    <br>
+    <ion-button style="margin: 5%;" shape="round" expand="block" (click)="login(alias.value,password.value)" >Ingresar</ion-button>
+  </ion-card>
 </ion-content>

@@ -1,0 +1,43 @@
+
+<div class="ion-page" id="main-content">
+  <ion-content class="ion-padding"> 
+    <ion-card>
+      <ion-card-header >
+        <ion-card-title>agendaData[index].nombretiposolicitud</ion-card-title>
+        <ion-card-subtitle>endaData[index].nombremunicipio,agendaData[index].nombredepartamento</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content >
+        <h3>Nombre</h3>
+        <h4> agendaData[index].nombrecontactosolicitud</h4>
+        <br>
+        <h3>plan</h3>
+        <h4> agendaData[index].nombreplan</h4>
+        <br>
+        <h3>fecha de inicio</h3>
+        <h4>--/----/--</h4>
+        <br>
+        <h3>fecha de finalizacion</h3>
+        <h4>--/----/--</h4>
+        <br>
+        <h3>descripcion</h3>
+        <h4>agendaData[index].nombretiposolicitud</h4>
+        <br>
+        <h3>direccion</h3>
+        <h4>agendaData[index].descripciondireccion</h4>
+        <br>
+        <h3>telefono</h3>
+        <h4>agendaData[index].celular1</h4>
+        <br>
+        <h3>telefono secundario</h3>
+        <h4>agendaData[index].celular2</h4>
+    
+      </ion-card-content>
+    
+      <ion-button expand="block" (click)="agendaa()">Iniciar Operacion</ion-button>
+      <ion-button  expand="block" fill="outline" color="dark" (click)="home()">Volver</ion-button>
+    
+    </ion-card>
+
+  </ion-content>
+</div>
