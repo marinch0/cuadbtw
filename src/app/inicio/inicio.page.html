@@ -21,7 +21,8 @@
   </ion-header>
  
   <ion-content class="ion-padding"> 
-    <ion-card style="margin-top: 10px;" *ngFor="let agendaData of agendaData; let i = index">
+    <div *ngFor="let agendaData of agendaData; let i = index">
+    <ion-card style="margin-top: 10px;">
       <ion-card-header>
         <ion-card-title>{{agendaData.nombretiposolicitud}}</ion-card-title>
         <ion-card-subtitle>{{agendaData.nombremunicipio}},{{agendaData.nombredepartamento}}</ion-card-subtitle>
@@ -34,9 +35,69 @@
         {{agendaData.celular1}}
       </ion-card-content>
     
-      <ion-button fill="clear" (click)="agenda(i)" >Detalles</ion-button>
+      <ion-button id="open-modal" fill="clear" (click)="setOpen(true,i)" >Detalles</ion-button>
+      
     
     </ion-card>
+
+  </div>
+    
+  
+
+    <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button (click)="cancel()">Volver</ion-button>
+            </ion-buttons>
+            <ion-title></ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="confirm()" [strong]="true">Iniciar operacion</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-card>
+              <ion-card-header >
+                <ion-card-title>{{agendaData[target].nombretiposolicitud}}</ion-card-title>
+                <ion-card-subtitle>{{agendaData[target].nombremunicipio}},{{agendaData[target].nombredepartamento}}</ion-card-subtitle>
+              </ion-card-header>
+            
+              <ion-card-content >
+                <h3>Nombre</h3>
+                <h4>{{ agendaData[target].nombrecontactosolicitud}}</h4>
+                <br>
+                <h3>plan</h3>
+                <h4>{{ agendaData[target].nombreplan}}</h4>
+                <br>
+                <h3>fecha de inicio</h3>
+                <h4>--/----/--</h4>
+                <br>
+                <h3>fecha de finalizacion</h3>
+                <h4>--/----/--</h4>
+                <br>
+                <h3>descripcion</h3>
+                <h4>{{agendaData[target].nombretiposolicitud}}</h4>
+                <br>
+                <h3>direccion</h3>
+                <h4>{{agendaData[target].descripciondireccion}}</h4>
+                <br>
+                <h3>telefono</h3>
+                <h4>{{agendaData[target].celular1}}</h4>
+                <br>
+                <h3>telefono secundario</h3>
+                <h4>{{agendaData[target].celular2}}</h4>
+            
+              </ion-card-content>
+          
+  
+            </ion-card>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
   </ion-content>
 
 </div>

@@ -41,6 +41,8 @@
       
     </ion-modal>
 
+    <h2>Horas Totales Aceptadas: ##</h2>
+
     <ion-card style="margin-top: 2%;" *ngFor="let casData of casData">
       <ion-card-header>
         <ion-card-title>{{casData.numeroservicio}}</ion-card-title>
@@ -55,10 +57,11 @@
     </ion-card>
 
     <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
-      <ion-fab-button (click)="home()">
+      <ion-fab-button (click)="home()" id="open-toast">
         <ion-icon name="archive"  size="large"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    <ion-toast trigger="open-toast" message="Se regreso al menu personal" [duration]="3000"></ion-toast>
 
   </ion-content>
 </div>

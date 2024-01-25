@@ -11,9 +11,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ChangeColorDirective } from './change-color.directive';
 import { LoadComponent } from './shared/load/load.component';
+import { PruPipe } from './pru.pipe';
 
 @NgModule({
-  declarations: [AppComponent, ChangeColorDirective],
+  declarations: [AppComponent, ChangeColorDirective, PruPipe],
   imports: [HttpClientModule,
     BrowserModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

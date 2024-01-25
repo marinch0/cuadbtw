@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, creadez, dezplaData, dezplacre, entidadescre, normadezdez, normalizaentidez, normalizardezpla } from '../api.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-desplnew',
@@ -23,7 +24,7 @@ export class DesplnewPage implements OnInit {
     { title: 'Cerrar Session', url: '/home', icon: 'warning'   },
   ];
   
-  constructor(private router:Router,private apiService: ApiService) { }
+  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController) { }
 
   credenciales: entidadescre={
     materiales:'',
@@ -86,7 +87,7 @@ export class DesplnewPage implements OnInit {
       next:(res) => {
 
         this.cardss = normadezdez(res);
-
+        this.elimi()
       },
       error: (err) =>{console.log(err);
       },
@@ -97,6 +98,25 @@ export class DesplnewPage implements OnInit {
     );
   }
 
+  async agreg() {
+    const alert = await this.alertController.create({
+      header: 'DESPLAZAMIENTOS',
+      subHeader: 'Se agrego un desplazamiento ',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
+
+  async elimi() {
+    const alert = await this.alertController.create({
+      header: 'DESPLAZAMIENTOS',
+      subHeader: 'Se elimino un desplazamiento ',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
 
   agregar(creadez: creadez) {
 
@@ -104,21 +124,37 @@ export class DesplnewPage implements OnInit {
     creadez.idserviciocuadrilla = 1
     creadez.idoperacionservicio = 1
     let authorization = localStorage.getItem('token')
-    this.apiService.creardesplaz(authorization, creadez).subscribe({
-      next: (res) => {
-        console.log(res);
-        
-        this.cardss = normadezdez(res);
-              
-      },
-      error: (err) =>{console.log(err);
-      },
-      complete() {
-
+    if (this.cant==null) {
+      this.error()
+    }else{
+      this.apiService.creardesplaz(authorization, creadez).subscribe({
+        next: (res) => {
+          console.log(res);
+          
+          this.cardss = normadezdez(res);
+          this.agreg()
+                
+        },
+        error: (err) =>{console.log(err);
+        },
+        complete() {
+  
+        }
       }
+      );
     }
-    );
 
+
+  }
+
+  async error() {
+    const alert = await this.alertController.create({
+      header: 'DESPLAZAMIENTOS',
+      subHeader: 'Error al seleccionar desplazamiento a la operacion',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
   }
 
 

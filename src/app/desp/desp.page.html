@@ -32,10 +32,9 @@
           <ion-icon name="library"></ion-icon>
           consumos
         </ion-tab-button>
-        
-        <ion-tab-button  (click)="desplaza()">
-          <ion-icon name="paper-plane"></ion-icon>
-          desplazamientos
+        <ion-tab-button  (click)="observ()">
+          <ion-icon name="eye"></ion-icon>
+          Observacion
         </ion-tab-button>
         <ion-tab-button  (click)="casos()">
           <ion-icon name="warning"></ion-icon>
@@ -57,21 +56,28 @@
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    <br>
+    <br>
 
-    <ion-card *ngFor="let cardss of cardss" style="z-index: 0;">
-      <ion-card-content>
-        <h6>{{cardss.municipioinicio}} {{cardss.municipiofin}}</h6>
-        <ion-button  fill="clear" style="padding-right: 3px;"(click)="eliminar(cardss.iddesplazamientocuadrilla)">
-          <ion-icon slot="icon-only" name="trash-outline" ></ion-icon>
-        </ion-button>
-      </ion-card-content>
+    <ion-card *ngFor="let cardss of cardss" >
+      <ion-grid>
+        <ion-row>
+          <ion-col><h3>{{cardss.municipioinicio}}</h3></ion-col>
+          <ion-col><h3>{{cardss.municipiofin}}</h3></ion-col>
+          <ion-col><ion-button  fill="clear"    (click)="eliminar(cardss.iddesplazamientocuadrilla)">
+            <ion-icon slot="icon-only" name="trash-outline"  size="large"></ion-icon>
+          </ion-button></ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card>
 
     <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
-      <ion-fab-button (click)="home()">
+      <ion-fab-button (click)="home()" id="open-toast">
         <ion-icon name="home"  size="large"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    <ion-toast trigger="open-toast" message="Se regreso al menu pricipal, operacion en pausa" [duration]="3000"></ion-toast>
+
 
   </ion-content>
 </div>

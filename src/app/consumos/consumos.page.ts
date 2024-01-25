@@ -24,6 +24,8 @@ export class ConsumosPage implements OnInit {
   ];
   constructor(private router: Router, private apiService: ApiService,private alertController: AlertController) { }
 
+
+
   credenciales: entidadescre = {
     materiales: '',
     labores: '',
@@ -57,6 +59,25 @@ export class ConsumosPage implements OnInit {
     await alert.present();
   }
 
+  async error1() {
+    const alert = await this.alertController.create({
+      header: 'CONSUMOS',
+      subHeader: 'Seleccionar Consumo para la operacion',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
+  async error2() {
+    const alert = await this.alertController.create({
+      header: 'CONSUMOS',
+      subHeader: 'Seleccionar Cantidad de Consumo para la operacion',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
+
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
     this.apiService.eliminarconsumo(authorization, id).subscribe({
@@ -80,24 +101,32 @@ export class ConsumosPage implements OnInit {
     crearconsum.idoperacionservicio = 1
     crearconsum.idmaterial = this.idaa
     crearconsum.cantidad = this.cant
+    
+    if (this.idaa==0) {
+      this.error1()
+    }else if(this.cant==null){
+      this.error2()
+    }else{
 
+      let authorization = localStorage.getItem('token')
 
-    let authorization = localStorage.getItem('token')
-
-    this.apiService.crearconsumo(authorization, crearconsum).subscribe({
-      next: (res) => {
-        this.cards = normacons(res);
-        console.log(this.cards);
-        this.agreg()
-
-      },
-      error: (err) =>{console.log(err);
-      },
-      complete() {
-
+      this.apiService.crearconsumo(authorization, crearconsum).subscribe({
+        next: (res) => {
+          this.cards = normacons(res);
+          console.log(this.cards);
+          this.agreg()
+  
+        },
+        error: (err) =>{console.log(err);
+        },
+        complete() {
+  
+        }
       }
+      );
     }
-    );
+
+
 
   }
 
@@ -161,6 +190,9 @@ export class ConsumosPage implements OnInit {
   }
   home() {
     this.router.navigate(["inicio"])
+  }
+  observ(){
+    this.router.navigate(["observ"])
   }
 
 }

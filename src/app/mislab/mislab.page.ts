@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, creacasoez, normacasoses } from '../api.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mislab',
@@ -31,13 +32,33 @@ export class MislabPage implements OnInit {
 
 }
 
+async agreg() {
+  const alert = await this.alertController.create({
+    header: 'CASO ESPECIAL',
+    subHeader: 'Se agrego un caso especial',
+    buttons: ['OK'],
+  });
+
+  await alert.present();
+}
+
+async elimi() {
+  const alert = await this.alertController.create({
+    header: 'CASO ESPECIAL',
+    subHeader: 'Se elimino un caso especial',
+    buttons: ['OK'],
+  });
+
+  await alert.present();
+}
+
 eliminar(id: any) {
   let authorization = localStorage.getItem('token')
   this.apiService.eliminarcasoez(authorization, id).subscribe({
     next:(res) => {
       this.cards = normacasoses(res);
       console.log(this.cards);
-
+      this.elimi()
     },
     error: (err) =>{console.log(err);
     },
@@ -54,6 +75,24 @@ creacaso: creacasoez = {
   idserviciocuadrilla: '',
   idoperacionservicio:''
 }
+async error1() {
+  const alert = await this.alertController.create({
+    header: 'CASOS ESPECIALES',
+    subHeader: 'no se agrego una descripcion',
+    buttons: ['OK'],
+  });
+
+  await alert.present();
+}
+async error2() {
+  const alert = await this.alertController.create({
+    header: 'CASOS ESPECIALES',
+    subHeader: 'no se agrego minutos ',
+    buttons: ['OK'],
+  });
+
+  await alert.present();
+}
 
 
 agregar(creacasoez: creacasoez) {
@@ -65,10 +104,16 @@ agregar(creacasoez: creacasoez) {
 
 
   let authorization = localStorage.getItem('token')
+  if (this.descrip==null) {
+    this.error1()
+  }else if(this.minutos==null){
+    this.error2()
+  }else{
   this.apiService.crearcasoez(authorization, creacasoez).subscribe({
     next: (res) => {
       this.cards = normacasoses(res);
       console.log(this.cards);
+      this.agreg()
 
     },
     error: (err) =>{console.log(err);
@@ -78,6 +123,7 @@ agregar(creacasoez: creacasoez) {
     }
   }
   );
+}
 
 }
 
@@ -90,7 +136,7 @@ agregar(creacasoez: creacasoez) {
     { title: 'Cerrar Session', url: '/home', icon: 'warning' },
   ];
   
-  constructor(private router:Router,private apiService: ApiService) { }
+  constructor(private router:Router,private apiService: ApiService ,private alertController: AlertController) { }
   omitir(){
     this.router.navigate(["inicio"])
   }

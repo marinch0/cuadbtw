@@ -1,8 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { ApiService, credgraf, normalizafech, normalizagraf } from '../api.service';
+
+import { ApiService, credgraf } from '../api.service';
 import * as moment from 'moment';
+import { AlertController } from '@ionic/angular';
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -13,12 +17,19 @@ export class DashboardPage implements OnInit {
   graf:any[] = [];
   fechas: any[]= [];
   tiempos:any[] = [];
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  fechast: any[]= [];
+  tiempost:any[] = [];
+  metas:any[]=[16,20,14,10];
+  acumulad:any[]=[];
+  total:number=0;
+  
   fechaHoraSeleccionada: string = new Date().toISOString();
   fechaHoraSeleccionada2: string = new Date().toISOString();
   grafica: any;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,private alertController: AlertController) {
+    Chart.register();
+  }
 
   ngOnInit() {
     //this.datgraf(this.credgraf)
@@ -33,40 +44,67 @@ export class DashboardPage implements OnInit {
     { title: 'Cerrar Session', url: '/home', icon: 'warning' },
   ];
 
-  public barChartOptions: ChartConfiguration['options'] = {
+  ///////////////////////////////////////////////////////////////////////
+
+  public lineChartData: ChartConfiguration['data'] = {
+    datasets: [
+      {
+        data: this.tiempos,
+        label: 'Tiempos',
+        backgroundColor: 'rgba(148,159,177,0.2)',
+        borderColor: 'rgba(148,159,177,1)',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+        fill: 'origin',
+      },
+      {
+        data: [16,20,14,10],
+        label: 'Estimado',
+        backgroundColor: 'rgba(255,0,0,0.3)',
+        borderColor: 'red',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+        fill: 'origin',
+      },
+      
+    ],
+    labels: this.fechas,
+  };
+
+  public lineChartOptions: ChartConfiguration['options'] = {
     elements: {
       line: {
-        tension: 0.4,
+        tension: 0.5,
+      },
+    },
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      y: {
+        position: 'left',
+      },
+      y1: {
+        position: 'right',
+        grid: {
+          color: 'rgba(255,0,0,0.3)',
+        },
+        ticks: {
+          color: 'red',
+        },
       },
     },
 
-    scales: {
-      x: {},
-      y: {
-        min: 10,
-      },
-    },
     plugins: {
       legend: { display: true },
     },
   };
-  public barChartLabels: string[] = [
-    '10-10-2023',
-    '15-10-2023',
-    '20-10-2023',
-    '25-10-2023'
-  ];
-  public barChartType: ChartType = 'bar';
 
-  public barChartData: ChartData<'bar'> = {
-    labels: this.barChartLabels,
-    datasets: [
-      { data: [15, 15, 15, 15 ], label: 'realizados' },
-      { data: [16, 20, 17, 15 ], label: 'meta' },
-    ],
-  };
+  public lineChartType: ChartType = 'line';
 
-  // events
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
   public chartClicked({
     event,
     active,
@@ -86,47 +124,62 @@ export class DashboardPage implements OnInit {
   }): void {
     console.log(event, active);
   }
-
-  public randomize(): void {
-    this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
+  async error() {
+    const alert = await this.alertController.create({
+      header: 'DASHBOARD',
+      subHeader: 'El filtro seleccionado No encuentra datos',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
   }
-
 
   //////////////////////////////////////////////////////////////////////
 
   datgraf(credgraf: credgraf) {
-    this.tiempos=[]
-    this.fechas=[]
+    const self = this;
+    this.fechast=[]
+    this.tiempost=[]
+    
     credgraf.idCuadrilla ="8636"
     credgraf.fecha = moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
     credgraf.fecha2 =moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
     credgraf.estadolabor =[2]
     credgraf.idestadodocumento=[2]
     let authorization = localStorage.getItem('token')
-    
-    
     this.apiService.grafbuscar(authorization, credgraf).subscribe({
       next: (res) =>{
-        
+        if(res['data']==0){
+          this.error()
+        }
         const dataArray = res['data'];
         dataArray.map((item: any)=>{
-          const { fechamodificacion: fecha,tiempolabor:tiempo } = item;
-          this.fechas.push(fecha)
-          this.tiempos.push(parseInt(tiempo))
+          const { fechamodificacion: fecha,tiempolabor:tiempo,nombreestadodocumento:estado } = item;
+          if (estado=="Validado") {
+            this.fechas.push(moment(fecha).format('L'))
+            this.fechast.push(moment(fecha).format('L'))
+            this.tiempos.push(parseInt(tiempo))
+            this.tiempost.push(parseInt(tiempo))
+            this.total+=parseInt(tiempo)
+            this.acumulad.push((this.total))
+          }else{
+            //llenar otra lista con todos los datos asi no esten validados 
+          }
         })
-        console.log( this.fechas);
-        console.log(this.tiempos);
-        this.chart?.update();
-        
+        this.graficar();
+        this.tiempos=this.tiempost
+        this.fechas=this.fechast
       },
       error: (err) =>{console.log(err);
       },
       complete() {
         console.log('complete suscripción');
+        self.tiempos=[]
+        self.fechas=[]
+
       },
     }
     );
-
   }
 
   graficar(){

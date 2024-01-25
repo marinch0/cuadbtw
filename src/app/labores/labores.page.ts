@@ -40,6 +40,16 @@ export class LaboresPage implements OnInit {
     await alert.present();
   }
 
+  async error() {
+    const alert = await this.alertController.create({
+      header: 'LABORES',
+      subHeader: 'Error al agregar la operacion',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
+
   listarentidadamterial(entidadescre: entidadescre) {
     entidadescre.materiales = "true"
     entidadescre.labores = "true"
@@ -101,22 +111,27 @@ export class LaboresPage implements OnInit {
   agregar(creaLabor: creaLabor) {
     creaLabor.idlabor = this.cant
     creaLabor.idoperacionservicio = 1
-    console.log(creaLabor);
-    let authorization = localStorage.getItem('token')
-    this.apiService.crearlabor(authorization, creaLabor).subscribe({
-      next:(res) => {
-        this.datalabores = normalab(res);
-        console.log(this.datalabores);
-        this.agreg()
-
-      },
-      error: (err) =>{console.log(err);
-      },
-      complete() {
-
+    console.log(this.cant==null);
+    if (this.cant==null) {
+      this.error()
+    }else{
+      let authorization = localStorage.getItem('token')
+      this.apiService.crearlabor(authorization, creaLabor).subscribe({
+        next:(res) => {
+          this.datalabores = normalab(res);
+          console.log(this.datalabores);
+          this.agreg()
+  
+        },
+        error: (err) =>{console.log(err);
+        },
+        complete() {
+  
+        }
       }
+      );
     }
-    );
+
 
   }
 
@@ -141,5 +156,8 @@ export class LaboresPage implements OnInit {
   }
   home() {
     this.router.navigate(["inicio"])
+  }
+  observ(){
+    this.router.navigate(["observ"])
   }
 }

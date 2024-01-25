@@ -16,7 +16,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title> Casos Especiales</ion-title>
+      <ion-title> observaciones</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -36,9 +36,9 @@
         <ion-icon name="paper-plane"></ion-icon>
         desplazamientos
       </ion-tab-button>
-      <ion-tab-button  (click)="observ()">
-        <ion-icon name="eye"></ion-icon>
-        Observacion
+      <ion-tab-button  (click)="casos()">
+        <ion-icon name="warning"></ion-icon>
+        casos especiales
       </ion-tab-button>
       
     </ion-tab-bar>
@@ -46,33 +46,20 @@
 
 <ion-card style="margin-top: 18%;">
   <ion-card-header>
-    <ion-card-title>Casos Especiales</ion-card-title>
+    <ion-card-title>Observaciones</ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
     <ion-item>
-      <ion-input label="Descripcion" placeholder="" [(ngModel)]="descrip"></ion-input>
+      <ion-input label="Descripcion" placeholder="" [(ngModel)]="descrip" [clearInput]="true"></ion-input>
     </ion-item>
 
-    <ion-item style="margin-bottom: 50px;">
-      <ion-input label="Tiempo" type="number" placeholder="(Minutos)" [(ngModel)]="minutos"></ion-input>
-    </ion-item>
-    <ion-button expand="block" style="margin-bottom: 5px;" color="dark" (click)="agregar(creacaso)">generar</ion-button>
-    <ion-button  expand="block" fill="outline" color="dark" (click)="home()">omitir</ion-button>
+
+    <ion-button expand="block" style="margin-bottom: 5px;"  (click)="error()">Agregar</ion-button>
   </ion-card-content>
 </ion-card>
 
-<ion-card *ngFor="let cards of cards" >
-  <ion-grid>
-    <ion-row>
-      <ion-col><h5>{{cards.descripcion}}</h5></ion-col>
-      <ion-col><h4>{{cards.tiempo}}</h4></ion-col>
-      <ion-col><ion-button  fill="clear"    (click)="eliminar(cards.iddesplazamientocuadrilla)">
-        <ion-icon slot="icon-only" name="trash-outline"  size="large"></ion-icon>
-      </ion-button></ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-card>
+
 
 <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;" >
   <ion-fab-button (click)="home()" id="open-toast">

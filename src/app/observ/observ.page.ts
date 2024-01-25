@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ApiService, creacasoez, normacasoses } from '../api.service';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-casespecial',
-  templateUrl: './casespecial.page.html',
-  styleUrls: ['./casespecial.page.scss'],
+  selector: 'app-observ',
+  templateUrl: './observ.page.html',
+  styleUrls: ['./observ.page.scss'],
 })
-export class CasespecialPage implements OnInit {
+export class ObservPage implements OnInit {
 
   descrip: any;
   minutos: any;
@@ -27,9 +27,6 @@ export class CasespecialPage implements OnInit {
   }
   casos() {
     this.router.navigate(["casespecial"])
-  }
-  observ(){
-    this.router.navigate(["observ"])
   }
 
   public appPages = [
@@ -91,33 +88,42 @@ home() {
     creacasoez.tiempo = this.minutos
     creacasoez.idserviciocuadrilla = 1
     creacasoez.idoperacionservicio = localStorage.getItem("idcuadrilla")
-    if (this.descrip==null) {
-      this.error1()
-    }else if(this.minutos==null){
-      this.error2()
-    }else{
-      let authorization = localStorage.getItem('token')
-      this.apiService.crearcasoez(authorization, creacasoez).subscribe({
-        next: (res) => {
-          this.cards = normacasoses(res);
-          console.log(this.cards);
-          this.agreg()
-  
-        },
-        error: (err) =>{console.log(err);
-        },
-        complete() {
-  
-        }
+
+
+    let authorization = localStorage.getItem('token')
+    this.apiService.crearcasoez(authorization, creacasoez).subscribe({
+      next: (res) => {
+        this.cards = normacasoses(res);
+        console.log(this.cards);
+        this.agreg()
+
+      },
+      error: (err) =>{console.log(err);
+      },
+      complete() {
+
       }
-      );
     }
+    );
 
   }
 
+  limpiar(){
+    this.descrip=""
+  }
 
+
+  async error() {
+    const alert = await this.alertController.create({
+      header: 'OBSERVACIONES',
+      subHeader: 'error al generar la observacion ',
+      buttons: ['OK'],
+    });
   
-  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController) { }
+    await alert.present();
+  }
+  
+  constructor(private router:Router,private apiService: ApiService, private alertController: AlertController  ) { }
 
   async agreg() {
     const alert = await this.alertController.create({
@@ -133,24 +139,6 @@ home() {
     const alert = await this.alertController.create({
       header: 'CASOS ESPECIALES',
       subHeader: 'Se elimino un caso a la operacion',
-      buttons: ['OK'],
-    });
-  
-    await alert.present();
-  }
-  async error1() {
-    const alert = await this.alertController.create({
-      header: 'CASOS ESPECIALES',
-      subHeader: 'no se agrego una descripcion',
-      buttons: ['OK'],
-    });
-  
-    await alert.present();
-  }
-  async error2() {
-    const alert = await this.alertController.create({
-      header: 'CASOS ESPECIALES',
-      subHeader: 'no se agrego minutos en el caso especial',
       buttons: ['OK'],
     });
   

@@ -53,7 +53,7 @@ home() {
 filtrar(dezplacre:misservcred){
   this.isLoading=true
   let authorization = localStorage.getItem('token')
-  this.dezplacre.idcuadrilla=localStorage.getItem("idcuadrilla")
+  this.dezplacre.idcuadrilla="8632"//localStorage.getItem("idcuadrilla")
   this.dezplacre.fecha=moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
   this.dezplacre.fecha2=moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
 

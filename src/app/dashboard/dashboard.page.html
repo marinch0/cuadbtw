@@ -46,84 +46,65 @@
     </ion-modal>
     
     <br>
+    <ion-toggle [checked]="true">Documento validado</ion-toggle><br /><br />
     <ion-content>
       <canvas
-  class="chart"
-  baseChart
-  [data]="barChartData"
-  [options]="barChartOptions"
-  [type]="barChartType"
-  (chartHover)="chartHovered($event)"
-  (chartClick)="chartClicked($event)"
->
-</canvas>
-<ion-button (click)="randomize()" >filtro</ion-button>
-<ion-grid>
-  <ion-row>
-    <ion-col>
+      baseChart
+      class="chart"
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [type]="lineChartType"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"
+    ></canvas>
+
+<div class="mi-grid">
+
+<ion-grid style="border: 2px solid #000;">
+  <ion-row class="mi-grid" >
+    <ion-col class="mi-grid">
       Fecha
-    </ion-col>
-    <ion-col>
+    </ion-col >
+    <ion-col class="mi-grid">
       Estimado
     </ion-col>
-    <ion-col>
+    <ion-col class="mi-grid">
+      Acumulado
+    </ion-col>
+    <ion-col class="mi-grid">
       Meta
     </ion-col>
   </ion-row>
 
-  <ion-row  >
-    <ion-col>
-      10/10/2023
+  <ion-row  *ngFor="let fechast of fechast;let indice=index">
+    <ion-col class="mi-grid">
+     {{fechast}}
     </ion-col>
-    <ion-col>
-      15
+    <ion-col class="mi-grid">
+      {{tiempost[indice]}}
     </ion-col>
-    <ion-col>
-      16
+    <ion-col class="mi-grid">
+      {{acumulad[indice]}}
     </ion-col>
-  </ion-row>
-
-  <ion-row >
-    <ion-col>
-      15/10/2023
-    </ion-col>
-    <ion-col>
-      15
-    </ion-col>
-    <ion-col>
-      20
+    <ion-col class="mi-grid">
+      {{metas[indice]}}
     </ion-col>
   </ion-row>
 
   <ion-row >
     <ion-col>
-      21/10/2023
+      TOTALES
     </ion-col>
     <ion-col>
-      15
+      {{total}}
     </ion-col>
     <ion-col>
-      17
     </ion-col>
-  </ion-row>
 
-  <ion-row >
-    <ion-col>
-      25/10/2023
-    </ion-col>
-    <ion-col>
-      15
-    </ion-col>
-    <ion-col>
-      15
-    </ion-col>
-  </ion-row>
-</ion-grid>
+    </ion-row>
+    </ion-grid>
 
+  </div>
     </ion-content>
-
-
-    
-
   </ion-content>
 </div>

@@ -72,6 +72,14 @@ const routes: Routes = [
     path: 'desplnew',
     loadChildren: () => import('./desplnew/desplnew.module').then( m => m.DesplnewPageModule)
   },
+  {
+    path: 'observ',
+    loadChildren: () => import('./observ/observ.module').then( m => m.ObservPageModule)
+  },
+  {
+    path: 'resumen',
+    loadChildren: () => import('./resumen/resumen.module').then( m => m.ResumenPageModule)
+  },
 ];
 
 @NgModule({

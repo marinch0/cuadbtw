@@ -1,0 +1,102 @@
+<ion-menu contentId="main-content" >
+  <ion-header>
+
+    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+      <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
+        <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+        <ion-label>{{ p.title }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-header>
+  
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Resumen</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Resumen</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Labores</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+     
+      <ion-card *ngFor="let datalabores of datalabores" style="z-index: 0;">
+        <ion-card-content>
+          <h5>{{datalabores.nombre}}</h5>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Consumos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+     
+      <ion-card *ngFor="let cons of cons" style="z-index: 0;">
+        <ion-card-content>
+          <h5>{{cons.nombre}}</h5>
+          <h6>{{cons.cantidad}} {{cons.unidadmedida}}</h6>
+
+        </ion-card-content>
+      </ion-card>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Desplazamientos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+     
+      <ion-card *ngFor="let desplaz of desplaz" style="z-index: 0;">
+        <ion-card-content>
+          <h6>{{desplaz.municipioinicio}} {{desplaz.municipiofin}}</h6>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Casos especiales</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+     
+      <ion-card *ngFor="let cases of cases" style="z-index: 0;">
+        <ion-card-header>
+          <ion-card-title>{{cases.descripcion}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <h3>{{cases.tiempo}}</h3>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
+    <ion-fab-button (click)="home()" id="open-toast">
+      <ion-icon name="checkmark-done-outline" size="large"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

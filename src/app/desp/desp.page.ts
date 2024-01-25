@@ -52,6 +52,16 @@ export class DespPage implements OnInit {
     await alert.present();
   }
 
+  async error() {
+    const alert = await this.alertController.create({
+      header: 'DESPLAZAMIENTOS',
+      subHeader: 'Error al seleccionar desplazamiento a la operacion',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
+
   listdez(){
     let authorization = localStorage.getItem('token')
     let id=369688
@@ -128,21 +138,26 @@ home() {
     creadez.idserviciocuadrilla = 1
     creadez.idoperacionservicio = 1
     let authorization = localStorage.getItem('token')
-    this.apiService.creardesplaz(authorization, creadez).subscribe({
-      next: (res) => {
-        console.log(res);
-        
-        this.cardss = normadezdez(res);
-        this.agreg()
-              
-      },
-      error: (err) =>{console.log(err);
-      },
-      complete() {
-
+    if (this.cant==null) {
+      this.error()
+    }else{
+      this.apiService.creardesplaz(authorization, creadez).subscribe({
+        next: (res) => {
+          console.log(res);
+          
+          this.cardss = normadezdez(res);
+          this.agreg()
+                
+        },
+        error: (err) =>{console.log(err);
+        },
+        complete() {
+  
+        }
       }
+      );
     }
-    );
+
 
   }
 
@@ -164,5 +179,8 @@ home() {
   }
   casos(){
     this.router.navigate(["casespecial"])
+  }
+  observ(){
+    this.router.navigate(["observ"])
   }
 }

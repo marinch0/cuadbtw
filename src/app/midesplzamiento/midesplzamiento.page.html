@@ -58,9 +58,10 @@
     
     </ion-card>
     <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
-      <ion-fab-button (click)="home()">
+      <ion-fab-button (click)="home()" id="open-toast">
         <ion-icon name="archive"  size="large"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    <ion-toast trigger="open-toast" message="Se regreso al menu personal" [duration]="3000"></ion-toast>
   </ion-content>
 </div>

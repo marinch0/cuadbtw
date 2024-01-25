@@ -28,19 +28,31 @@
       </ion-select>
     </ion-item>
     
-    <ion-fab style="margin-top: 3%;margin-left: 40%;">
+    <ion-fab style="margin-top: 3%;margin-left: 39%;">
       <ion-fab-button (click)="agregar(creadez)">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-
-    <ion-card *ngFor="let cardss of cardss" style="z-index: 0;">
-      <ion-card-content>
-        <h6>{{cardss.municipioinicio}} {{cardss.municipiofin}}</h6>
-        <ion-button  fill="clear" style="padding-right: 3px;"(click)="eliminar(cardss.iddesplazamientocuadrilla)">
-          <ion-icon slot="icon-only" name="trash-outline" ></ion-icon>
-        </ion-button>
-      </ion-card-content>
+    <ion-card style="margin-top: 10%;">
+      <ion-grid>
+        <ion-row>
+          <ion-col><h5>Origen</h5></ion-col>
+          <ion-col><h5>Destino</h5></ion-col>
+          <ion-col><h5>Eliminar</h5></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  
+    <ion-card *ngFor="let cardss of cardss" >
+      <ion-grid>
+        <ion-row>
+          <ion-col><h3>{{cardss.municipioinicio}}</h3></ion-col>
+          <ion-col><h3>{{cardss.municipiofin}}</h3></ion-col>
+          <ion-col><ion-button  fill="clear"    (click)="eliminar(cardss.iddesplazamientocuadrilla)">
+            <ion-icon slot="icon-only" name="trash-outline"  size="large"></ion-icon>
+          </ion-button></ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card>
 
 
