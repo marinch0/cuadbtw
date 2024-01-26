@@ -38,6 +38,7 @@ export class CasespecialPage implements OnInit {
     { title: 'Mis Servicios', url: '/menupersonal', icon: 'archive' },
     { title: 'Excepciones', url: '/mislab', icon: 'warning' },
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
+    { title: 'Acta instalacion', url: '/actinstalacion', icon:"document"},
     { title: 'Cerrar Session', url: '/home', icon: 'warning' },
   ];
   listcons(){
@@ -159,6 +160,9 @@ home() {
 
   omitir(){
     this.router.navigate(["inicio"])
+  }
+  acta(){
+    this.router.navigate(["actinstalacion"])
   }
   ngOnInit() {
     this.listcons()
