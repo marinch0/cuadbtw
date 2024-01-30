@@ -8,9 +8,13 @@ import { Observable } from 'rxjs';
 
 export class ApiService {
 
-  
-  
+  urlActivosFijos:string = "http://192.168.50.169:4001"
+
   API_URL='http://104.131.8.122:8000/';
+
+  //solo para hacer la prueba de los tecnicos
+  urlServicios:string = "https://bitwan.info/api/public/login"
+
   constructor(private http: HttpClient) { }
 
   httpOptions = {
@@ -19,10 +23,82 @@ export class ApiService {
 		})
 	};
 
+//-------------------------------------------------------------------------------------------------------------------------------//
+
+  getAuthHeaders(): HttpHeaders {
+    // Crea y devuelve los encabezados de autenticación con el token
+    return new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+  }
+
+  getBodegasTecnicos(){
+    const headers = this.getAuthHeaders();
+    const numTercero = localStorage.getItem('numerotercero');
+    const nombreTecnico = localStorage.getItem('nombres');
+
+    return this.http.get(`${this.urlActivosFijos}/getBodegasTecnicos/${nombreTecnico}/${numTercero}`, {headers} );
+  }
+
+  buscarActivoFijoMoverTecnicos(buscar:string){
+
+    const numTercero = localStorage.getItem('numerotercero');
+
+    const headers = this.getAuthHeaders();
+    const nombreTecnico = localStorage.getItem('nombres');
+
+    return this.http.get(`${this.urlActivosFijos}/buscarActivoFijoMoverTecnicos/${buscar}/${nombreTecnico}/${numTercero}`, {headers} );
+  }
 
 
+  postActaDeMovimiento(RazonMovimiento:string, TipoEntrega:string, BodegaEntra:string, BodegaSale:string, Descripcion:string, GuiaTrasportadora:string,  ImgGuia:string, idOnts:any,ServicioDelClienteEspecifico:string){
+    const headers = this.getAuthHeaders();
+    const nombreTecnico = localStorage.getItem('nombres');
+    const numTercero = localStorage.getItem('numerotercero');
+
+    const form = new FormData();
+
+    form.append('RazonMovimiento', RazonMovimiento);
+    form.append('TipoEntrega', TipoEntrega);
+    form.append('BodegaEntra', BodegaEntra);
+    form.append('BodegaSale', BodegaSale);
+    form.append('Descripcion', Descripcion);
+    form.append('GuiaTrasportadora', GuiaTrasportadora);
+    form.append('estadoActa', '1');
+    form.append('nombre', nombreTecnico!.trim());
+    form.append('files',ImgGuia);
+    form.append('idOnts', JSON.stringify(idOnts));
+    form.append('ServicioDelClienteEspecifico',ServicioDelClienteEspecifico);
+    form.append('numTercero',numTercero!)
+
+    return this.http.post(`${this.urlActivosFijos}/postCrearActaDeMovimiento`, form , {headers} )
+  }
 
 
+  getOnt(numServicio:string){
+
+    const headers = this.getAuthHeaders();
+
+    const data = {
+      numServicio:numServicio
+    }
+
+    return this.http.post(`${this.urlActivosFijos}/retirarCliente`, data,  {headers} )
+
+  }
+
+  getOntEspecifica(idActivoFijo:string){
+
+    const headers = this.getAuthHeaders();
+
+    const data = {
+      idActivoFijo:idActivoFijo,
+    }
+
+    return this.http.post(`${this.urlActivosFijos}/retirarClienteEspecifico`, data,  {headers} )
+
+  }
+
+
+//-----------------------------------------------------------------------------------------------------------------------------//
 
   loginn(credenciale:credenciales){
 
@@ -31,12 +107,12 @@ export class ApiService {
     formData.append('json', JSON.stringify(credenciale))
 
     return this.http.post(this.API_URL+'login',formData);
-  } 
+  }
 
   login(credenciale:credenciales){
 
     return this.http.post(
-      this.API_URL+'login',
+      this.urlServicios,
       'json='+JSON.stringify(credenciale),
       this.httpOptions
     );
@@ -46,14 +122,14 @@ export class ApiService {
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(consumoscredenciales))
     return this.http.post(this.API_URL+'consumosopservicios/consumosbycuadrilla',formData);
-    
+
   }
   casobuscar(authorization:any,casoscre:casoscre){
     let formData = new FormData();
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(casoscre))
     return this.http.post(this.API_URL+'casosespeciales/casosbycuadrilla',formData);
-    
+
   }
 
   //datos grafica
@@ -62,29 +138,29 @@ export class ApiService {
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(credgraf))
     return this.http.post(this.API_URL+'laboresop/laboresbycuadrilla',formData);
-    
+
   }
 
   entidadesBuscar(authorization:any,entidadescre:entidadescre){
     let formData = new FormData();
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(entidadescre))
-    return this.http.post(this.API_URL+'operacionesservicios/getentities',formData);    
+    return this.http.post(this.API_URL+'operacionesservicios/getentities',formData);
   }
 
 
   dezplabuscar(authorization:any,dezplacre:dezplacre){
     let formData = new FormData();
     formData.append('authorization',authorization)
-    formData.append('json', JSON.stringify(dezplacre))  
+    formData.append('json', JSON.stringify(dezplacre))
     return this.http.post(this.API_URL+'desplazamientoscuadrillas/desplazamientosbycuadrilla',formData);
   }
 
   servfinbuscar(authorization:any,dezplacre:dezplacre){
-    
+
     let formData = new FormData();
     formData.append('authorization',authorization)
-    formData.append('json', JSON.stringify(dezplacre))  
+    formData.append('json', JSON.stringify(dezplacre))
 
     return this.http.post(this.API_URL+'operacionesservicios/listbycuadrilla',formData);
   }
@@ -97,7 +173,7 @@ export class ApiService {
     formData.append('json', JSON.stringify(credeagenda))
 
     return this.http.post(this.API_URL+'agenda/listbytercero',formData);
-    
+
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -108,7 +184,7 @@ export class ApiService {
     formData.append('authorization',authorization)
     formData.append('idoperacion', id)
     return this.http.post(this.API_URL+'laboresop/laboresbyoperacion',formData);
-    
+
   }
 
 
@@ -118,7 +194,7 @@ export class ApiService {
     formData.append('authorization',authorization)
     formData.append('idoperacion', id)
     return this.http.post(this.API_URL+'consumosopservicios/consumosbyoperacion',formData);
-    
+
   }
 
 
@@ -128,7 +204,7 @@ export class ApiService {
     formData.append('authorization',authorization)
     formData.append('idoperacion', id)
     return this.http.post(this.API_URL+'desplazamientoscuadrillas/desplazamientobyoperacion',formData);
-    
+
   }
 
 
@@ -138,38 +214,38 @@ export class ApiService {
     formData.append('authorization',authorization)
     formData.append('idoperacion', id)
     return this.http.post(this.API_URL+'casosespeciales/casosespecialesbyoperacion',formData);
-    
+
   }
 
   ////////////////////////////////////////////////////////////////////////////
 
-  
+
 
 
   crearlabor(authorization:any,creaLabor:creaLabor){
     let formData = new FormData();
     formData.append('authorization',authorization)
-    formData.append('json', JSON.stringify(creaLabor))  
+    formData.append('json', JSON.stringify(creaLabor))
     return this.http.post(this.API_URL+'laboresop/create',formData);
   }
 
   crearconsumo(authorization:any,creaconsumo:creaconsumo){
     let formData = new FormData();
     formData.append('authorization',authorization)
-    formData.append('json', JSON.stringify(creaconsumo))  
+    formData.append('json', JSON.stringify(creaconsumo))
     return this.http.post(this.API_URL+'consumosopservicios/create',formData);
   }
 
   creardesplaz(authorization:any,creadez:creadez){
     let formData = new FormData();
     formData.append('authorization',authorization)
-    formData.append('json', JSON.stringify(creadez))  
+    formData.append('json', JSON.stringify(creadez))
     return this.http.post(this.API_URL+'desplazamientoscuadrillas/create',formData);
   }
   crearcasoez(authorization:any,creacasoez:creacasoez){
     let formData = new FormData();
     formData.append('authorization',authorization)
-    formData.append('json', JSON.stringify(creacasoez))  
+    formData.append('json', JSON.stringify(creacasoez))
     return this.http.post(this.API_URL+'casosespeciales/create',formData);
   }
 
@@ -185,39 +261,39 @@ export class ApiService {
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'desplazamientoscuadrillas/delete/'+iddesplazamientocuadrilla,formData);
-  } 
+  }
   eliminarcasoez(authorization:any,idcasoespecial:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'casosespeciales/delete/'+idcasoespecial,formData);
-  } 
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////
 
-  
+
   listarconsop(authorization:any,idcasoespecial:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'consumosopservicios/consumosbyoperacion',formData);
-  } 
+  }
 
   listarlaboresop(authorization:any,idcasoespecial:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'laboresop/laboresbyoperacion',formData);
-  } 
+  }
 
   listardezop(authorization:any,idcasoespecial:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'desplazamientoscuadrillas/desplazamientobyoperacion',formData);
-  } 
+  }
   listarcasesop(authorization:any,idcasoespecial:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'casosespeciales/casosespecialesbyoperacion',formData);
-  } 
-  
+  }
+
   //////////////////////////////////////////////////////////////////////////////////////
   checktoken(token:any){
 
@@ -373,7 +449,7 @@ export function normalizaentilab(respuestaAPI: any): entimatdata[] {
   }));
 }
 
-// consumos 
+// consumos
 export interface consData {
   idconsumooperacionservicio: string;
   cantidad: string;
@@ -399,7 +475,7 @@ export function normacons(respuestaAPI: any): consData[] {
 }
 
 
-// casoses 
+// casoses
 export interface casosesdata {
   idcasoespeciales: string;
   descripcion: string;
@@ -422,7 +498,7 @@ export function normacasoses(respuestaAPI: any): consData[] {
 }
 
 
-// dezplasamientos 
+// dezplasamientos
 export interface dezdezdata {
   iddesplazamientocuadrilla: string;
   municipioinicio: string;
@@ -595,7 +671,7 @@ export interface AgendaData {
   nombrecontactosolicitud:any;
   nombreplan:any;
   nombretiposolicitud:any;
-
+  numeroservicio:any;
 
   // Agrega otras propiedades que necesites de la respuesta de la API
 }
@@ -658,8 +734,8 @@ export function normalizeData(respuestaAPI: any): AgendaData[] {
 
   // Suponiendo que el array de datos se encuentra en respuestaAPI.data
    const item = respuestaAPI.data.map((item: any) => ({
-    
-    
+
+
     apellidostercero: item.apellidostercero,
     celular1: item.celular1,
     celular2: item.celular2,
@@ -667,12 +743,13 @@ export function normalizeData(respuestaAPI: any): AgendaData[] {
     estado: item.estado,
     fechaagenda:item.fechaagenda,
     fechacreado:item.fechacreado,
+    numeroservicio:item.numeroservicio,
     nombredepartamento:item.nombredepartamento,
     nombremunicipio:item.nombremunicipio,
     nombrecontactosolicitud:item.nombrecontactosolicitud,
     nombreplan:item.nombreplan,
     nombretiposolicitud:item.nombretiposolicitud
-    
+
     // Mapea otras propiedades que necesites de la respuesta de la API
   }));
 
@@ -729,7 +806,7 @@ export function normalizacasos(respuestaAPI: any): casosData[] {
   }));
 
 
-  
+
 }
 
 

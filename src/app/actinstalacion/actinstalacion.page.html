@@ -12,6 +12,103 @@
   </ion-header>
 
 
+  <div class="container mt-3" >
+
+
+    <div *ngIf="bodegaSaleMostrar">
+      <label  class="form-label">Bodega de la que saldra la ont</label>
+      <select  [(ngModel)]="BodegaSale" name="BodegaSale" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+      <option *ngFor="let bodegaTecnico of bodegaTecnico" value="{{bodegaTecnico.ID}}"> {{bodegaTecnico.nombre}} </option>
+      </select>
+    </div>
+
+    <div *ngIf="bodegaEntraMostrarUser">
+      <label  class="form-label">Bodega a la que entrara la ont a retirar</label>
+      <select  [(ngModel)]="BodegaEntra" name="BodegaEntra" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+      <option *ngFor="let bodegaTecnico of bodegaTecnico" value="{{bodegaTecnico.ID}}"> {{bodegaTecnico.nombre}} </option>
+      </select>
+    </div>
+
+    <div *ngIf="selectOntsRetirar">
+      <label  class="form-label">Selecione que ont desea retirar de este cliente</label>
+      <select  [(ngModel)]="selectOntEspecifica" (change)="retirarOntEspecifica($event.target)" name="selectOntEspecifica" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+      <option *ngFor="let guardarClienteRetirar of guardarClienteRetirar" value="{{guardarClienteRetirar.numeroActivo}}"> {{guardarClienteRetirar.numeroActivo}} </option>
+      </select>
+    </div>
+
+    <div *ngIf="bodegaEntraMostrar">
+      <label  class="form-label">Serial ont de la ont a retirar</label>
+      <input  class="form-control bg-dark border-secondary text-white" [disabled]="bodegaEntraMostrar"  [(ngModel)]="serial" type="text"> <br>
+    </div>
+
+    <div *ngIf="bodegaEntraMostrar">
+      <label  class="form-label">Numero ont de la ont a retirar</label>
+      <input  class="form-control bg-dark border-secondary text-white" [disabled]="bodegaEntraMostrar"  [(ngModel)]="numOnt" type="text"> <br>
+    </div>
+
+
+    <div>
+      <label class="form-label">Ingrese una Descripcion (opcional) </label>
+      <input type="text" name="Descripcion" [(ngModel)]="Descripcion" class="form-control bg-dark border-secondary text-white">
+    </div>
+
+  </div>
+
+    <div *ngIf="btnPushOnts" class="container mt-3">
+      <div class="row ">
+
+        <label *ngIf="infoTextoActivosFijos"  class="text-white" for="">ingresa el numero de la ont de tu inventario para cargarla a la acta</label>
+
+        <div *ngFor="let input of dynamicInputs; let i = index; trackBy: trackByFn " class="col-md-12 mb-2 mt-2  ">
+
+          <!-- El siguiente grupo de entrada se renderiza solo si no hay resultados previos para la entrada específica (índice i). permite ingresar datos cuando no hay resultados previos para la entrada específica, evitando duplicaciones de información. -->
+          <div class="input-group" *ngIf="!resultadosPorInput[i]">
+
+            <input type="number" [name]="'dynamicInputs'+i" #valorOnts [id]="'input_' + i" placeholder="Agregar ont número {{i + 1}}" class="form-control bg-dark text-white border-secondary mx-2" autofocus [(ngModel)]="dynamicInputs[i]">
+
+            <div class="input-group-append ">
+              <button (click)="searchONTs(valorOnts.value, i)" class="btn botonesCrearActaMovimiento  botonesActa text-white mx-1">Buscar ONTS</button>
+              <button (click)="eliminarInput(i)" class="btn btn-danger">Eliminar</button>
+            </div>
+
+          </div>
+          <!-- Mostrar el resultado específico para este input -->
+          <div *ngIf="resultadosPorInput[i]" class="mt-2 d-flex align-items-center">
+            <input disabled type="text" [value]="resultadosPorInput[i].numeroActivo+
+              resultadosPorInput[i].MAC + ',' +
+              resultadosPorInput[i].serial + ',' +
+              resultadosPorInput[i].referencia + ','+
+              resultadosPorInput[i].proveedor +','+
+              resultadosPorInput[i].marca + ','+
+              resultadosPorInput[i].categoria"
+              class="form-control bg-dark text-white border-secondary flex-grow-1" />
+            <!-- Coloca el botón "Eliminar" al lado derecho del resultado en línea -->
+            <button (click)="eliminarInput(i)" class="btn btn-danger ml-2">Eliminar</button>
+          </div>
+        </div>
+      </div> <br>
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-between">
+          <button  (click)="addInput()"
+            [disabled]="  dynamicInputs[dynamicInputs.length -1] === '' || anular  "
+            class="btn btn-success mx-2">Agregar activos fijos</button>
+          <!-- <button (click)="limpiar()" class="btn btn-secondary">Limpiar Campos</button> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+
+      <div >
+
+        <button  type="button" (click)="crearActa()"  class="btn  botonesActa text-white">Crear Acta</button>
+
+      </div>
+    </div>
+
+
+
+
 </ion-content>
 <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;" >
   <ion-fab-button (click)="acta()" id="open-toast">

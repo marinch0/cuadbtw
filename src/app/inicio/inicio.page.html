@@ -8,7 +8,7 @@
       </ion-item>
     </ion-menu-toggle>
   </ion-header>
-  
+
 </ion-menu>
 <div class="ion-page" id="main-content">
   <ion-header>
@@ -19,8 +19,8 @@
       <ion-title>Agendas</ion-title>
     </ion-toolbar>
   </ion-header>
- 
-  <ion-content class="ion-padding"> 
+
+  <ion-content class="ion-padding">
     <div *ngFor="let agendaData of agendaData; let i = index">
     <ion-card style="margin-top: 10px;">
       <ion-card-header>
@@ -28,21 +28,23 @@
         <ion-card-subtitle>{{agendaData.nombremunicipio}},{{agendaData.nombredepartamento}}</ion-card-subtitle>
         {{agendaData.descripciondireccion}}
       </ion-card-header>
-    
+
       <ion-card-content>
         {{ agendaData.nombrecontactosolicitud}}
         <br>
         {{agendaData.celular1}}
       </ion-card-content>
-    
-      <ion-button id="open-modal" fill="clear" (click)="setOpen(true,i)" >Detalles</ion-button>
-      
-    
+
+      <ion-button id="open-modal" fill="clear" (click)="setOpen(true,i,agendaData.numeroservicio)" >Detalles</ion-button>
+
+
+
+
     </ion-card>
 
   </div>
-    
-  
+
+
 
     <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
       <ng-template>
@@ -64,7 +66,7 @@
                 <ion-card-title>{{agendaData[target].nombretiposolicitud}}</ion-card-title>
                 <ion-card-subtitle>{{agendaData[target].nombremunicipio}},{{agendaData[target].nombredepartamento}}</ion-card-subtitle>
               </ion-card-header>
-            
+
               <ion-card-content >
                 <h3>Nombre</h3>
                 <h4>{{ agendaData[target].nombrecontactosolicitud}}</h4>
@@ -89,10 +91,10 @@
                 <br>
                 <h3>telefono secundario</h3>
                 <h4>{{agendaData[target].celular2}}</h4>
-            
+
               </ion-card-content>
-          
-  
+
+
             </ion-card>
           </ion-item>
         </ion-content>

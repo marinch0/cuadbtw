@@ -16,18 +16,18 @@ export class HomePage {
     let token=localStorage.getItem('token')
 
     this.apiService.checktoken(token).subscribe(
-      res=>{ 
+      res=>{
 
         this.respuesta=<any>res
         if (this.respuesta.code==200) {
 
           this.router.navigate(["inicio"])
         }
-        
+
       },
       err=> console.log(err)
     );
-    
+
 
   }
   credenciales:credenciales={
@@ -44,7 +44,7 @@ export class HomePage {
     this.loadImage();
   }
 
-  
+
   loadImage() {
     this.http.get(this.imageUrl, { responseType: 'blob' }).subscribe((data) => {
       const reader = new FileReader();
@@ -61,14 +61,14 @@ export class HomePage {
       subHeader: 'Los datos ingresados no son correctos',
       buttons: ['OK'],
     });
-  
+
     await alert.present();
   }
   login(alias:any,password:any){
     this.credenciales.alias=alias
     this.credenciales.password=password
     this.apiService.login(this.credenciales).subscribe(
-      res=>{ 
+      (res:any)=>{
         this.respuesta=<any>res
         if (this.respuesta.code==200) {
           console.log(this.respuesta.data.token);
@@ -76,12 +76,14 @@ export class HomePage {
           localStorage.setItem('respuesta',JSON.stringify(this.respuesta))
           localStorage.setItem('token',this.respuesta.data.token)
           localStorage.setItem('idcuadrilla',"28701")
+          localStorage.setItem('numerotercero', res.data.numerotercero)
+          localStorage.setItem('nombres',res.data.nombres)
         }else{
           this.fal()
           alias=""
           password=""
         }
-        
+
       },
       err=> console.log(err)
     );

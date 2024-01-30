@@ -34,9 +34,10 @@ export class InicioPage implements OnInit {
       this.message = `Hello, ${ev.detail.data}!`;
     }
   }
-  setOpen(isOpen: boolean,i:any) {
+  setOpen(isOpen: boolean,i:any,numeroservicio:any) {
     this.target=i
     this.isModalOpen = isOpen;
+    localStorage.setItem('numserv',numeroservicio)
   }
 
 
@@ -74,7 +75,7 @@ export class InicioPage implements OnInit {
 
   cambio(target:number){
     console.log(target);
-    
+
   }
 
 
@@ -96,10 +97,10 @@ export class InicioPage implements OnInit {
       next:(res) => {
        // console.log(res);
 
-        
+
         this.agendaData=normalizeData(res);
 
-        
+
       },
       error: (err) =>{console.log(err);
       },
