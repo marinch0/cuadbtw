@@ -44,6 +44,7 @@ export class ActinstalacionPage implements OnInit {
   bodegaEntraMostrarUser:boolean = true
   selectOntsRetirar:boolean = false;
   btnPushOnts:boolean = true;
+  bodegaEntraMostrarEspecifico:boolean = false;
 
   anular: boolean = false;
   infoTextoActivosFijos:boolean = false;
@@ -60,6 +61,7 @@ export class ActinstalacionPage implements OnInit {
       if(this.tipoOperacion == '1' || this.tipoOperacion == '2' || this.tipoOperacion == '3' || this.tipoOperacion == '4' || this.tipoOperacion == '19'){
         this.BodegaSale = this.bodegaTecnico[0].ID
         this.bodegaEntraMostrar = false
+        this.bodegaEntraMostrarUser = false;
 
       }else if(this.tipoOperacion == '5' || this.tipoOperacion == '6' || this.tipoOperacion == '7' || this.tipoOperacion == '8'){
         this.BodegaEntra = this.bodegaTecnico[0].ID
@@ -79,7 +81,8 @@ export class ActinstalacionPage implements OnInit {
             this.BodegaSale = this.numServicioCliente;
             this.serial = this.guardarClienteRetirar[0].serial
             this.numOnt = this.guardarClienteRetirar[0].numeroActivo;
-
+            this.bodegaEntraMostrarEspecifico = true
+            this.guardarValorOnts = this.guardarClienteRetirar[0].numeroActivo;
 
           }
 
@@ -247,6 +250,11 @@ export class ActinstalacionPage implements OnInit {
                 htmlContainer: 'text-white'
               }
             });
+
+            this.BodegaEntra = "";
+            this.dynamicInputs = [];
+            this.infoTextoActivosFijos = false;
+            this.resultadosPorInput = [];
           }
 
         }
@@ -254,7 +262,7 @@ export class ActinstalacionPage implements OnInit {
       )}
 
     }else if(this.tipoOperacion == '5' || this.tipoOperacion == '6' || this.tipoOperacion == '7' || this.tipoOperacion == '8'){
-    
+
       this.api.postActaDeMovimiento(this.tipoOperacion, this.TipoEntrega, this.BodegaEntra, this.BodegaSale, this.Descripcion, this.GuiaTrasportadora, this.archivoCapturado, this.guardarValorOnts,this.ServicioDelClienteEspecifico).subscribe((crear: any) => {
         //habilitar esto cuando tenga el numero de servicio de las instalaciones
          if(crear.length >= 1) {
@@ -280,7 +288,15 @@ export class ActinstalacionPage implements OnInit {
               title: 'text-white',
               htmlContainer: 'text-white'
             }
+          }).then((result)=>{
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
           });
+
+
+
+
         }
 
       }
@@ -303,12 +319,15 @@ export class ActinstalacionPage implements OnInit {
       this.numOnt = this.guardarOntEspecifica[0].numeroActivo;
       this.BodegaSale = this.numServicioCliente;
 
+
+
     });
 
 
 
 
   }
+
 
   trackByFn(index: number, item: any): any {
     return index;
