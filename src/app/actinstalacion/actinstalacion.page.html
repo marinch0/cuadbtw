@@ -1,21 +1,59 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>actinstalacion</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-menu contentId="main-content">
+  <ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+      <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
+        <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+        <ion-label>{{ p.title }}</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-header>
+  
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">actinstalacion</ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title> Actas</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
+ 
+
+  <div class="container mt-3"  >
+    <ion-tabs >
+      <ion-tab-bar slot="top">
+        <ion-tab-button  (click)="labores()">
+          <ion-icon name="archive"></ion-icon>
+          labores
+        </ion-tab-button>
+        <ion-tab-button (click)="consumos()">
+          <ion-icon name="library"></ion-icon>
+          consumos
+        </ion-tab-button>
+        
+        <ion-tab-button  (click)="desplaza()">
+          <ion-icon name="paper-plane"></ion-icon>
+          desplazamientos
+        </ion-tab-button>
+        <ion-tab-button  (click)="observ()">
+          <ion-icon name="eye"></ion-icon>
+          Observacion
+        </ion-tab-button>
+        <ion-tab-button  (click)="casos()">
+          <ion-icon name="warning"></ion-icon>
+          casos especiales
+        </ion-tab-button>
+        
+      </ion-tab-bar>
+    </ion-tabs>
+    <br>
+    <br>
 
 
-  <div class="container mt-3" >
-
-
-    <div *ngIf="bodegaSaleMostrar">
+    <div *ngIf="bodegaSaleMostrar" >
       <label  class="form-label">Bodega de la que saldra la ont</label>
       <select  [(ngModel)]="BodegaSale" name="BodegaSale" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
       <option *ngFor="let bodegaTecnico of bodegaTecnico" value="{{bodegaTecnico.ID}}"> {{bodegaTecnico.nombre}} </option>
@@ -110,6 +148,7 @@
 
 
 </ion-content>
+
 <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;" >
   <ion-fab-button (click)="acta()" id="open-toast">
     <ion-icon name="checkmark-outline"  size="large"></ion-icon>

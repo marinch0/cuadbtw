@@ -194,5 +194,9 @@ export class ConsumosPage implements OnInit {
   observ(){
     this.router.navigate(["observ"])
   }
+  actas(){
+    this.router.navigate(["actinstalacion"])
+  }
+  
 
 }

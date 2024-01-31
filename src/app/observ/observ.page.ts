@@ -28,6 +28,10 @@ export class ObservPage implements OnInit {
   casos() {
     this.router.navigate(["casespecial"])
   }
+  actas(){
+    this.router.navigate(["actinstalacion"])
+  }
+
 
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },
@@ -108,7 +112,7 @@ home() {
 
   }
 
-  limpiar(){
+  clean(){
     this.descrip=""
   }
 

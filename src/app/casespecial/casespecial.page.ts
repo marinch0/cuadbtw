@@ -31,6 +31,9 @@ export class CasespecialPage implements OnInit {
   observ(){
     this.router.navigate(["observ"])
   }
+  actas(){
+    this.router.navigate(["actinstalacion"])
+  }
 
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },

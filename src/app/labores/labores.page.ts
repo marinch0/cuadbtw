@@ -77,6 +77,9 @@ export class LaboresPage implements OnInit {
     idlabor: ''
   }
 
+  actas(){
+    this.router.navigate(["actinstalacion"])
+  }
 
   /*eliminar(id: any) {
     let authorization = localStorage.getItem('token')
