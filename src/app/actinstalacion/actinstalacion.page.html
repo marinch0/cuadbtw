@@ -56,20 +56,6 @@
     <br>
 
 
-    <div *ngIf="bodegaSaleMostrar" >
-      <label  class="form-label">Bodega de la que saldra la ont</label>
-      <ion-select  [(ngModel)]="BodegaSale" name="BodegaSale" interface="popover"  aria-label="Default select example">
-      <ion-select-option *ngFor="let bodegaTecnico of bodegaTecnico" value="{{bodegaTecnico.ID}}"> {{bodegaTecnico.nombre}} </ion-select-option>
-      </ion-select>
-    </div>
-
-    <div *ngIf="bodegaEntraMostrarUser">
-      <label  class="form-label">Bodega a la que entrara la ont a retirar</label>
-      <ion-select  [(ngModel)]="BodegaEntra" name="BodegaEntra" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
-      <ion-select-option *ngFor="let bodegaTecnico of bodegaTecnico" value="{{bodegaTecnico.ID}}"> {{bodegaTecnico.nombre}} </ion-select-option>
-      </ion-select>
-    </div>
-
     <div *ngIf="selectOntsRetirar">
       <label  class="form-label">Selecione que ont desea retirar de este cliente</label>
       <ion-select   [(ngModel)]="selectOntEspecifica" (ngModelChange)="retirarOntEspecifica()" name="selectOntEspecifica" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
@@ -88,9 +74,9 @@
     </div>
 
 
-    <div>
+    <div >
       <label class="form-label">Ingrese una Descripcion (opcional) </label>
-      <ion-input type="text" name="Descripcion" [(ngModel)]="Descripcion" class="form-control bg-dark border-secondary text-white"></ion-input>
+      <ion-input type="text" name="Descripcion" [(ngModel)]="Descripcion" class="form-control bg-dark border-secondary text-white  "></ion-input>
     </div>
 
   </div>
@@ -108,8 +94,8 @@
             <ion-input type="number" [name]="'dynamicInputs'+i" #valorOnts [id]="'input_' + i" placeholder="Agregar ont número {{i + 1}}" class="form-control bg-dark text-white border-secondary mx-2" autofocus [(ngModel)]="dynamicInputs[i]"></ion-input>
 
             <div class="input-group-append ">
-              <ion-button (click)="searchONTs(valorOnts.value, i)" class="btn botonesCrearActaMovimiento  botonesActa text-white mx-1">Buscar ONTS</ion-button>
-              <ion-button (click)="eliminarInput(i)" class="btn btn-danger">Eliminar</ion-button>
+              <ion-button (click)="searchONTs(valorOnts.value, i)" class="   text-white mx-1">Buscar ONTS</ion-button>
+              <ion-button (click)="eliminarInput(i)" class="">Eliminar</ion-button>
             </div>
 
           </div>
