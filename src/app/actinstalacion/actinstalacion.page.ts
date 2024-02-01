@@ -55,6 +55,7 @@ export class ActinstalacionPage implements OnInit {
 
     this.numServicioCliente = localStorage.getItem('numserv')!
 
+
     this.api.getBodegasTecnicos().subscribe(res => {
       this.bodegaTecnico = res;
 
@@ -141,10 +142,10 @@ export class ActinstalacionPage implements OnInit {
     }
   }
 
-  searchONTs(value: string, index: number) {
+  searchONTs(value: any, index: number) {
 
     if (value == "") {
-      this.miInput.nativeElement.focus();
+
       Swal.fire({
         title: 'ERROR',
         text: `Ingrese un valor a buscar`,
@@ -279,6 +280,7 @@ export class ActinstalacionPage implements OnInit {
             this.dynamicInputs = [];
             this.infoTextoActivosFijos = false;
             this.resultadosPorInput = [];
+            this.Descripcion = "";
           }
 
         }
@@ -331,12 +333,16 @@ export class ActinstalacionPage implements OnInit {
   }
 
 
-  retirarOntEspecifica(evento:any){
+  retirarOntEspecifica(){
 
-    this.api.getOntEspecifica(evento.value).subscribe(res=>{
+    console.log(this.selectOntEspecifica);
+
+    this.api.getOntEspecifica(this.selectOntEspecifica).subscribe(res=>{
 
       this.bodegaEntraMostrar = true;
       this.guardarOntEspecifica = res;
+
+      console.log(this.guardarOntEspecifica);
 
       this.guardarValorOnts = this.guardarOntEspecifica[0].numeroActivo;
       this.serial = this.guardarOntEspecifica[0].serial

@@ -8,7 +8,7 @@
       </ion-item>
     </ion-menu-toggle>
   </ion-header>
-  
+
 </ion-menu>
 <div class="ion-page" id="main-content">
   <ion-header>
@@ -20,10 +20,10 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
- 
 
 
- 
+
+
 
   <div class="container mt-3"  >
     <ion-tabs >
@@ -36,7 +36,7 @@
           <ion-icon name="library"></ion-icon>
           consumos
         </ion-tab-button>
-        
+
         <ion-tab-button  (click)="desplaza()">
           <ion-icon name="paper-plane"></ion-icon>
           desplazamientos
@@ -49,7 +49,7 @@
           <ion-icon name="warning"></ion-icon>
           casos especiales
         </ion-tab-button>
-        
+
       </ion-tab-bar>
     </ion-tabs>
     <br>
@@ -72,7 +72,7 @@
 
     <div *ngIf="selectOntsRetirar">
       <label  class="form-label">Selecione que ont desea retirar de este cliente</label>
-      <ion-select   [(ngModel)]="selectOntEspecifica" (change)="retirarOntEspecifica($event.target)" name="selectOntEspecifica" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+      <ion-select   [(ngModel)]="selectOntEspecifica" (ngModelChange)="retirarOntEspecifica()" name="selectOntEspecifica" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
       <ion-select-option *ngFor="let guardarClienteRetirar of guardarClienteRetirar" value="{{guardarClienteRetirar.numeroActivo}}"> {{guardarClienteRetirar.numeroActivo}} </ion-select-option>
       </ion-select >
     </div>
@@ -108,7 +108,7 @@
             <ion-input type="number" [name]="'dynamicInputs'+i" #valorOnts [id]="'input_' + i" placeholder="Agregar ont número {{i + 1}}" class="form-control bg-dark text-white border-secondary mx-2" autofocus [(ngModel)]="dynamicInputs[i]"></ion-input>
 
             <div class="input-group-append ">
-           <!--   <ion-button (click)="searchONTs(valorOnts.value, i)" class="btn botonesCrearActaMovimiento  botonesActa text-white mx-1">Buscar ONTS</ion-button>-->
+              <ion-button (click)="searchONTs(valorOnts.value, i)" class="btn botonesCrearActaMovimiento  botonesActa text-white mx-1">Buscar ONTS</ion-button>
               <ion-button (click)="eliminarInput(i)" class="btn btn-danger">Eliminar</ion-button>
             </div>
 
