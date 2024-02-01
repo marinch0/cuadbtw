@@ -174,6 +174,7 @@ export class ConsumosPage implements OnInit {
   ngOnInit() {
     this.listarentidadamterial(this.credenciales)
     this.listcons()
+
   }
   labores() {
     this.router.navigate(["labores"])
