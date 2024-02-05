@@ -143,6 +143,8 @@ export class LaboresPage implements OnInit {
   ngOnInit() {
     this.listarentidadamterial(this.credenciales)
     this.listlab()
+    console.log(localStorage.getItem('idRazon'));
+    
   }
 
   labores(){

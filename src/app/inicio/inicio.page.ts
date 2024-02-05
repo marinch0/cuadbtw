@@ -23,6 +23,31 @@ export class InicioPage implements OnInit {
     this.isModalOpen = false;
   }
 
+  laborselect(tipolabor:any){
+    if (tipolabor=="Solicitud de instalación") {
+      localStorage.setItem('idRazon',"1")
+    }else if(tipolabor=="Traslado"){
+      localStorage.setItem('idRazon',"2")
+    }else if(tipolabor=="Migracion"){
+      localStorage.setItem('idRazon',"3")
+    }else if (tipolabor=="Soporte") {
+      localStorage.setItem('idRazon',"4")
+    }else if (tipolabor=="Retiro final") {
+      localStorage.setItem('idRazon',"5")
+    }else if (tipolabor=="Retiro soporte") {
+      localStorage.setItem('idRazon',"6")
+    }else if (tipolabor=="Retiro migracion") {
+      localStorage.setItem('idRazon',"7")
+    }else if (tipolabor=="Retrio Traslado"){
+      localStorage.setItem('idRazon',"8")
+    }else if (tipolabor=="Envio tecnico") {
+      localStorage.setItem('idRazon',"9")
+    }else if(tipolabor=="Reconexion"){
+      localStorage.setItem('idRazon',"19")
+    }
+    this.confirm()
+  }
+
   confirm() {
     this.modal.dismiss(null, 'confirm');
     this.router.navigate(["labores"])
@@ -37,7 +62,11 @@ export class InicioPage implements OnInit {
   setOpen(isOpen: boolean,i:any,numeroservicio:any) {
     this.target=i
     this.isModalOpen = isOpen;
+
+    
     localStorage.setItem('numserv',numeroservicio)
+    console.log(localStorage.getItem('numserv'));
+    
   }
 
 
@@ -75,7 +104,7 @@ export class InicioPage implements OnInit {
 
   cambio(target:number){
     console.log(target);
-
+    
   }
 
 
@@ -95,12 +124,12 @@ export class InicioPage implements OnInit {
 
     this.apiService.agendabuscar(authorization, credeagenda).subscribe({
       next:(res) => {
-       // console.log(res);
+        console.log(res);
 
-
+        
         this.agendaData=normalizeData(res);
 
-
+        
       },
       error: (err) =>{console.log(err);
       },
