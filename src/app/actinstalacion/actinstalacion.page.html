@@ -84,7 +84,7 @@
     <div *ngIf="btnPushOnts" class="container mt-3">
       <div class="row ">
 
-        <label *ngIf="infoTextoActivosFijos"  class="text-white" for="">ingresa el numero de la ont de tu inventario para cargarla a la acta</label>
+        <label *ngIf="infoTextoActivosFijos"   for="">ingresa el numero de la ont de tu inventario para cargarla a la acta</label>
 
         <div *ngFor="let input of dynamicInputs; let i = index; trackBy: trackByFn " class="col-md-12 mb-2 mt-2  ">
 
@@ -94,8 +94,8 @@
             <ion-input type="number" [name]="'dynamicInputs'+i" #valorOnts [id]="'input_' + i" placeholder="Agregar ont número {{i + 1}}" class="form-control bg-dark text-white border-secondary mx-2" autofocus [(ngModel)]="dynamicInputs[i]"></ion-input>
 
             <div class="input-group-append ">
-              <ion-button (click)="searchONTs(valorOnts.value, i)" class="   text-white mx-1">Buscar ONTS</ion-button>
-              <ion-button (click)="eliminarInput(i)" class="">Eliminar</ion-button>
+              <ion-button (click)="searchONTs(valorOnts.value, i)" color="primary"  >Buscar ONTS</ion-button>
+              <ion-button (click)="eliminarInput(i)" color="danger">Eliminar</ion-button>
             </div>
 
           </div>
@@ -110,7 +110,7 @@
               resultadosPorInput[i].categoria"
               class="form-control bg-dark text-white border-secondary flex-grow-1" />
             <!-- Coloca el botón "Eliminar" al lado derecho del resultado en línea -->
-            <ion-button (click)="eliminarInput(i)" class="btn btn-danger ml-2">Eliminar</ion-button>
+            <ion-button (click)="eliminarInput(i)" color="danger">Eliminar</ion-button>
           </div>
         </div>
       </div> <br>
