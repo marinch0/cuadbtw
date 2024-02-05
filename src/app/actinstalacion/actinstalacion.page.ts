@@ -84,6 +84,7 @@ export class ActinstalacionPage implements OnInit {
             this.numOnt = this.guardarClienteRetirar[0].numeroActivo;
             this.bodegaEntraMostrarEspecifico = true
             this.guardarValorOnts = this.guardarClienteRetirar[0].numeroActivo;
+            this.selectOntsRetirar = false;
 
           }
 
@@ -109,22 +110,28 @@ export class ActinstalacionPage implements OnInit {
     { title: 'Acta instalacion', url: '/actinstalacion', icon:"document"},
     { title: 'Cerrar Session', url: '/home', icon: 'warning' },
   ];
+
   acta() {
     this.router.navigate(["resumen"])
   }
+
   labores() {
     this.router.navigate(["labores"])
 
   }
+
   consumos() {
     this.router.navigate(["consumos"])
   }
+
   desplaza() {
     this.router.navigate(["desp"])
   }
+
   casos() {
     this.router.navigate(["casespecial"])
   }
+
   observ(){
     this.router.navigate(["observ"])
   }
@@ -255,7 +262,7 @@ export class ActinstalacionPage implements OnInit {
 
             Swal.fire({
               title: 'ERROR',
-              text: `El numero de servicio  ${this.BodegaEntra} YA CUENTA CON UNA ACTA PENDIENTE`,
+              text: `ESTE CLIENTE YA CUENTA CON UNA ACTA PENDIENTE`,
               icon: 'error',
               customClass: {
                 popup: 'bg-dark',
@@ -274,13 +281,21 @@ export class ActinstalacionPage implements OnInit {
                 title: 'text-white',
                 htmlContainer: 'text-white'
               }
-            });
+            }).then((result)=>{
+              if (result.isConfirmed) {
 
-            this.BodegaEntra = "";
-            this.dynamicInputs = [];
-            this.infoTextoActivosFijos = false;
-            this.resultadosPorInput = [];
-            this.Descripcion = "";
+                this.guardarValorOnts = [];
+                this.BodegaEntra = "";
+                this.dynamicInputs = [];
+                this.infoTextoActivosFijos = false;
+                this.resultadosPorInput = [];
+                this.Descripcion = "";
+
+
+              }
+            });;
+
+
           }
 
         }
@@ -289,60 +304,72 @@ export class ActinstalacionPage implements OnInit {
 
     }else if(this.tipoOperacion == '5' || this.tipoOperacion == '6' || this.tipoOperacion == '7' || this.tipoOperacion == '8'){
 
-      this.api.postActaDeMovimiento(this.tipoOperacion, this.TipoEntrega, this.BodegaEntra, this.BodegaSale, this.Descripcion, this.GuiaTrasportadora, this.archivoCapturado, this.guardarValorOnts,this.ServicioDelClienteEspecifico).subscribe((crear: any) => {
-        //habilitar esto cuando tenga el numero de servicio de las instalaciones
-         if(crear.length >= 1) {
+      if(this.guardarValorOnts.length == 0){
 
-          Swal.fire({
-            title: 'ERROR',
-            text: `El numero de servicio  ${this.BodegaEntra} YA CUENTA CON UNA ACTA PENDIENTE`,
-            icon: 'error',
-            customClass: {
-              popup: 'bg-dark',
-              title: 'text-white',
-              htmlContainer: 'text-white'
-            }
-          });
+        Swal.fire({
+          title: 'ERROR',
+          text: 'POR FAVOR SELECIONE UNA ONT A RETIRAR DEL CLIENTE',
+          icon: 'error',
+          customClass: {
+            popup: 'bg-dark',
+            title: 'text-white',
+            htmlContainer: 'text-white'
+          }
+        });
 
-        } else{
-          Swal.fire({
-            title: 'EXITO',
-            text: 'ACTA CREADA CON EXITO',
-            icon: 'success',
-            customClass: {
-              popup: 'bg-dark',
-              title: 'text-white',
-              htmlContainer: 'text-white'
-            }
-          }).then((result)=>{
-            if (result.isConfirmed) {
-              window.location.reload();
-            }
-          });
+      }else{
+        this.api.postActaDeMovimiento(this.tipoOperacion, this.TipoEntrega, this.BodegaEntra, this.BodegaSale, this.Descripcion, this.GuiaTrasportadora, this.archivoCapturado, this.guardarValorOnts,this.ServicioDelClienteEspecifico).subscribe((crear: any) => {
+          //habilitar esto cuando tenga el numero de servicio de las instalaciones
+           if(crear.length >= 1) {
+
+            Swal.fire({
+              title: 'ERROR',
+              text: `ESTE CLIENTE YA CUENTA CON UNA ACTA PENDIENTE`,
+              icon: 'error',
+              customClass: {
+                popup: 'bg-dark',
+                title: 'text-white',
+                htmlContainer: 'text-white'
+              }
+            });
+
+          } else{
+            Swal.fire({
+              title: 'EXITO',
+              text: 'ACTA CREADA CON EXITO',
+              icon: 'success',
+              customClass: {
+                popup: 'bg-dark',
+                title: 'text-white',
+                htmlContainer: 'text-white'
+              }
+            }).then((result)=>{
+              if (result.isConfirmed) {
+                this.ngOnInit();
+              }
+            });
 
 
 
 
-        }
+          }
 
+        })
       }
 
-
-    )}
+     }
 
   }
 
 
   retirarOntEspecifica(){
 
-    console.log(this.selectOntEspecifica);
 
     this.api.getOntEspecifica(this.selectOntEspecifica).subscribe(res=>{
 
       this.bodegaEntraMostrar = true;
       this.guardarOntEspecifica = res;
 
-      console.log(this.guardarOntEspecifica);
 
       this.guardarValorOnts = this.guardarOntEspecifica[0].numeroActivo;
       this.serial = this.guardarOntEspecifica[0].serial
