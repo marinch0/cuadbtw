@@ -16,7 +16,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title> observaciones</ion-title>
+      <ion-title> Observaciones</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -25,24 +25,24 @@
     <ion-tab-bar slot="top">
       <ion-tab-button  (click)="labores()">
         <ion-icon name="archive"></ion-icon>
-        labores
+        Labores
       </ion-tab-button>
       <ion-tab-button (click)="consumos()">
         <ion-icon name="library"></ion-icon>
-        consumos
+        Consumos
       </ion-tab-button>
       
       <ion-tab-button  (click)="desplaza()">
         <ion-icon name="paper-plane"></ion-icon>
-        desplazamientos
+        Desplazamientos
       </ion-tab-button>
       <ion-tab-button  (click)="actas()">
         <ion-icon name="document-text"></ion-icon>
-        Inventario
+        Actas
       </ion-tab-button>
       <ion-tab-button  (click)="casos()">
         <ion-icon name="warning"></ion-icon>
-        casos especiales
+        Casos Especiales
       </ion-tab-button>
       
     </ion-tab-bar>
@@ -55,7 +55,7 @@
 
   <ion-card-content>
     <ion-item>
-      <ion-input label="Descripcion" placeholder="" [(ngModel)]="descrip" [clearInput]="true"></ion-input>
+      <ion-input label="descripción" placeholder="" [(ngModel)]="descrip" [clearInput]="true"></ion-input>
     </ion-item>
 
 

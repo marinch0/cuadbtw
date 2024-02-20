@@ -74,9 +74,9 @@ export class InicioPage implements OnInit {
     { title: 'Inicio', url: '/inicio', icon: 'Home' },
     { title: 'Dashboard', url: '/dashboard', icon: 'paper-plane' },
     { title: 'Mis Servicios', url: '/menupersonal', icon: 'archive' },
-    { title: 'Excepciones', url: '/mislab', icon: 'warning' },
+    { title: 'Excépciones', url: '/mislab', icon: 'warning' },
     { title: 'Desplazamiento', url: '/mislab', icon: 'car' },
-    { title: 'Cerrar Session', url: '/home', icon: 'warning' },
+    { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
 
   listaAgenda:any = null;

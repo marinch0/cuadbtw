@@ -50,9 +50,9 @@ public appPages = [
   { title: 'Inicio', url: '/inicio', icon: 'Home' },
   { title: 'Dashboard', url: '/dashboard', icon: 'paper-plane' },
   { title: 'Mis Servicios', url: '/menupersonal', icon: 'archive' },
-  { title: 'Excepciones', url: '/mislab', icon: 'warning' },
+  { title: 'Excépciones', url: '/mislab', icon: 'warning' },
   { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
-  { title: 'Cerrar Session', url: '/home', icon: 'warning' },
+  { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
 ];
 listcons(){
   let authorization = localStorage.getItem('token')
