@@ -36,7 +36,7 @@ export class HomePage {
   }
   respuesta:respuesta={
     code:'',
-    data:{idusuario:'',nombre:'',token:''}
+    data:{idusuario:'',nombre:'',token:'',numerotercero:''}
   }
 
   constructor(private apiService:ApiService, private router:Router,private alertController: AlertController,private http: HttpClient) {
@@ -72,13 +72,19 @@ export class HomePage {
         this.respuesta=<any>res
         if (this.respuesta.code==200) {
           console.log(this.respuesta.data.idusuario);
-          this.router.navigate(["inicio"])
-          localStorage.setItem('respuesta',JSON.stringify(this.respuesta))
-          localStorage.setItem('token',this.respuesta.data.token)
-          localStorage.setItem('idcuadrilla',"28701")
-          localStorage.setItem('idusuario',this.respuesta.data.idusuario)
-          localStorage.setItem('numerotercero', res.data.numerotercero)
-          localStorage.setItem('nombres',res.data.nombres)
+
+          this.apiService.obtenerDatosTecnico(res.data.numerotercero).subscribe((nomTecnico:any)=>{
+
+            this.router.navigate(["inicio"])
+            localStorage.setItem('respuesta',JSON.stringify(this.respuesta))
+            localStorage.setItem('token',this.respuesta.data.token)
+            localStorage.setItem('idcuadrilla',"28701")
+            localStorage.setItem('idusuario',this.respuesta.data.idusuario)
+            localStorage.setItem('numerotercero', res.data.numerotercero)
+            localStorage.setItem('nombres',nomTecnico.data[0].nombres.toLowerCase().trim() +" "+ nomTecnico.data[0].apellidos.toLowerCase().trim())
+
+          })
+
         }else{
           this.fal()
           alias=""

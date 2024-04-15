@@ -180,6 +180,9 @@ export class ActinstalacionPage implements OnInit {
               htmlContainer: 'text-white'
             }
           });
+
+          this.dynamicInputs[index] = "";
+
         } else {
 
           this.guardarActivosFijos = acta;

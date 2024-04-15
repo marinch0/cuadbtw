@@ -8,12 +8,13 @@ import { Observable } from 'rxjs';
 
 export class ApiService {
 
-  urlActivosFijos:string = "http://192.168.50.169:4001"
+  urlActivosFijos:string = "http://192.168.50.46:4001"
 
   API_URL='http://104.131.8.122:8000/';
 
   //solo para hacer la prueba de los tecnicos
   urlServicios:string = "https://bitwan.info/api/public/login"
+  urlTecnicosServicios:string = "https://bitwan.info/api/public/terceros/searchbycriteria";
 
   constructor(private http: HttpClient) { }
 
@@ -117,6 +118,21 @@ export class ApiService {
       this.httpOptions
     );
   }
+
+  obtenerDatosTecnico(credenciale:credenciales){
+
+    const token = localStorage.getItem('token');
+
+    const body = new URLSearchParams();
+
+    body.set('json', JSON.stringify({"criteria":["numerotercero"],"value":credenciale,"onlyusers":true,"page":0,"limit":10}));
+    body.set('authorization',token!)
+
+    return this.http.post("https://bitwan.info/api/public/terceros/searchbycriteria", body.toString() ,
+      this.httpOptions
+    );
+  }
+
   consumosbuscar(authorization:any,consumoscredenciales:consumoscredenciales){
     let formData = new FormData();
     formData.append('authorization',authorization)
@@ -362,7 +378,9 @@ export interface credenciales{
 }
 export interface respuesta{
   code?:any;
-  data:{idusuario?:any,nombre?:any,token?:any}
+  data:{
+    numerotercero?:any,idusuario?:any,nombre?:any,token?:any
+}
 }
 
 export interface credeagenda {
