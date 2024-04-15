@@ -204,6 +204,14 @@ export class ApiService {
   }
 
 
+  //muni desplazamientos 
+
+  dezplmuni(authorization:any):Observable<any>{
+    let formData = new FormData();
+    formData.append('authorization',authorization)
+    return this.http.post('https://bitwan.info/api/public/municipios/listbydepartamento/31',formData);
+  }
+
   consum(authorization:any,id:any){
 
     let formData = new FormData();

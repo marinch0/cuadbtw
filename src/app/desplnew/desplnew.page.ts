@@ -11,8 +11,11 @@ import { AlertController } from '@ionic/angular';
 })
 export class DesplnewPage implements OnInit {
   cant: any;
+  cantt: any;
   laboress: any[] = [];
   cardss: any[] = [];
+  muni: any[] = [];
+  apuntador: any[]=[];
   
 
   public appPages = [
@@ -21,7 +24,7 @@ export class DesplnewPage implements OnInit {
     { title: 'Mis Servicios', url: '/menupersonal', icon: 'archive' },
     { title: 'Excépciones', url: '/mislab', icon: 'warning' },
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
-    { title: 'Cerrar Sesión', url: '/home', icon: 'warning'   },
+    { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
   
   constructor(private router:Router,private apiService: ApiService,private alertController: AlertController) { }
@@ -32,6 +35,37 @@ export class DesplnewPage implements OnInit {
     idtipooperacion:'',
     desplazamientos:''
   }
+
+  async agreg() {
+    const alert = await this.alertController.create({
+      header: 'DESPLAZAMIENTOS',
+      subHeader: 'Se agrego un desplazamiento a la operacion',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
+
+  async elimi() {
+    const alert = await this.alertController.create({
+      header: 'DESPLAZAMIENTOS',
+      subHeader: 'Se elimino un desplazamiento a la operacion',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
+
+  async error() {
+    const alert = await this.alertController.create({
+      header: 'DESPLAZAMIENTOS',
+      subHeader: 'Error al seleccionar desplazamiento a la operacion',
+      buttons: ['OK'],
+    });
+  
+    await alert.present();
+  }
+
   listdez(){
     let authorization = localStorage.getItem('token')
     let id=369688
@@ -52,6 +86,12 @@ export class DesplnewPage implements OnInit {
 }
 
 
+
+
+home() {
+  this.router.navigate(["inicio"])
+}
+
   listarentidadamterial(entidadescre: entidadescre) {
     entidadescre.materiales = "true"
     entidadescre.labores = "true"
@@ -62,7 +102,7 @@ export class DesplnewPage implements OnInit {
     this.apiService.entidadesBuscar(authorization, entidadescre).subscribe({
       next:(res) => {
         this.laboress=normalizaentidez(res);
-        console.log(this.laboress);
+        
         
       },
       error: (err) =>{console.log(err);
@@ -73,6 +113,37 @@ export class DesplnewPage implements OnInit {
     }
     );
   }
+
+
+  desplz() {
+
+    let authorization = localStorage.getItem('token')
+
+    this.apiService.dezplmuni(authorization).subscribe({
+      next:(res) => {
+        const dataArray = res['data'];
+        dataArray.map((item: any)=>{
+          const { nombre:nombre } = item;
+          this.muni.push(nombre)
+        })
+
+        console.log(this.muni);
+      },
+      error: (err) =>{console.log(err);
+      },
+      complete() {
+
+      }
+    }
+    );
+  }
+
+
+
+
+
+
+
 
   creadez: creadez = {
     iddesplazamiento: '',
@@ -88,6 +159,7 @@ export class DesplnewPage implements OnInit {
 
         this.cardss = normadezdez(res);
         this.elimi()
+
       },
       error: (err) =>{console.log(err);
       },
@@ -98,33 +170,25 @@ export class DesplnewPage implements OnInit {
     );
   }
 
-  async agreg() {
-    const alert = await this.alertController.create({
-      header: 'DESPLAZAMIENTOS',
-      subHeader: 'Se agrego un desplazamiento ',
-      buttons: ['OK'],
-    });
-  
-    await alert.present();
-  }
-
-  async elimi() {
-    const alert = await this.alertController.create({
-      header: 'DESPLAZAMIENTOS',
-      subHeader: 'Se elimino un desplazamiento ',
-      buttons: ['OK'],
-    });
-  
-    await alert.present();
-  }
 
   agregar(creadez: creadez) {
-
-    creadez.iddesplazamiento = this.cant
+    
+  
     creadez.idserviciocuadrilla = 1
     creadez.idoperacionservicio = 1
     let authorization = localStorage.getItem('token')
-    if (this.cant==null) {
+    console.log(this.laboress)
+    for (let i = 0; i < this.laboress.length; i++) {
+      
+      if (this.laboress[i].municipioinicio.nombre==this.cant && this.laboress[i].municipiofin.nombre==this.cantt) {
+        console.log(this.laboress[i].iddesplazamiento);
+        creadez.iddesplazamiento=this.laboress[i].iddesplazamiento
+        this.apuntador=this.laboress[i].iddesplazamiento
+      }
+    }
+   
+    
+    if (this.apuntador==null&&creadez.iddesplazamiento==null) {
       this.error()
     }else{
       this.apiService.creardesplaz(authorization, creadez).subscribe({
@@ -147,21 +211,12 @@ export class DesplnewPage implements OnInit {
 
   }
 
-  async error() {
-    const alert = await this.alertController.create({
-      header: 'DESPLAZAMIENTOS',
-      subHeader: 'Error al seleccionar desplazamiento a la operacion',
-      buttons: ['OK'],
-    });
-  
-    await alert.present();
-  }
-
 
 
   ngOnInit() {
     this.listarentidadamterial(this.credenciales)
     this.listdez()
+    this.desplz()
   }
   labores(){
     this.router.navigate(["labores"])
@@ -175,5 +230,11 @@ export class DesplnewPage implements OnInit {
   }
   casos(){
     this.router.navigate(["casespecial"])
+  }
+  observ(){
+    this.router.navigate(["observ"])
+  }
+  actas(){
+    this.router.navigate(["actinstalacion"])
   }
 }

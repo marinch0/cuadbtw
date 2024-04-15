@@ -10,8 +10,11 @@ import { AlertController } from '@ionic/angular';
 })
 export class DespPage implements OnInit {
   cant: any;
+  cantt: any;
   laboress: any[] = [];
   cardss: any[] = [];
+  muni: any[] = [];
+  apuntador: any[]=[];
   
 
   public appPages = [
@@ -80,6 +83,10 @@ export class DespPage implements OnInit {
 );
 
 }
+
+
+
+
 home() {
   this.router.navigate(["inicio"])
 }
@@ -94,7 +101,7 @@ home() {
     this.apiService.entidadesBuscar(authorization, entidadescre).subscribe({
       next:(res) => {
         this.laboress=normalizaentidez(res);
-        console.log(this.laboress);
+        
         
       },
       error: (err) =>{console.log(err);
@@ -105,6 +112,37 @@ home() {
     }
     );
   }
+
+
+  desplz() {
+
+    let authorization = localStorage.getItem('token')
+
+    this.apiService.dezplmuni(authorization).subscribe({
+      next:(res) => {
+        const dataArray = res['data'];
+        dataArray.map((item: any)=>{
+          const { nombre:nombre } = item;
+          this.muni.push(nombre)
+        })
+
+        console.log(this.muni);
+      },
+      error: (err) =>{console.log(err);
+      },
+      complete() {
+
+      }
+    }
+    );
+  }
+
+
+
+
+
+
+
 
   creadez: creadez = {
     iddesplazamiento: '',
@@ -133,12 +171,23 @@ home() {
 
 
   agregar(creadez: creadez) {
-
-    creadez.iddesplazamiento = this.cant
+    
+  
     creadez.idserviciocuadrilla = 1
     creadez.idoperacionservicio = 1
     let authorization = localStorage.getItem('token')
-    if (this.cant==null) {
+    console.log(this.laboress)
+    for (let i = 0; i < this.laboress.length; i++) {
+      
+      if (this.laboress[i].municipioinicio.nombre==this.cant && this.laboress[i].municipiofin.nombre==this.cantt) {
+        console.log(this.laboress[i].iddesplazamiento);
+        creadez.iddesplazamiento=this.laboress[i].iddesplazamiento
+        this.apuntador=this.laboress[i].iddesplazamiento
+      }
+    }
+   
+    
+    if (this.apuntador==null&&creadez.iddesplazamiento==null) {
       this.error()
     }else{
       this.apiService.creardesplaz(authorization, creadez).subscribe({
@@ -166,6 +215,7 @@ home() {
   ngOnInit() {
     this.listarentidadamterial(this.credenciales)
     this.listdez()
+    this.desplz()
   }
   labores(){
     this.router.navigate(["labores"])

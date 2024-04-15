@@ -21,28 +21,28 @@
   </ion-header>
   <ion-content class="ion-padding"> 
 
-    
+        
+   
+
+    <ion-item style="margin-top: 0%;">
+      <ion-select label="Origen" label-placement="fixed" placeholder="Trayecto realizado" [(ngModel)]="cant">
+        <ion-select-option style="min-width: 100px;padding: 15px;"  *ngFor="let muni of muni" >{{muni}}</ion-select-option>
+      </ion-select>
+    </ion-item>
     <ion-item style="margin-top: 5%;">
-      <ion-select label="Trayecto" label-placement="fixed" placeholder="Trayecto realizado" [(ngModel)]="cant">
-        <ion-select-option style="min-width: 100px;padding: 15px;" value="{{laboress.iddesplazamiento}}" *ngFor="let laboress of laboress" >{{laboress.municipioinicio.nombre}}-{{laboress.municipiofin.nombre}}</ion-select-option>
+      <ion-select label="Destino" label-placement="fixed" placeholder="Trayecto realizado" [(ngModel)]="cantt">
+        <ion-select-option style="min-width: 100px;padding: 15px;"  *ngFor="let muni of muni" >{{muni}}</ion-select-option>
       </ion-select>
     </ion-item>
     
-    <ion-fab style="margin-top: 3%;margin-left: 39%;">
+    <ion-fab style="margin-top: 3%;margin-left: 40%;">
       <ion-fab-button (click)="agregar(creadez)">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-    <ion-card style="margin-top: 10%;">
-      <ion-grid>
-        <ion-row>
-          <ion-col><h5>Origen</h5></ion-col>
-          <ion-col><h5>Destino</h5></ion-col>
-          <ion-col><h5>Eliminar</h5></ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  
+    <br>
+    <br>
+
     <ion-card *ngFor="let cardss of cardss" >
       <ion-grid>
         <ion-row>
@@ -55,8 +55,13 @@
       </ion-grid>
     </ion-card>
 
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
+      <ion-fab-button (click)="home()" id="open-toast">
+        <ion-icon name="home"  size="large"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-toast trigger="open-toast" message="Se regreso al menu pricipal, operacion en pausa" [duration]="3000"></ion-toast>
 
-    
 
   </ion-content>
 </div>

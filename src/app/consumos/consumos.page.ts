@@ -157,6 +157,8 @@ export class ConsumosPage implements OnInit {
 
     this.apiService.entidadesBuscar(authorization, entidadescre).subscribe({
       next: (res) => {
+        console.log(res);
+        
         this.laboress = normalizamaterialess(res);
         console.log(this.laboress);
 
