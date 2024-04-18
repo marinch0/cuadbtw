@@ -149,6 +149,8 @@ export class DashboardPage implements OnInit {
     let authorization = localStorage.getItem('token')
     this.apiService.grafbuscar(authorization, credgraf).subscribe({
       next: (res) =>{
+        console.log(res);
+        
         if(res['data']==0){
           this.error()
         }
