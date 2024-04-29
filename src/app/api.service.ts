@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 export class ApiService {
 
-  urlActivosFijos:string = "http://192.168.50.46:4001"
+  urlActivosFijos:string = "http://45.55.193.86:4001"
 
   API_URL='http://104.131.8.122:8000/';
 
@@ -118,6 +118,12 @@ export class ApiService {
       this.httpOptions
     );
   }
+  obtercero(authorization:any,tercero:any){
+    let formData = new FormData();
+    formData.append('authorization',authorization)
+    return this.http.post('https://bitwan.info/api/public/terceros/servicioscuadrillabytercero/'+tercero,formData);
+    
+  }
 
   obtenerDatosTecnico(credenciale:credenciales){
 
@@ -187,8 +193,7 @@ export class ApiService {
     let formData = new FormData();
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(credeagenda))
-
-    return this.http.post(this.API_URL+'agenda/listbytercero',formData);
+    return this.http.post('https://bitwan.info/api/public/agenda/listbytercero',formData);
 
   }
 
@@ -387,7 +392,7 @@ export interface credenciales{
 export interface respuesta{
   code?:any;
   data:{
-    numerotercero?:any,idusuario?:any,nombre?:any,token?:any
+    numerotercero?:any,idtercero?:any,idusuario?:any,nombre?:any,token?:any
 }
 }
 

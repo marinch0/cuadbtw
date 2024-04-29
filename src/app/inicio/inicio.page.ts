@@ -118,7 +118,10 @@ export class InicioPage implements OnInit {
 
 
   listargenda(credeagenda: credeagenda) {
-    credeagenda.idcuadrilla = "21095"
+    console.log(localStorage.getItem('idservicio'));
+    //console.log("32862");
+    
+    credeagenda.idcuadrilla=localStorage.getItem('idcuadrilla')
     credeagenda.estado = "pendientes"
     let authorization = localStorage.getItem('token')
 

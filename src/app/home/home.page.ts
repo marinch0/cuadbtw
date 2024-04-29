@@ -36,7 +36,7 @@ export class HomePage {
   }
   respuesta:respuesta={
     code:'',
-    data:{idusuario:'',nombre:'',token:'',numerotercero:''}
+    data:{idusuario:'',idtercero:'',nombre:'',token:'',numerotercero:''}
   }
 
   constructor(private apiService:ApiService, private router:Router,private alertController: AlertController,private http: HttpClient) {
@@ -64,6 +64,22 @@ export class HomePage {
 
     await alert.present();
   }
+
+  guardaridcuadrilla(){
+    console.log(localStorage.getItem('idtercero'));
+    this.apiService.obtercero(localStorage.getItem('token'),localStorage.getItem('idtercero')).subscribe(
+      (res:any)=>{
+        console.log(res);
+        const dataArray = res['data'];
+        dataArray.map((item: any)=>{
+          const { idservicio: idservicio } = item;
+          console.log(idservicio);
+          localStorage.setItem('idcuadrilla',idservicio)
+        })
+      }
+    );
+  }
+
   login(alias:any,password:any){
     this.credenciales.alias=alias
     this.credenciales.password=password
@@ -71,20 +87,21 @@ export class HomePage {
       (res:any)=>{
         this.respuesta=<any>res
         if (this.respuesta.code==200) {
-          console.log(this.respuesta.data.idusuario);
+          
+          
 
           this.apiService.obtenerDatosTecnico(res.data.numerotercero).subscribe((nomTecnico:any)=>{
 
             this.router.navigate(["inicio"])
             localStorage.setItem('respuesta',JSON.stringify(this.respuesta))
             localStorage.setItem('token',this.respuesta.data.token)
-            localStorage.setItem('idcuadrilla',"28701")
+            localStorage.setItem('idtercero',this.respuesta.data.idtercero)
             localStorage.setItem('idusuario',this.respuesta.data.idusuario)
             localStorage.setItem('numerotercero', res.data.numerotercero)
             localStorage.setItem('nombres',nomTecnico.data[0].nombres.toLowerCase().trim() +" "+ nomTecnico.data[0].apellidos.toLowerCase().trim())
-
+            
           })
-
+          this.guardaridcuadrilla();
         }else{
           this.fal()
           alias=""
