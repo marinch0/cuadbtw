@@ -83,7 +83,7 @@ export class InicioPage implements OnInit {
 
 
   ngOnInit() {
-    //console.log(localStorage.getItem('token'));
+    console.log(localStorage.getItem('idcuadrillas'));
     this.listargenda(this.credenciales)
   }
 
@@ -118,8 +118,8 @@ export class InicioPage implements OnInit {
 
 
   listargenda(credeagenda: credeagenda) {
-    console.log(localStorage.getItem('idservicio'));
-    //console.log("32862");
+    
+   
     
     credeagenda.idcuadrilla=localStorage.getItem('idcuadrilla')
     credeagenda.estado = "pendientes"
