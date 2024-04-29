@@ -12,7 +12,7 @@ export class ActinstalacionPage implements OnInit {
 
   @ViewChild('valorOnts') miInput!: ElementRef;
 
-  tipoOperacion:string = "1";
+  tipoOperacion:string = "5";
   TipoEntrega: string = "";
   GuiaTrasportadora: string = "";
   archivoCapturado: any;
