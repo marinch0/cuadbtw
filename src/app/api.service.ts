@@ -122,7 +122,17 @@ export class ApiService {
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post('https://bitwan.info/api/public/terceros/servicioscuadrillabytercero/'+tercero,formData);
+  }
+
+  dashboardtime(authorization:any,credashboard:any){
+    let formData = new FormData();
+    formData.append('json', JSON.stringify(credashboard))
+    console.log(credashboard);
     
+
+    formData.append('authorization',authorization)
+
+    return this.http.post('https://bitwan.info/api/public/laboresop/dashboardbycuadrilla',formData);
   }
 
   obtenerDatosTecnico(credenciale:credenciales){
@@ -435,6 +445,13 @@ export interface entimatdata{
   nombre?:any;
   descripcion?:any;
   unidadMedida?:any;
+}
+
+export interface  credashboard {
+  finicial?:any;
+  ffinal?:any;
+  idcuadrilla?:any;
+  validaciondocumento?:any;
 }
 
 export function normalizamaterialess(respuestaAPI: any): entimatdata[] {

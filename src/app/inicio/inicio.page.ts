@@ -65,7 +65,7 @@ export class InicioPage implements OnInit {
 
     
     localStorage.setItem('numserv',numeroservicio)
-    console.log(localStorage.getItem('numserv'));
+
     
   }
 
@@ -83,7 +83,7 @@ export class InicioPage implements OnInit {
 
 
   ngOnInit() {
-    console.log(localStorage.getItem('idcuadrillas'));
+    
     this.listargenda(this.credenciales)
   }
 
@@ -103,7 +103,7 @@ export class InicioPage implements OnInit {
   }
 
   cambio(target:number){
-    console.log(target);
+
     
   }
 
@@ -127,9 +127,6 @@ export class InicioPage implements OnInit {
 
     this.apiService.agendabuscar(authorization, credeagenda).subscribe({
       next:(res) => {
-        console.log(res);
-
-        
         this.agendaData=normalizeData(res);
 
         
