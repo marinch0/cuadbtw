@@ -59,13 +59,14 @@ export class InicioPage implements OnInit {
       this.message = `Hello, ${ev.detail.data}!`;
     }
   }
-  setOpen(isOpen: boolean,i:any,numeroservicio:any) {
+  setOpen(isOpen: boolean,i:any,numeroservicio:any,idagenda:any) {
     this.target=i
     this.isModalOpen = isOpen;
 
-    
     localStorage.setItem('numserv',numeroservicio)
-
+    localStorage.setItem('idagenda',idagenda)
+    console.log(localStorage.getItem('idagenda'));
+    
     
   }
 
@@ -102,10 +103,7 @@ export class InicioPage implements OnInit {
     }
   }
 
-  cambio(target:number){
-
-    
-  }
+ 
 
 
 
@@ -123,13 +121,13 @@ export class InicioPage implements OnInit {
     
     credeagenda.idcuadrilla=localStorage.getItem('idcuadrilla')
     credeagenda.estado = "pendientes"
+
+    
     let authorization = localStorage.getItem('token')
 
     this.apiService.agendabuscar(authorization, credeagenda).subscribe({
       next:(res) => {
         this.agendaData=normalizeData(res);
-
-        
       },
       error: (err) =>{console.log(err);
       },
