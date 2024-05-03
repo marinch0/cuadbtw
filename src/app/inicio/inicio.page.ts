@@ -59,14 +59,58 @@ export class InicioPage implements OnInit {
       this.message = `Hello, ${ev.detail.data}!`;
     }
   }
-  setOpen(isOpen: boolean,i:any,numeroservicio:any) {
+  setOpen(isOpen: boolean,i:any,numeroservicio:any,tipoOperacion:string) {
     this.target=i
     this.isModalOpen = isOpen;
 
-    
+    if(tipoOperacion == "Solicitud de instalación"){
+
+      localStorage.setItem('tipoOperacion',"1")
+
+    }else if(tipoOperacion == "Solicitud de conexión (por suspención temporal)"){
+
+      localStorage.setItem('tipoOperacion',"19")
+
+    }else if(tipoOperacion== "Terminación del contrato /cancelación del servicio"){
+
+      localStorage.setItem('tipoOperacion',"5")
+
+    }else if(tipoOperacion=="Traslado"){
+
+      localStorage.setItem('tipoOperacion',"2")
+
+    }else if(tipoOperacion=="Migración"){
+
+      localStorage.setItem('tipoOperacion',"3")
+
+    }else if(tipoOperacion=="Soporte técnico Internet: Mover WiFi"){
+
+      localStorage.setItem('tipoOperacion',"4")
+
+    }else if(tipoOperacion=="Soporte técnico Internet: Otras fallas de intertnet"){
+
+      localStorage.setItem('tipoOperacion',"4")
+
+    }else if(tipoOperacion=="Soporte técnico Internet: No hay internet"){
+
+      localStorage.setItem('tipoOperacion',"4")
+
+    }else if(tipoOperacion=="Soporte técnico Internet: Internet lento"){
+
+      localStorage.setItem('tipoOperacion',"4")
+
+    }else if(tipoOperacion=="Soporte técnico Internet: Internet intermitente"){
+
+      localStorage.setItem('tipoOperacion',"4")
+
+    }
+
+
+
+
     localStorage.setItem('numserv',numeroservicio)
     console.log(localStorage.getItem('numserv'));
-    
+
   }
 
 
@@ -104,7 +148,7 @@ export class InicioPage implements OnInit {
 
   cambio(target:number){
     console.log(target);
-    
+
   }
 
 
@@ -118,9 +162,9 @@ export class InicioPage implements OnInit {
 
 
   listargenda(credeagenda: credeagenda) {
-    
-   
-    
+
+
+
     credeagenda.idcuadrilla=localStorage.getItem('idcuadrilla')
     credeagenda.estado = "pendientes"
     let authorization = localStorage.getItem('token')
@@ -129,10 +173,10 @@ export class InicioPage implements OnInit {
       next:(res) => {
         console.log(res);
 
-        
+
         this.agendaData=normalizeData(res);
 
-        
+
       },
       error: (err) =>{console.log(err);
       },

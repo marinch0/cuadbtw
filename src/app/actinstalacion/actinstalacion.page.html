@@ -2,7 +2,8 @@
   <ion-header>
 
     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-      <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
+      <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected"
+        style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
         <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
         <ion-label>{{ p.title }}</ion-label>
       </ion-item>
@@ -25,120 +26,149 @@
 
 
 
-  <div class="container mt-3"  >
-    <ion-tabs >
-      <ion-tab-bar slot="top">
-        <ion-tab-button  (click)="labores()">
-          <ion-icon name="archive"></ion-icon>
-          labores
-        </ion-tab-button>
-        <ion-tab-button (click)="consumos()">
-          <ion-icon name="library"></ion-icon>
-          consumos
-        </ion-tab-button>
+    <div class="container mt-3">
+      <ion-tabs>
+        <ion-tab-bar slot="top">
+          <ion-tab-button (click)="labores()">
+            <ion-icon name="archive"></ion-icon>
+            labores
+          </ion-tab-button>
+          <ion-tab-button (click)="consumos()">
+            <ion-icon name="library"></ion-icon>
+            consumos
+          </ion-tab-button>
 
-        <ion-tab-button  (click)="desplaza()">
-          <ion-icon name="paper-plane"></ion-icon>
-          desplazamientos
-        </ion-tab-button>
-        <ion-tab-button  (click)="observ()">
-          <ion-icon name="eye"></ion-icon>
-          Observacion
-        </ion-tab-button>
-        <ion-tab-button  (click)="casos()">
-          <ion-icon name="warning"></ion-icon>
-          casos especiales
-        </ion-tab-button>
+          <ion-tab-button (click)="desplaza()">
+            <ion-icon name="paper-plane"></ion-icon>
+            desplazamientos
+          </ion-tab-button>
+          <ion-tab-button (click)="observ()">
+            <ion-icon name="eye"></ion-icon>
+            Observacion
+          </ion-tab-button>
+          <ion-tab-button (click)="casos()">
+            <ion-icon name="warning"></ion-icon>
+            casos especiales
+          </ion-tab-button>
 
-      </ion-tab-bar>
-    </ion-tabs>
-    <br>
-    <br>
+        </ion-tab-bar>
+      </ion-tabs>
+      <br>
+      <br>
+
+      <div class="no-refresh">
+        <div *ngIf="opcionSoporteTraslado">
+
+          <ion-item>
+            <ion-label>Selecciona una opción:</ion-label>
+            <ion-select [(ngModel)]="opcionSeleccionada" (ngModelChange)="condicionTrasladoSoporte()">
+              <ion-select-option value="instalacion" [disabled]="desahibilitarRetiro === 'instalacion' ">Instalacion
+              </ion-select-option>
+              <ion-select-option value="retiro"
+                [disabled]="desahibilitarRetiro === 'retiro' ">Retiro</ion-select-option>
+              <ion-select-option value="ninguna"
+                [disabled]="desahibilitarRetiro === 'retiro' || desahibilitarRetiro === 'instalacion' ">sin
+                proceso</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div> <br>
+
+        <h5 *ngIf="noOperacion">Si no tuvo que realizar ningun proceso que tenga que ver con su aumento del inventario
+          continue con el proceso.</h5>
+
+        <div *ngIf="selectOntsRetirar">
+          <label class="form-label">Selecione que ont desea retirar de este cliente</label>
+          <ion-select [(ngModel)]="selectOntEspecifica" (ngModelChange)="retirarOntEspecifica()"
+            name="selectOntEspecifica" class="form-select p-2 mb-3 bg-dark border-secondary text-white"
+            aria-label="Default select example">
+            <ion-select-option *ngFor="let guardarClienteRetirar of guardarClienteRetirar"
+              value="{{guardarClienteRetirar.numeroActivo}}"> {{guardarClienteRetirar.numeroActivo}}
+            </ion-select-option>
+          </ion-select>
+        </div>
+
+        <div *ngIf="bodegaEntraMostrar">
+          <label class="form-label">Serial ont de la ont a retirar</label>
+          <ion-input class="form-control bg-dark border-secondary text-white" [disabled]="bodegaEntraMostrar"
+            [(ngModel)]="serial" type="text"></ion-input> <br>
+        </div>
+
+        <div *ngIf="bodegaEntraMostrarEspecifico">
+          <label class="form-label">Numero ont de la ont a retirar</label>
+          <ion-input class="form-control bg-dark border-secondary text-white" [disabled]="bodegaEntraMostrar"
+            [(ngModel)]="numOnt" type="text"></ion-input> <br>
+        </div>
 
 
-    <div *ngIf="selectOntsRetirar">
-      <label  class="form-label">Selecione que ont desea retirar de este cliente</label>
-      <ion-select   [(ngModel)]="selectOntEspecifica" (ngModelChange)="retirarOntEspecifica()" name="selectOntEspecifica" class="form-select p-2 mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
-      <ion-select-option *ngFor="let guardarClienteRetirar of guardarClienteRetirar" value="{{guardarClienteRetirar.numeroActivo}}"> {{guardarClienteRetirar.numeroActivo}} </ion-select-option>
-      </ion-select >
-    </div>
+        <div *ngIf="descripcionOpcional">
+          <label class="form-label">Ingrese una Descripcion (opcional) </label>
+          <ion-input type="text" name="Descripcion" [(ngModel)]="Descripcion"
+            class="form-control bg-dark border-secondary text-white  "></ion-input>
+        </div>
 
-    <div *ngIf="bodegaEntraMostrar">
-      <label  class="form-label">Serial ont de la ont a retirar</label>
-      <ion-input  class="form-control bg-dark border-secondary text-white" [disabled]="bodegaEntraMostrar"  [(ngModel)]="serial" type="text"></ion-input> <br>
-    </div>
+      </div>
 
-    <div *ngIf="bodegaEntraMostrarEspecifico">
-      <label  class="form-label">Numero ont de la ont a retirar</label>
-      <ion-input  class="form-control bg-dark border-secondary text-white" [disabled]="bodegaEntraMostrar"  [(ngModel)]="numOnt" type="text"></ion-input> <br>
-    </div>
-    
+      <div *ngIf="btnPushOnts" class="container mt-3">
+        <div class="row ">
 
-    <div >
-      <label class="form-label">Ingrese una Descripcion (opcional) </label>
-      <ion-input type="text" name="Descripcion" [(ngModel)]="Descripcion" class="form-control bg-dark border-secondary text-white  "></ion-input>
-    </div>
+          <label *ngIf="infoTextoActivosFijos" for="">ingresa el numero de la ont de tu inventario para cargarla a la
+            acta</label>
 
-  </div>
+          <div *ngFor="let input of dynamicInputs; let i = index; trackBy: trackByFn " class="col-md-12 mb-2 mt-2  ">
 
-    <div *ngIf="btnPushOnts" class="container mt-3">
-      <div class="row ">
+            <!-- El siguiente grupo de entrada se renderiza solo si no hay resultados previos para la entrada específica (índice i). permite ingresar datos cuando no hay resultados previos para la entrada específica, evitando duplicaciones de información. -->
+            <div class="input-group" *ngIf="!resultadosPorInput[i]">
 
-        <label *ngIf="infoTextoActivosFijos"   for="">ingresa el numero de la ont de tu inventario para cargarla a la acta</label>
+              <ion-input type="number" [name]="'dynamicInputs'+i" #valorOnts [id]="'input_' + i"
+                placeholder="Agregar ont número {{i + 1}}" class="form-control bg-dark text-white border-secondary mx-2"
+                autofocus [(ngModel)]="dynamicInputs[i]"></ion-input>
 
-        <div *ngFor="let input of dynamicInputs; let i = index; trackBy: trackByFn " class="col-md-12 mb-2 mt-2  ">
+              <div class="input-group-append ">
+                <ion-button (click)="searchONTs(valorOnts.value, i)" color="primary">Buscar ONTS</ion-button>
+                <ion-button (click)="eliminarInput(i)" color="danger">Eliminar</ion-button>
+              </div>
 
-          <!-- El siguiente grupo de entrada se renderiza solo si no hay resultados previos para la entrada específica (índice i). permite ingresar datos cuando no hay resultados previos para la entrada específica, evitando duplicaciones de información. -->
-          <div class="input-group" *ngIf="!resultadosPorInput[i]">
+            </div>
+            <!-- Mostrar el resultado específico para este input -->
 
-            <ion-input type="number" [name]="'dynamicInputs'+i" #valorOnts [id]="'input_' + i" placeholder="Agregar ont número {{i + 1}}" class="form-control bg-dark text-white border-secondary mx-2" autofocus [(ngModel)]="dynamicInputs[i]"></ion-input>
-
-            <div class="input-group-append ">
-              <ion-button (click)="searchONTs(valorOnts.value, i)" color="primary"  >Buscar ONTS</ion-button>
+            <div *ngIf="resultadosPorInput[i]" class="mt-2 d-flex align-items-center">
+              <ion-input disabled type="text" [value]="resultadosPorInput[i].numeroActivo+
+                resultadosPorInput[i].MAC + ',' +
+                resultadosPorInput[i].serial + ',' +
+                resultadosPorInput[i].referencia + ','+
+                resultadosPorInput[i].proveedor +','+
+                resultadosPorInput[i].marca + ','+
+                resultadosPorInput[i].categoria"
+                class="form-control bg-dark text-white border-secondary flex-grow-1" />
+              <!-- Coloca el botón "Eliminar" al lado derecho del resultado en línea -->
               <ion-button (click)="eliminarInput(i)" color="danger">Eliminar</ion-button>
             </div>
-
           </div>
-          <!-- Mostrar el resultado específico para este input -->
-          <div *ngIf="resultadosPorInput[i]" class="mt-2 d-flex align-items-center">
-            <ion-input disabled type="text" [value]="resultadosPorInput[i].numeroActivo+
-              resultadosPorInput[i].MAC + ',' +
-              resultadosPorInput[i].serial + ',' +
-              resultadosPorInput[i].referencia + ','+
-              resultadosPorInput[i].proveedor +','+
-              resultadosPorInput[i].marca + ','+
-              resultadosPorInput[i].categoria"
-              class="form-control bg-dark text-white border-secondary flex-grow-1" />
-            <!-- Coloca el botón "Eliminar" al lado derecho del resultado en línea -->
-            <ion-button (click)="eliminarInput(i)" color="danger">Eliminar</ion-button>
+        </div> <br>
+        <div class="row">
+          <div *ngIf="ocultarBotonAddOnts" class="col-md-12 d-flex justify-content-between">
+            <ion-button (click)="addInput()"
+              [disabled]="  dynamicInputs[dynamicInputs.length -1] === '' || anular  ">Agregar activos
+              fijos</ion-button>
+            <!-- <button (click)="limpiar()" class="btn btn-secondary">Limpiar Campos</button> -->
           </div>
         </div>
-      </div> <br>
-      <div class="row">
-        <div class="col-md-12 d-flex justify-content-between">
-          <ion-button  (click)="addInput()"
-            [disabled]="  dynamicInputs[dynamicInputs.length -1] === '' || anular  "
-            >Agregar activos fijos</ion-button>
-          <!-- <button (click)="limpiar()" class="btn btn-secondary">Limpiar Campos</button> -->
+      </div>
+
+      <div *ngIf="OcultarBoton" class="text-center mt-5">
+
+        <div>
+
+          <ion-button type="button" (click)="crearActa()">Crear Acta</ion-button>
+
         </div>
       </div>
     </div>
-
-    <div class="text-center mt-5">
-
-      <div >
-
-        <ion-button  type="button" (click)="crearActa()" >Crear Acta</ion-button>
-
-      </div>
-    </div>
-
-
 
   </ion-content>
 
 
-<ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;" >
-  <ion-fab-button (click)="acta()" id="open-toast">
-    <ion-icon name="checkmark-outline"  size="large"></ion-icon>
-  </ion-fab-button>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
+    <ion-fab-button (click)="acta()" id="open-toast">
+      <ion-icon name="checkmark-outline" size="large"></ion-icon>
+    </ion-fab-button>

@@ -12,7 +12,7 @@ export class ActinstalacionPage implements OnInit {
 
   @ViewChild('valorOnts') miInput!: ElementRef;
 
-  tipoOperacion:string = "5";
+  tipoOperacion:string = localStorage.getItem("tipoOperacion")!;
   TipoEntrega: string = "";
   GuiaTrasportadora: string = "";
   archivoCapturado: any;
@@ -22,10 +22,15 @@ export class ActinstalacionPage implements OnInit {
   serial:string = ""
   numOnt:string = "";
   Descripcion:string = "";
+  desahibilitarRetiro:string = "";
+  descripcionOpcional:boolean = true;
   ServicioDelClienteEspecifico:any = "";
+  contadorOperaciones:number = 0;
 
+  opcionSeleccionada:string = "";
   numServicioCliente:string = "";
 
+  OcultarBoton:boolean = true;
 
   bodegaTecnico: any;
   dynamicInputs: any[] = []; //variable para acumular las ont que se vayan a instalar
@@ -45,6 +50,11 @@ export class ActinstalacionPage implements OnInit {
   selectOntsRetirar:boolean = false;
   btnPushOnts:boolean = true;
   bodegaEntraMostrarEspecifico:boolean = false;
+  opcionSoporteTraslado:boolean = false;
+  ocultarBotonAddOnts:boolean = true;
+  infoOnt:boolean = true;
+  noOperacion:boolean = false;
+
 
   anular: boolean = false;
   infoTextoActivosFijos:boolean = false;
@@ -53,47 +63,57 @@ export class ActinstalacionPage implements OnInit {
 
   ngOnInit() {
 
+    if(this.contadorOperaciones == 2){
+      console.log("instalacion y retiro completados!!!");
+    }
+
     this.numServicioCliente = localStorage.getItem('numserv')!
 
 
     this.api.getBodegasTecnicos().subscribe(res => {
       this.bodegaTecnico = res;
 
-      if(this.tipoOperacion == '1' || this.tipoOperacion == '2' || this.tipoOperacion == '3' || this.tipoOperacion == '4' || this.tipoOperacion == '19'){
+      if(this.tipoOperacion == '1'   || this.tipoOperacion == '19'){
+
         this.BodegaSale = this.bodegaTecnico[0].ID
         this.bodegaEntraMostrar = false
         this.bodegaEntraMostrarUser = false;
+        this.noOperacion = false;
 
-      }else if(this.tipoOperacion == '5' || this.tipoOperacion == '6' || this.tipoOperacion == '7' || this.tipoOperacion == '8'){
-        this.BodegaEntra = this.bodegaTecnico[0].ID
-        this.bodegaSaleMostrar = false
+
+      }else if(this.tipoOperacion == '2'){
+
+        this.BodegaSale = this.bodegaTecnico[0].ID
         this.btnPushOnts = false;
-
-        this.api.getOnt(this.numServicioCliente).subscribe(res=>{
-
-          this.guardarClienteRetirar = res;
-          if(this.guardarClienteRetirar.length>1){
-
-            this.bodegaEntraMostrar = false;
-
-            this.selectOntsRetirar = true;
-
-          }else{
-            this.BodegaSale = this.numServicioCliente;
-            this.serial = this.guardarClienteRetirar[0].serial
-            this.numOnt = this.guardarClienteRetirar[0].numeroActivo;
-            this.bodegaEntraMostrarEspecifico = true
-            this.guardarValorOnts = this.guardarClienteRetirar[0].numeroActivo;
-            this.selectOntsRetirar = false;
-
-          }
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = false;
+        this.descripcionOpcional = false;
+        this.opcionSoporteTraslado = true;
 
 
-        })
+      }else if(this.tipoOperacion == '3'){
+
+        this.BodegaSale = this.bodegaTecnico[0].ID
+        this.btnPushOnts = false;
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = false;
+        this.descripcionOpcional = false;
+        this.opcionSoporteTraslado = true;
+
+      }else if(this.tipoOperacion == '4'){
+
+        this.BodegaSale = this.bodegaTecnico[0].ID
+        this.btnPushOnts = false;
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = false;
+        this.descripcionOpcional = false;
+        this.opcionSoporteTraslado = true;
+
+      }else if(this.tipoOperacion == '5'){
+        this.ocultarBotonAddOnts = false;
+        this.getOnt();
 
       }
-
-
 
     })
 
@@ -265,7 +285,7 @@ export class ActinstalacionPage implements OnInit {
 
             Swal.fire({
               title: 'ERROR',
-              text: `ESTE CLIENTE YA CUENTA CON UNA ACTA PENDIENTE`,
+              text: `ESTE CLIENTE YA CUENTA CON UNA ACTA PENDIENTE,POR FAVOR ESPERE QUE LE VALIDEN LA ACTA ANTERIOR CREADA PARA CONTINUAR.`,
               icon: 'error',
               customClass: {
                 popup: 'bg-dark',
@@ -284,20 +304,28 @@ export class ActinstalacionPage implements OnInit {
                 title: 'text-white',
                 htmlContainer: 'text-white'
               }
-            }).then((result)=>{
-              if (result.isConfirmed) {
+            })
 
-                this.guardarValorOnts = [];
-                this.BodegaEntra = "";
-                this.dynamicInputs = [];
-                this.infoTextoActivosFijos = false;
-                this.resultadosPorInput = [];
-                this.Descripcion = "";
+              this.guardarValorOnts = [];
+
+              this.dynamicInputs = [];
+              this.infoTextoActivosFijos = false;
+              this.resultadosPorInput = [];
+              this.Descripcion = "";
+              this.opcionSeleccionada = "Seleccione una opcion";
+              this.desahibilitarRetiro = "instalacion";
+              this.descripcionOpcional = false;
+              this.btnPushOnts = false;
+              this.OcultarBoton = false;
+              this.contadorOperaciones = this.contadorOperaciones+1;
+              this.ngOnInit();
 
 
+
+              if(this.tipoOperacion == "1" || this.tipoOperacion == "19"){
+                //aqui mandar al usuario a la pagina de resumen una vez finaliza la acta
+                this.router.navigate(["inicio"])
               }
-            });;
-
 
           }
 
@@ -327,7 +355,7 @@ export class ActinstalacionPage implements OnInit {
 
             Swal.fire({
               title: 'ERROR',
-              text: `ESTE CLIENTE YA CUENTA CON UNA ACTA PENDIENTE`,
+              text: `ESTE CLIENTE YA CUENTA CON UNA ACTA PENDIENTE, POR FAVOR ESPERE QUE LE VALIDEN LA ACTA ANTERIOR CREADA PARA CONTINUAR.`,
               icon: 'error',
               customClass: {
                 popup: 'bg-dark',
@@ -346,14 +374,40 @@ export class ActinstalacionPage implements OnInit {
                 title: 'text-white',
                 htmlContainer: 'text-white'
               }
-            }).then((result)=>{
-              if (result.isConfirmed) {
-                this.ngOnInit();
-              }
-            });
+            })
 
 
+            this.selectOntsRetirar = false;
+            this.bodegaEntraMostrar = false;
+            this.descripcionOpcional = false;
+            this.bodegaEntraMostrarEspecifico = false;
 
+            this.serial = "";
+            this.numOnt = "";
+            this.opcionSeleccionada = "Seleccione una opcion";
+
+            if(this.guardarClienteRetirar.length>1){
+
+            }else{
+              this.desahibilitarRetiro = "retiro";
+            }
+
+            this.guardarValorOnts = [];
+            this.guardarClienteRetirar = [];
+            this.dynamicInputs = [];
+            this.infoTextoActivosFijos = false;
+            this.resultadosPorInput = [];
+            this.Descripcion = "";
+            this.OcultarBoton = false;
+            this.contadorOperaciones = this.contadorOperaciones+1;
+
+
+            /* if(this.tipoOperacion == "5"){
+              //aqui mandar al usuario a la pagina de resumen una vez finaliza la acta
+              this.router.navigate(["inicio"])
+            } */
+
+            this.ngOnInit();
 
           }
 
@@ -391,6 +445,214 @@ export class ActinstalacionPage implements OnInit {
 
   trackByFn(index: number, item: any): any {
     return index;
+  }
+
+  getOnt(){
+
+    this.BodegaEntra = this.bodegaTecnico[0].ID
+        this.bodegaSaleMostrar = false
+        this.btnPushOnts = true;
+
+        this.api.getOnt(this.numServicioCliente).subscribe(res=>{
+
+          this.guardarClienteRetirar = res;
+
+          if( this.guardarClienteRetirar==""){
+
+            this.selectOntsRetirar = false;
+            this.bodegaEntraMostrar = false;
+            this.bodegaEntraMostrarEspecifico = false;
+            this.descripcionOpcional = false;
+            this.opcionSeleccionada = "";
+            this.OcultarBoton = false;
+
+            Swal.fire({
+              title: 'ERROR',
+              text: 'ESTE CLIENTE NO CUENTA CON NINGUNA ONT, SI YA CREO EL ACTA DE RETIRO POR FAVOR PROSIGA CON LA DE INSTALACION.',
+              icon: 'error',
+              customClass: {
+                popup: 'bg-dark',
+                title: 'text-white',
+                htmlContainer: 'text-white'
+              }
+            })
+
+          }else{
+
+            if(this.guardarClienteRetirar.length>1){
+
+              this.bodegaEntraMostrar = false;
+              this.selectOntsRetirar = true;
+
+            }else{
+              this.BodegaSale = this.numServicioCliente;
+              this.serial = this.guardarClienteRetirar[0].serial
+              this.numOnt = this.guardarClienteRetirar[0].numeroActivo;
+              this.bodegaEntraMostrarEspecifico = true
+              this.guardarValorOnts = this.guardarClienteRetirar[0].numeroActivo;
+              this.selectOntsRetirar = false;
+
+            }
+
+          }
+
+
+
+        })
+
+  }
+
+
+  condicionTrasladoSoporte(){
+
+    if(this.tipoOperacion == '2' || this.tipoOperacion == '8'){
+
+      if(this.opcionSeleccionada == "instalacion"){
+        this.btnPushOnts = true;
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = true;
+        this.descripcionOpcional = true;
+        this.noOperacion = false;
+        this.bodegaEntraMostrarEspecifico = false;
+        this.selectOntsRetirar = false;
+        this.ocultarBotonAddOnts = true;
+        this.guardarValorOnts = [];
+        this.tipoOperacion = '2';
+
+        this.api.getBodegasTecnicos().subscribe(res => {
+          this.bodegaTecnico = res;
+            this.BodegaSale = this.bodegaTecnico[0].ID
+        })
+
+
+
+      }else if(this.opcionSeleccionada == "retiro"){
+
+        this.guardarValorOnts = [];
+        this.selectOntsRetirar = true;
+        this.bodegaEntraMostrar = true;
+        this.bodegaEntraMostrarEspecifico = true;
+        this.descripcionOpcional = true;
+
+        this.btnPushOnts = false;
+        this.OcultarBoton = true;
+        this.ocultarBotonAddOnts = false;
+        this.tipoOperacion='8';
+
+        this.getOnt();
+
+
+      } else{
+        this.btnPushOnts = false;
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = false;
+        this.descripcionOpcional = false;
+        this.bodegaEntraMostrarEspecifico = false;
+        this.noOperacion = true;
+      }
+
+
+    }else if(this.tipoOperacion == '4' || this.tipoOperacion == '6'){
+
+      if(this.opcionSeleccionada == "instalacion"){
+        this.btnPushOnts = true;
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = true;
+        this.selectOntsRetirar = false;
+        this.descripcionOpcional = true;
+        this.noOperacion = false;
+        this.bodegaEntraMostrarEspecifico = false;
+        this.ocultarBotonAddOnts = true;
+        this.guardarValorOnts = [];
+        this.tipoOperacion = '4';
+
+        this.api.getBodegasTecnicos().subscribe(res => {
+          this.bodegaTecnico = res;
+            this.BodegaSale = this.bodegaTecnico[0].ID
+        })
+
+
+
+      }else if(this.opcionSeleccionada == "retiro"){
+
+        this.guardarValorOnts = [];
+        this.selectOntsRetirar = true;
+        this.bodegaEntraMostrar = true;
+        this.bodegaEntraMostrarEspecifico = true;
+        this.descripcionOpcional = true;
+
+        this.btnPushOnts = false;
+        this.OcultarBoton = true;
+        this.ocultarBotonAddOnts = false;
+        this.tipoOperacion='6';
+
+        this.getOnt();
+
+
+      }else{
+        this.btnPushOnts = false;
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = false;
+        this.descripcionOpcional = false;
+        this.bodegaEntraMostrarEspecifico = false;
+        this.noOperacion = true;
+      }
+
+    }else if(this.tipoOperacion == '3' || this.tipoOperacion == '7'){
+
+      if(this.opcionSeleccionada == "instalacion"){
+        this.btnPushOnts = true;
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = true;
+        this.descripcionOpcional = true;
+        this.noOperacion = false;
+        this.bodegaEntraMostrarEspecifico = false;
+        this.ocultarBotonAddOnts = true;
+        this.guardarValorOnts = [];
+        this.selectOntsRetirar = false;
+
+        this.tipoOperacion = '3';
+
+        this.api.getBodegasTecnicos().subscribe(res => {
+          this.bodegaTecnico = res;
+            this.BodegaSale = this.bodegaTecnico[0].ID
+        })
+
+
+
+      }else if(this.opcionSeleccionada == "retiro"){
+
+        this.selectOntEspecifica = "";
+        this.guardarValorOnts = [];
+        this.selectOntsRetirar = true;
+        this.bodegaEntraMostrar = true;
+        this.bodegaEntraMostrarEspecifico = true;
+        this.descripcionOpcional = true;
+
+        this.btnPushOnts = false;
+        this.OcultarBoton = true;
+        this.ocultarBotonAddOnts = false;
+        this.bodegaEntraMostrarEspecifico = false;
+        this.tipoOperacion='7';
+
+        this.getOnt();
+
+
+      }else{
+        this.btnPushOnts = false;
+        this.bodegaEntraMostrar = false;
+        this.OcultarBoton = false;
+        this.descripcionOpcional = false;
+        this.bodegaEntraMostrarEspecifico = false;
+        this.noOperacion = true;
+      }
+
+
+    }
+
+
+
+
   }
 
 }
