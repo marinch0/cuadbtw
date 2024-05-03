@@ -124,7 +124,7 @@ export class ApiService {
     return this.http.post('https://bitwan.info/api/public/terceros/servicioscuadrillabytercero/'+tercero,formData);
   }
   
-//////////////////////////////
+/////////////////////////////////
   dashboardtime(authorization:any,credashboard:any){
     let formData = new FormData();
     formData.append('json', JSON.stringify(credashboard))
