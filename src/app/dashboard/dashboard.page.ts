@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
-import { ApiService, credgraf } from '../api.service';
+import { ApiService, credashboard, credgraf } from '../api.service';
 import * as moment from 'moment';
 import { AlertController } from '@ionic/angular';
 
@@ -14,12 +14,13 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+  credashboard:any=[];
   graf:any[] = [];
   fechas: any[]= [];
   tiempos:any[] = [];
   fechast: any[]= [];
   tiempost:any[] = [];
-  metas:any[]=[16,20,14,10];
+  metas:any[]=[420];
   acumulad:any[]=[];
   total:number=0;
   
@@ -30,9 +31,28 @@ export class DashboardPage implements OnInit {
   constructor(private apiService: ApiService,private alertController: AlertController) {
     Chart.register();
   }
+  
 
   ngOnInit() {
+
     //this.datgraf(this.credgraf)
+  }
+
+  dashboard(credashboard:credashboard){
+    credashboard.finicial=moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
+    credashboard.ffinal=moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
+    credashboard.idcuadrilla=localStorage.getItem('idcuadrilla')
+    credashboard.validaciondocumento=false
+    let authorization = localStorage.getItem('token')
+    
+    
+    this.apiService.dashboardtime(authorization,credashboard).subscribe({
+      next: (res) =>{
+        console.log(res);
+        
+      }
+    })
+
   }
 
   public appPages = [
@@ -164,6 +184,7 @@ export class DashboardPage implements OnInit {
             this.tiempost.push(parseInt(tiempo))
             this.total+=parseInt(tiempo)
             this.acumulad.push((this.total))
+            
           }else{
             //llenar otra lista con todos los datos asi no esten validados 
           }

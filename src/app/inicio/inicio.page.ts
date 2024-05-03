@@ -59,7 +59,7 @@ export class InicioPage implements OnInit {
       this.message = `Hello, ${ev.detail.data}!`;
     }
   }
-  setOpen(isOpen: boolean,i:any,numeroservicio:any,tipoOperacion:string) {
+  setOpen(isOpen: boolean,i:any,numeroservicio:any,tipoOperacion:string,idagenda:any) {
     this.target=i
     this.isModalOpen = isOpen;
 

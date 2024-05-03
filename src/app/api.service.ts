@@ -122,9 +122,41 @@ export class ApiService {
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post('https://bitwan.info/api/public/terceros/servicioscuadrillabytercero/'+tercero,formData);
+  }
+  
+/////////////////////////////////
+  dashboardtime(authorization:any,credashboard:any){
+    let formData = new FormData();
+    formData.append('json', JSON.stringify(credashboard))
+    console.log(credashboard);
     
+
+    formData.append('authorization',authorization)
+
+    return this.http.post('https://bitwan.info/api/public/laboresop/dashboardbycuadrilla',formData);
+  }
+  ///////////////////////////////////////////////////
+  crearoperacion(authorization:any,consumoscredenciales:consumoscredenciales){
+    let formData = new FormData();
+    formData.append('authorization',authorization)
+    formData.append('json', JSON.stringify(consumoscredenciales))
+    return this.http.post(this.API_URL+'operacionesservicios/create',formData);
+  }
+////////////////////////////////
+  opview(authorization:any,idagenda:any){
+    let formData = new FormData();
+    formData.append('authorization',authorization)
+    return this.http.post(this.API_URL+'operacionesservicios/view/'+idagenda,formData);
+  }
+////////////////////////////////////////////////
+
+  finaloperacion(authorization:any,json:any){
+    let formData = new FormData();
+    formData.append('authorization',authorization)
+    return this.http.post(this.API_URL+'operacionesservicios/edit',formData);
   }
 
+///////////////////////////////////////////////
   obtenerDatosTecnico(credenciale:credenciales){
 
     const token = localStorage.getItem('token');
@@ -437,6 +469,13 @@ export interface entimatdata{
   unidadMedida?:any;
 }
 
+export interface  credashboard {
+  finicial?:any;
+  ffinal?:any;
+  idcuadrilla?:any;
+  validaciondocumento?:any;
+}
+
 export function normalizamaterialess(respuestaAPI: any): entimatdata[] {
   if (!respuestaAPI || !respuestaAPI.materiales || !Array.isArray(respuestaAPI.materiales)) {
     return [];
@@ -687,7 +726,9 @@ export interface agenda {
     fechacreado?:any,
     idagenda?:any,
     idoperacionservicio?:any,
-    idservicio?:any}
+    idservicio?:any,
+    
+  }
 }
 export interface AgendaData {
   apellidostercero: string;
@@ -703,6 +744,7 @@ export interface AgendaData {
   nombreplan:any;
   nombretiposolicitud:any;
   numeroservicio:any;
+  idagenda:any;
 
   // Agrega otras propiedades que necesites de la respuesta de la API
 }
@@ -779,7 +821,8 @@ export function normalizeData(respuestaAPI: any): AgendaData[] {
     nombremunicipio:item.nombremunicipio,
     nombrecontactosolicitud:item.nombrecontactosolicitud,
     nombreplan:item.nombreplan,
-    nombretiposolicitud:item.nombretiposolicitud
+    nombretiposolicitud:item.nombretiposolicitud,
+    idagenda:item.idagenda
 
     // Mapea otras propiedades que necesites de la respuesta de la API
   }));
