@@ -158,7 +158,7 @@ export class DashboardPage implements OnInit {
 
           const propiedades =  Object.keys(res['data']) ;
           const dataArray = res['data'];
-          console.log((dataArray));
+          
           propiedades.map((fecha: String)=>{
             const {suma,cantidad}=dataArray[`${fecha}`];
             const objeto = {fecha,suma,cantidad}
@@ -184,7 +184,7 @@ export class DashboardPage implements OnInit {
         },
         complete() {
           console.log('complete suscripción');
-          console.log(self.fechas);
+
           
           self.tiempos=[]
           self.fechas=[]
@@ -195,7 +195,7 @@ export class DashboardPage implements OnInit {
     }
   
 
-  datgraf(credgraf: credgraf) {
+  /*datgraf(credgraf: credgraf) {
     const self = this;
     this.fechast=[]
     this.tiempost=[]
@@ -241,7 +241,7 @@ export class DashboardPage implements OnInit {
       },
     }
     );
-  }
+  }*/
 
   graficar(){
     this.chart?.update();
