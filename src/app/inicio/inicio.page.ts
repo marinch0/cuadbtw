@@ -104,15 +104,20 @@ export class InicioPage implements OnInit {
       localStorage.setItem('tipoOperacion',"4")
 
     }
-
-
-
-
     localStorage.setItem('numserv',numeroservicio)
     console.log(localStorage.getItem('numserv'));
-
+    this.agview(localStorage.getItem('numserv'))
   }
 
+    agview(serv:any){
+      let authorization = localStorage.getItem('token')
+      this.apiService.opview(authorization,serv).subscribe({
+        next: (res) =>{
+          console.log(res);
+          
+        }
+      })
+    }
 
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },

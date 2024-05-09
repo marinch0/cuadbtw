@@ -46,7 +46,7 @@ export class CasespecialPage implements OnInit {
   ];
   listcons(){
     let authorization = localStorage.getItem('token')
-    let id=367971
+    let id=localStorage.getItem('numserv')
     this.apiService.casoses(authorization,id).subscribe({
       next:(res) => {
         this.cards = normacasoses(res);
@@ -66,7 +66,7 @@ home() {
 
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
-    this.apiService.eliminarcasoez(authorization, id).subscribe({
+    this.apiService.eliminarcasoez(authorization, localStorage.getItem('numserv')).subscribe({
       next:(res) => {
         this.cards = normacasoses(res);
         console.log(this.cards);
@@ -93,7 +93,7 @@ home() {
 
     creacasoez.descripcion = this.descrip
     creacasoez.tiempo = this.minutos
-    creacasoez.idserviciocuadrilla = 1
+    creacasoez.idserviciocuadrilla = localStorage.getItem('numserv')
     creacasoez.idoperacionservicio = localStorage.getItem("idcuadrilla")
     if (this.descrip==null) {
       this.error1()

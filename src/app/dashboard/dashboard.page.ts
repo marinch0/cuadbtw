@@ -38,22 +38,7 @@ export class DashboardPage implements OnInit {
     //this.datgraf(this.credgraf)
   }
 
-  dashboard(credashboard:credashboard){
-    credashboard.finicial=moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
-    credashboard.ffinal=moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
-    credashboard.idcuadrilla=localStorage.getItem('idcuadrilla')
-    credashboard.validaciondocumento=false
-    let authorization = localStorage.getItem('token')
-    
-    
-    this.apiService.dashboardtime(authorization,credashboard).subscribe({
-      next: (res) =>{
-        console.log(res);
-        
-      }
-    })
 
-  }
 
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },
@@ -155,6 +140,45 @@ export class DashboardPage implements OnInit {
   }
 
   //////////////////////////////////////////////////////////////////////
+  dashboard(credashboard:credashboard){
+    const self = this;
+    this.fechast=[]
+    this.tiempost=[]
+
+    credashboard.finicial=moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
+    credashboard.ffinal=moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
+    credashboard.idcuadrilla=localStorage.getItem('idcuadrilla')
+    credashboard.validaciondocumento=false
+    
+    let authorization = localStorage.getItem('token')
+      this.apiService.dashboardtime(authorization, credashboard).subscribe({
+        next: (res) =>{
+          console.log(res);
+
+          const propiedades =  Object.keys(res['data']) ;
+          const dataArray = res['data'];
+          console.log((dataArray));
+          propiedades.map((fecha: String)=>{
+            const {suma,cantidad}=dataArray[`${fecha}`];
+            const objeto = {fecha,suma,cantidad}
+            this.fechas.push(fecha)
+            this.tiempos.push(suma)
+          })
+        },
+        error: (err) =>{console.log(err);
+        },
+        complete() {
+          console.log('complete suscripción');
+          console.log(self.fechas);
+          console.log(self.tiempos);
+          self.tiempos=[]
+          self.fechas=[]
+
+        },
+      }
+      );
+    }
+  
 
   datgraf(credgraf: credgraf) {
     const self = this;
@@ -169,8 +193,7 @@ export class DashboardPage implements OnInit {
     let authorization = localStorage.getItem('token')
     this.apiService.grafbuscar(authorization, credgraf).subscribe({
       next: (res) =>{
-        console.log(res);
-        
+
         if(res['data']==0){
           this.error()
         }

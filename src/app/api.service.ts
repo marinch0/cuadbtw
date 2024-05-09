@@ -125,15 +125,18 @@ export class ApiService {
   }
   
 /////////////////////////////////
-  dashboardtime(authorization:any,credashboard:any){
+  dashboardtime(token:any,credashboard:credashboard):Observable<any>{
+
     let formData = new FormData();
-    formData.append('json', JSON.stringify(credashboard))
-    console.log(credashboard);
-    
+    const body = new URLSearchParams();
+    formData.append('json', JSON.stringify({"finicial":credashboard.finicial,"ffinal":credashboard.ffinal,"idcuadrilla":credashboard.idcuadrilla,"validaciondocumento":credashboard.validaciondocumento}));
+    formData.append('authorization',token!)
 
-    formData.append('authorization',authorization)
 
-    return this.http.post('https://bitwan.info/api/public/laboresop/dashboardbycuadrilla',formData);
+    return this.http.post(this.API_URL+'laboresop/dashboardbycuadrilla', formData
+    );
+
+
   }
   ///////////////////////////////////////////////////
   crearoperacion(authorization:any,consumoscredenciales:consumoscredenciales){

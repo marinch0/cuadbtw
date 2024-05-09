@@ -37,10 +37,7 @@
         <ion-icon name="eye"></ion-icon>
         Observación
       </ion-tab-button>
-      <ion-tab-button  (click)="actas()">
-        <ion-icon name="document-text"></ion-icon>
-        Actas
-      </ion-tab-button>
+
       <ion-tab-button  (click)="casos()">
         <ion-icon name="warning"></ion-icon>
         casos especiales
@@ -66,11 +63,12 @@
       <ion-icon name="add"></ion-icon>
   </ion-fab-button>
   </ion-fab>
-  <!-- <ion-button (click)="hola()">Default</ion-button> -->
+ 
   
   
 
-  
+  <br>
+  <br>
   <ion-card *ngFor="let cards of cards" >
     <ion-grid>
       <ion-row>
@@ -86,11 +84,7 @@
 </div>
 
 
-<ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
-  <ion-fab-button (click)="home()"  id="open-toast">
-    <ion-icon name="home"  size="large"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+
 <ion-toast trigger="open-toast" message="Se regreso al menu pricipal, operacion en pausa" [duration]="3000"></ion-toast>
 
 </ion-content>

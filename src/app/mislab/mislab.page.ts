@@ -17,7 +17,7 @@ export class MislabPage implements OnInit {
 
   listcons(){
     let authorization = localStorage.getItem('token')
-    let id=367971
+    let id=localStorage.getItem('numserv')
     this.apiService.casoses(authorization,id).subscribe({
       next:(res) => {
         this.cards = normacasoses(res);
@@ -54,7 +54,7 @@ async elimi() {
 
 eliminar(id: any) {
   let authorization = localStorage.getItem('token')
-  this.apiService.eliminarcasoez(authorization, id).subscribe({
+  this.apiService.eliminarcasoez(authorization, localStorage.getItem('numserv')).subscribe({
     next:(res) => {
       this.cards = normacasoses(res);
       console.log(this.cards);
@@ -100,7 +100,7 @@ agregar(creacasoez: creacasoez) {
   creacasoez.descripcion = this.descrip
   creacasoez.tiempo = this.minutos
   creacasoez.idserviciocuadrilla = 1
-  creacasoez.idoperacionservicio = 1
+  creacasoez.idoperacionservicio = localStorage.getItem('numserv')
 
 
   let authorization = localStorage.getItem('token')

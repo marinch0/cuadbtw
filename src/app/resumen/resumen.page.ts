@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, normacasoses, normacons, normadezdez, normalab } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-resumen',
@@ -11,7 +12,7 @@ export class ResumenPage implements OnInit {
   cons:any[]=[];
   cases:any[]=[];
   desplaz:any[]=[];
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,private router: Router) { }
 
   ngOnInit() {
     this.listlab()
@@ -23,7 +24,7 @@ export class ResumenPage implements OnInit {
 
   home(){
     console.log("finalizado");
-    
+    this.router.navigate(["inicio"])
   }
 
 
