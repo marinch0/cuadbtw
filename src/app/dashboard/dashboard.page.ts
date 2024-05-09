@@ -20,7 +20,8 @@ export class DashboardPage implements OnInit {
   tiempos:any[] = [];
   fechast: any[]= [];
   tiempost:any[] = [];
-  metas:any[]=[420];
+  metas:any[]=[];
+  metaac=0;
   acumulad:any[]=[];
   total:number=0;
   
@@ -54,7 +55,7 @@ export class DashboardPage implements OnInit {
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
-        data: this.tiempos,
+        data:  this.acumulad,
         label: 'Tiempos',
         backgroundColor: 'rgba(148,159,177,0.2)',
         borderColor: 'rgba(148,159,177,1)',
@@ -65,7 +66,7 @@ export class DashboardPage implements OnInit {
         fill: 'origin',
       },
       {
-        data: [16,20,14,10],
+        data: this.metas,
         label: 'Estimado',
         backgroundColor: 'rgba(255,0,0,0.3)',
         borderColor: 'red',
@@ -163,14 +164,28 @@ export class DashboardPage implements OnInit {
             const objeto = {fecha,suma,cantidad}
             this.fechas.push(fecha)
             this.tiempos.push(suma)
+            this.fechast.push(fecha)
+            this.tiempost.push(suma)
+            this.total+=parseInt(suma)
+            this.acumulad.push((this.total))
+            this.metas.push(this.metaac)
+
+            this.metaac+=420;
+
           })
+          this.graficar();
+          this.tiempos=this.tiempost
+          this.fechas=this.fechast
+          
+
+          
         },
         error: (err) =>{console.log(err);
         },
         complete() {
           console.log('complete suscripción');
           console.log(self.fechas);
-          console.log(self.tiempos);
+          
           self.tiempos=[]
           self.fechas=[]
 
