@@ -64,7 +64,7 @@ export class ActinstalacionPage implements OnInit {
   ngOnInit() {
 
     if(this.contadorOperaciones == 2){
-      console.log("instalacion y retiro completados!!!");
+      this.router.navigate(["inicio"])
     }
 
     this.numServicioCliente = localStorage.getItem('numserv')!
@@ -376,7 +376,7 @@ export class ActinstalacionPage implements OnInit {
               }
             })
 
-
+            this.BodegaSale = "";
             this.selectOntsRetirar = false;
             this.bodegaEntraMostrar = false;
             this.descripcionOpcional = false;
@@ -402,10 +402,10 @@ export class ActinstalacionPage implements OnInit {
             this.contadorOperaciones = this.contadorOperaciones+1;
 
 
-            /* if(this.tipoOperacion == "5"){
+            if(this.tipoOperacion == "5"){
               //aqui mandar al usuario a la pagina de resumen una vez finaliza la acta
               this.router.navigate(["inicio"])
-            } */
+            }
 
             this.ngOnInit();
 
@@ -457,7 +457,7 @@ export class ActinstalacionPage implements OnInit {
 
           this.guardarClienteRetirar = res;
 
-          if( this.guardarClienteRetirar==""){
+          if( this.guardarClienteRetirar=="" && this.tipoOperacion!='5'){
 
             this.selectOntsRetirar = false;
             this.bodegaEntraMostrar = false;

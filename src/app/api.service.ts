@@ -8,10 +8,10 @@ import { Observable } from 'rxjs';
 
 export class ApiService {
 
-  urlActivosFijos:string = "http://45.55.193.86:4001"
+  urlActivosFijos:string = "http://192.168.50.46:4001"
 
   API_URL='http://104.131.8.122:8000/';
-  
+
   //solo para hacer la prueba de los tecnicos
   urlServicios:string = "https://bitwan.info/api/public/login"
   urlTecnicosServicios:string = "https://bitwan.info/api/public/terceros/searchbycriteria";
@@ -123,13 +123,13 @@ export class ApiService {
     formData.append('authorization',authorization)
     return this.http.post('https://bitwan.info/api/public/terceros/servicioscuadrillabytercero/'+tercero,formData);
   }
-  
+
 /////////////////////////////////
   dashboardtime(authorization:any,credashboard:any){
     let formData = new FormData();
     formData.append('json', JSON.stringify(credashboard))
     console.log(credashboard);
-    
+
 
     formData.append('authorization',authorization)
 
@@ -241,7 +241,7 @@ export class ApiService {
   }
 
 
-  //muni desplazamientos 
+  //muni desplazamientos
 
   dezplmuni(authorization:any):Observable<any>{
     let formData = new FormData();
@@ -727,7 +727,7 @@ export interface agenda {
     idagenda?:any,
     idoperacionservicio?:any,
     idservicio?:any,
-    
+
   }
 }
 export interface AgendaData {
