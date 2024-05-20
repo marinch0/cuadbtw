@@ -152,7 +152,14 @@ export class ApiService {
     return this.http.post(this.API_URL+'operacionesservicios/view/'+idagenda,formData);
   }
 ////////////////////////////////////////////////
-
+agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
+  let formData = new FormData();
+  formData.append('authorization',authorization)
+  formData.append('idagenda',idagenda)
+  formData.append('idcuadrilla',idcuadrilla)
+  return this.http.post('https://bitwan.info/api/public/agenda/agendaoperacion',formData);
+}
+////////////////////////////////////////////////
   finaloperacion(authorization:any,json:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
