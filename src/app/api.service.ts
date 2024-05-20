@@ -146,7 +146,7 @@ export class ApiService {
     return this.http.post(this.API_URL+'operacionesservicios/create',formData);
   }
 ////////////////////////////////
-  opview(authorization:any,idagenda:any){
+  opview(authorization:any,idagenda:any):Observable<any>{
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'operacionesservicios/view/'+idagenda,formData);
