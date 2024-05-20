@@ -33,6 +33,11 @@ export class MicasoespPage implements OnInit {
   home() {
     this.router.navigate(["menupersonal"])
   }
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.clear();
+    }
+  }
   casData: casosData[] = [];
 
   filtrar(casoscre:casoscre){

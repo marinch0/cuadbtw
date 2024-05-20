@@ -17,7 +17,11 @@ export class AgendaPage implements OnInit {
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
   constructor( private router:Router) { }
-
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.clear();
+    }
+  }
   ngOnInit() {
   }
   

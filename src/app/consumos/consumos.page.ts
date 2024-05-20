@@ -146,7 +146,11 @@ export class ConsumosPage implements OnInit {
 );
 
 }
-
+logout(compare:any){
+  if (compare=="Cerrar Sesión") {
+    localStorage.clear();
+  }
+}
 
   listarentidadamterial(entidadescre: entidadescre) {
     entidadescre.materiales = "true"

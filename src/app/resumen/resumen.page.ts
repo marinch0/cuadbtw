@@ -21,7 +21,11 @@ export class ResumenPage implements OnInit {
     this.listcases()
 
   }
-
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.clear();
+    }
+  }
   home(){
     console.log("finalizado");
     this.router.navigate(["inicio"])
