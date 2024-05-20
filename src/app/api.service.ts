@@ -234,9 +234,10 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
   agendabuscar(authorization:any,credeagenda:credeagenda){
 
     let formData = new FormData();
-    formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(credeagenda))
-    return this.http.post('https://www.bitwan.info/api/public/agenda/listbytercero',formData);
+    formData.append('authorization',authorization)
+
+    return this.http.post(this.API_URL+'agenda/listbytercero',formData);
 
   }
 

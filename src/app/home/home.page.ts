@@ -13,6 +13,7 @@ export class HomePage {
 
   imageUrl: string = 'https://static.wixstatic.com/media/632b1b_7a7cfc03c37641d08c03c1e93378328d~mv2.png/v1/fill/w_900,h_589,al_c/632b1b_7a7cfc03c37641d08c03c1e93378328d~mv2.png';
   ngOnInit() {
+    /*
     let token=localStorage.getItem('token')
 
     this.apiService.checktoken(token).subscribe(
@@ -28,7 +29,7 @@ export class HomePage {
       err=> console.log(err)
     );
 
-
+*/
   }
   credenciales:credenciales={
     alias:'',
@@ -75,6 +76,7 @@ export class HomePage {
           const { idservicio: idservicio } = item;
           console.log(idservicio);
           localStorage.setItem('idcuadrilla',idservicio)
+          console.log(localStorage.getItem('idcuadrilla'));
         })
       }
     );
@@ -99,9 +101,9 @@ export class HomePage {
             localStorage.setItem('idusuario',this.respuesta.data.idusuario)
             localStorage.setItem('numerotercero', res.data.numerotercero)
             localStorage.setItem('nombres',nomTecnico.data[0].nombres.toLowerCase().trim() +" "+ nomTecnico.data[0].apellidos.toLowerCase().trim())
-            
+            this.guardaridcuadrilla();
           })
-          this.guardaridcuadrilla();
+          
         }else{
           this.fal()
           alias=""
