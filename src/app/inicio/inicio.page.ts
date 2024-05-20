@@ -132,13 +132,6 @@ export class InicioPage implements OnInit {
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
 
-  logout(compare:any){
-    if (compare=="Cerrar Sesión") {
-      localStorage.clear();
-    }
-  }
-  
-
   listaAgenda:any = null;
 
 

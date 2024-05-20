@@ -60,12 +60,7 @@ export class ActinstalacionPage implements OnInit {
   infoTextoActivosFijos:boolean = false;
 
   constructor(private router: Router, private api: ApiService) { }
-  
-  logout(compare:any){
-    if (compare=="Cerrar Sesión") {
-      localStorage.clear();
-    }
-  }
+
   ngOnInit() {
 
     if(this.contadorOperaciones == 2){

@@ -111,12 +111,6 @@ export class LaboresPage implements OnInit {
 }
 
 
-logout(compare:any){
-  if (compare=="Cerrar Sesión") {
-    localStorage.clear();
-  }
-}
-
   agregar(creaLabor: creaLabor) {
     creaLabor.idlabor = this.cant
     creaLabor.idoperacionservicio = localStorage.getItem('numserv')

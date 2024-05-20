@@ -126,11 +126,6 @@ agregar(creacasoez: creacasoez) {
 }
 
 }
-logout(compare:any){
-  if (compare=="Cerrar Sesión") {
-    localStorage.clear();
-  }
-}
 
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },

@@ -35,12 +35,6 @@ export class MiservfinPage implements OnInit {
   fecha2:''
 }
 
-logout(compare:any){
-  if (compare=="Cerrar Sesión") {
-    localStorage.clear();
-  }
-}
-
 async presentAlert() {
   const alert = await this.alertController.create({
     header: 'MIS OPERACIONES',

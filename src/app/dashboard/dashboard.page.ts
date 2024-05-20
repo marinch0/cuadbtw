@@ -38,11 +38,7 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     //this.datgraf(this.credgraf)
   }
-  logout(compare:any){
-    if (compare=="Cerrar Sesión") {
-      localStorage.clear();
-    }
-  }
+
 
 
   public appPages = [

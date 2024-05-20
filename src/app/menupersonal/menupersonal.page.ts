@@ -21,11 +21,7 @@ export class MenupersonalPage implements OnInit {
 
   constructor(private router:Router, private apiService: ApiService) { }
 
-  logout(compare:any){
-    if (compare=="Cerrar Sesión") {
-      localStorage.clear();
-    }
-  }
+
   fechaHoraSeleccionada: string = new Date().toISOString();
   fechaHoraSeleccionada2: string = new Date().toISOString();
 

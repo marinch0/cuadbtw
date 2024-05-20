@@ -23,12 +23,6 @@ export class MiconsumoPage implements OnInit {
 
   ngOnInit() {
   }
-  
-  logout(compare:any){
-    if (compare=="Cerrar Sesión") {
-      localStorage.clear();
-    }
-  }
   home() {
     this.router.navigate(["menupersonal"])
   }

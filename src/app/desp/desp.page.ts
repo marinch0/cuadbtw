@@ -209,11 +209,7 @@ home() {
 
 
   }
-  logout(compare:any){
-    if (compare=="Cerrar Sesión") {
-      localStorage.clear();
-    }
-  }
+
 
 
   ngOnInit() {

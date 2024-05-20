@@ -63,11 +63,7 @@ export class CasespecialPage implements OnInit {
 home() {
   this.router.navigate(["inicio"])
 }
-logout(compare:any){
-  if (compare=="Cerrar Sesión") {
-    localStorage.clear();
-  }
-}
+
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
     this.apiService.eliminarcasoez(authorization, localStorage.getItem('numserv')).subscribe({
