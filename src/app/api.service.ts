@@ -13,8 +13,8 @@ export class ApiService {
   API_URL='http://104.131.8.122:8000/';
 
   //solo para hacer la prueba de los tecnicos
-  urlServicios:string = "https://bitwan.info/api/public/login"
-  urlTecnicosServicios:string = "https://bitwan.info/api/public/terceros/searchbycriteria";
+  urlServicios:string = "https://www.bitwan.info/api/public/login"
+  urlTecnicosServicios:string = "https://www.bitwan.info/api/public/terceros/searchbycriteria";
 
   constructor(private http: HttpClient) { }
 
@@ -121,14 +121,14 @@ export class ApiService {
   obtercero(authorization:any,tercero:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
-    return this.http.post('https://bitwan.info/api/public/terceros/servicioscuadrillabytercero/'+tercero,formData);
+    return this.http.post('https://www.bitwan.info/api/public/terceros/servicioscuadrillabytercero/'+tercero,formData);
   }
 
 /////////////////////////////////
   dashboardtime(token:any,credashboard:credashboard):Observable<any>{
 
     let formData = new FormData();
-    
+
     const body = new URLSearchParams();
     formData.append('json', JSON.stringify({"finicial":credashboard.finicial,"ffinal":credashboard.ffinal,"idcuadrilla":credashboard.idcuadrilla,"validaciondocumento":credashboard.validaciondocumento}));
     formData.append('authorization',token!)
@@ -158,7 +158,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
   formData.append('authorization',authorization)
   formData.append('idagenda',idagenda)
   formData.append('idcuadrilla',idcuadrilla)
-  return this.http.post('https://bitwan.info/api/public/agenda/agendaoperacion',formData);
+  return this.http.post('https://www.bitwan.info/api/public/agenda/agendaoperacion',formData);
 }
 ////////////////////////////////////////////////
   finaloperacion(authorization:any,json:any){
@@ -177,7 +177,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
     body.set('json', JSON.stringify({"criteria":["numerotercero"],"value":credenciale,"onlyusers":true,"page":0,"limit":10}));
     body.set('authorization',token!)
 
-    return this.http.post("https://bitwan.info/api/public/terceros/searchbycriteria", body.toString() ,
+    return this.http.post("https://www.bitwan.info/api/public/terceros/searchbycriteria", body.toString() ,
       this.httpOptions
     );
   }
@@ -236,7 +236,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(credeagenda))
-    return this.http.post('https://bitwan.info/api/public/agenda/listbytercero',formData);
+    return this.http.post('https://www.bitwan.info/api/public/agenda/listbytercero',formData);
 
   }
 
@@ -257,7 +257,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
   dezplmuni(authorization:any):Observable<any>{
     let formData = new FormData();
     formData.append('authorization',authorization)
-    return this.http.post('https://bitwan.info/api/public/municipios/listbydepartamento/31',formData);
+    return this.http.post('https://www.bitwan.info/api/public/municipios/listbydepartamento/31',formData);
   }
 
   consum(authorization:any,id:any){
