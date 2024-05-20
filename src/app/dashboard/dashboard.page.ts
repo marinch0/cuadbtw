@@ -20,7 +20,10 @@ export class DashboardPage implements OnInit {
   tiempos:any[] = [];
   fechast: any[]= [];
   tiempost:any[] = [];
-  metas:any[]=[420];
+  metas:any[]=[];
+  metaac=0;
+  acumuladot:any[]=[]
+  metast:any[]=[];
   acumulad:any[]=[];
   total:number=0;
   
@@ -31,29 +34,12 @@ export class DashboardPage implements OnInit {
   constructor(private apiService: ApiService,private alertController: AlertController) {
     Chart.register();
   }
-  
 
   ngOnInit() {
-
     //this.datgraf(this.credgraf)
   }
 
-  dashboard(credashboard:credashboard){
-    credashboard.finicial=moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
-    credashboard.ffinal=moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
-    credashboard.idcuadrilla=localStorage.getItem('idcuadrilla')
-    credashboard.validaciondocumento=false
-    let authorization = localStorage.getItem('token')
-    
-    
-    this.apiService.dashboardtime(authorization,credashboard).subscribe({
-      next: (res) =>{
-        console.log(res);
-        
-      }
-    })
 
-  }
 
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },
@@ -69,7 +55,7 @@ export class DashboardPage implements OnInit {
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
-        data: this.tiempos,
+        data:  this.acumulad,
         label: 'Tiempos',
         backgroundColor: 'rgba(148,159,177,0.2)',
         borderColor: 'rgba(148,159,177,1)',
@@ -80,7 +66,7 @@ export class DashboardPage implements OnInit {
         fill: 'origin',
       },
       {
-        data: [16,20,14,10],
+        data: this.metas,
         label: 'Estimado',
         backgroundColor: 'rgba(255,0,0,0.3)',
         borderColor: 'red',
@@ -155,12 +141,58 @@ export class DashboardPage implements OnInit {
   }
 
   //////////////////////////////////////////////////////////////////////
+  dashboard(credashboard:credashboard){
 
-  datgraf(credgraf: credgraf) {
+    const self = this;
+
+    this.fechast=[]
+    this.tiempost=[]
+    credashboard.finicial=moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
+    credashboard.ffinal=moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
+    credashboard.idcuadrilla=localStorage.getItem('idcuadrilla')
+    credashboard.validaciondocumento=false
+    let authorization = localStorage.getItem('token')
+      this.apiService.dashboardtime(authorization, credashboard).subscribe({
+        next: (res) =>{
+          const propiedades =  Object.keys(res['data']) ;
+          const dataArray = res['data'];
+          propiedades.map((fecha: String)=>{
+            const {suma,cantidad}=dataArray[`${fecha}`];
+            const objeto = {fecha,suma,cantidad}
+            this.fechas.push(fecha)
+            this.tiempos.push(suma)
+            this.fechast.push(fecha)
+            this.tiempost.push(suma)
+            this.metaac+=420;
+            this.total+=parseInt(suma)
+            this.tiempost.push(this.total)
+            this.acumulad.push((this.total))
+            this.metas.push(this.metaac)
+          })    
+          this.tiempost=this.tiempos
+          this.tiempos=this.acumulad
+          this.fechas=this.fechast
+          this.graficar();
+          console.log(this.acumulad);
+          
+        },
+        error: (err) =>{console.log(err);
+        },
+        complete() {
+          console.log('complete suscripción');
+
+          self.tiempos=[]
+          self.fechas=[]
+        },
+      }
+      );
+    }
+  
+
+  /*datgraf(credgraf: credgraf) {
     const self = this;
     this.fechast=[]
     this.tiempost=[]
-    
     credgraf.idCuadrilla ="8636"
     credgraf.fecha = moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
     credgraf.fecha2 =moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
@@ -169,8 +201,6 @@ export class DashboardPage implements OnInit {
     let authorization = localStorage.getItem('token')
     this.apiService.grafbuscar(authorization, credgraf).subscribe({
       next: (res) =>{
-        console.log(res);
-        
         if(res['data']==0){
           this.error()
         }
@@ -184,7 +214,6 @@ export class DashboardPage implements OnInit {
             this.tiempost.push(parseInt(tiempo))
             this.total+=parseInt(tiempo)
             this.acumulad.push((this.total))
-            
           }else{
             //llenar otra lista con todos los datos asi no esten validados 
           }
@@ -199,16 +228,17 @@ export class DashboardPage implements OnInit {
         console.log('complete suscripción');
         self.tiempos=[]
         self.fechas=[]
-
       },
     }
     );
-  }
+  }*/
 
   graficar(){
     this.chart?.update();
-
+    //this.acumuladot=[]
+    //this.metast=[]
   }
+
 
   credgraf: credgraf = {
     idCuadrilla:'',

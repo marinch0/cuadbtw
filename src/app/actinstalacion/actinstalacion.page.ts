@@ -324,7 +324,7 @@ export class ActinstalacionPage implements OnInit {
 
               if(this.tipoOperacion == "1" || this.tipoOperacion == "19"){
                 //aqui mandar al usuario a la pagina de resumen una vez finaliza la acta
-                this.router.navigate(["inicio"])
+                this.router.navigate(["resumen"])
               }
 
           }
@@ -404,7 +404,7 @@ export class ActinstalacionPage implements OnInit {
 
             if(this.tipoOperacion == "5"){
               //aqui mandar al usuario a la pagina de resumen una vez finaliza la acta
-              this.router.navigate(["inicio"])
+              this.router.navigate(["resumen"])
             }
 
             this.ngOnInit();

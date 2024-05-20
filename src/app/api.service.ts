@@ -125,15 +125,19 @@ export class ApiService {
   }
 
 /////////////////////////////////
-  dashboardtime(authorization:any,credashboard:any){
+  dashboardtime(token:any,credashboard:credashboard):Observable<any>{
+
     let formData = new FormData();
-    formData.append('json', JSON.stringify(credashboard))
-    console.log(credashboard);
+    
+    const body = new URLSearchParams();
+    formData.append('json', JSON.stringify({"finicial":credashboard.finicial,"ffinal":credashboard.ffinal,"idcuadrilla":credashboard.idcuadrilla,"validaciondocumento":credashboard.validaciondocumento}));
+    formData.append('authorization',token!)
 
 
-    formData.append('authorization',authorization)
+    return this.http.post(this.API_URL+'laboresop/dashboardbycuadrilla', formData
+    );
 
-    return this.http.post('https://bitwan.info/api/public/laboresop/dashboardbycuadrilla',formData);
+
   }
   ///////////////////////////////////////////////////
   crearoperacion(authorization:any,consumoscredenciales:consumoscredenciales){
@@ -143,13 +147,20 @@ export class ApiService {
     return this.http.post(this.API_URL+'operacionesservicios/create',formData);
   }
 ////////////////////////////////
-  opview(authorization:any,idagenda:any){
+  opview(authorization:any,idagenda:any):Observable<any>{
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'operacionesservicios/view/'+idagenda,formData);
   }
 ////////////////////////////////////////////////
-
+agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
+  let formData = new FormData();
+  formData.append('authorization',authorization)
+  formData.append('idagenda',idagenda)
+  formData.append('idcuadrilla',idcuadrilla)
+  return this.http.post('https://bitwan.info/api/public/agenda/agendaoperacion',formData);
+}
+////////////////////////////////////////////////
   finaloperacion(authorization:any,json:any){
     let formData = new FormData();
     formData.append('authorization',authorization)

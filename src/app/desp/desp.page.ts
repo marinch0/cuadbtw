@@ -67,7 +67,7 @@ export class DespPage implements OnInit {
 
   listdez(){
     let authorization = localStorage.getItem('token')
-    let id=369688
+    let id=localStorage.getItem('numserv')
     this.apiService.dezpl(authorization,id).subscribe({
       next:(res) => {
         this.cardss = normadezdez(res);
@@ -153,7 +153,7 @@ home() {
 
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
-    this.apiService.eliminardez(authorization, id).subscribe({
+    this.apiService.eliminardez(authorization, localStorage.getItem('numserv')).subscribe({
       next:(res) => {
 
         this.cardss = normadezdez(res);
@@ -173,8 +173,8 @@ home() {
   agregar(creadez: creadez) {
     
   
-    creadez.idserviciocuadrilla = 1
-    creadez.idoperacionservicio = 1
+    creadez.idserviciocuadrilla = localStorage.getItem('idcuadrilla')
+    creadez.idoperacionservicio = localStorage.getItem('numserv')
     let authorization = localStorage.getItem('token')
     console.log(this.laboress)
     for (let i = 0; i < this.laboress.length; i++) {

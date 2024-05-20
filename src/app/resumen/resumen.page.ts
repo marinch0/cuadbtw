@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, normacasoses, normacons, normadezdez, normalab } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-resumen',
@@ -11,7 +12,7 @@ export class ResumenPage implements OnInit {
   cons:any[]=[];
   cases:any[]=[];
   desplaz:any[]=[];
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,private router: Router) { }
 
   ngOnInit() {
     this.listlab()
@@ -23,13 +24,13 @@ export class ResumenPage implements OnInit {
 
   home(){
     console.log("finalizado");
-    
+    this.router.navigate(["inicio"])
   }
 
 
   listlab(){
     let authorization = localStorage.getItem('token')
-    let id=807
+    let id=localStorage.getItem('numserv')
     this.apiService.labsop(authorization,id).subscribe({
       next:(res) => {
         this.datalabores = normalab(res);
@@ -56,7 +57,7 @@ public appPages = [
 ];
 listcons(){
   let authorization = localStorage.getItem('token')
-  let id=807
+  let id=localStorage.getItem('numserv')
   this.apiService.consum(authorization,id).subscribe({
     next:(res) => {
       this.cons = normacons(res);
@@ -73,7 +74,7 @@ complete() {
 
 listdez(){
   let authorization = localStorage.getItem('token')
-  let id=369688
+  let id=localStorage.getItem('numserv')
   this.apiService.dezpl(authorization,id).subscribe({
     next:(res) => {
       this.desplaz = normadezdez(res);
@@ -92,7 +93,7 @@ complete() {
 
 listcases(){
   let authorization = localStorage.getItem('token')
-  let id=367971
+  let id=localStorage.getItem('numserv')
   this.apiService.casoses(authorization,id).subscribe({
     next:(res) => {
       this.cases = normacasoses(res);

@@ -62,6 +62,8 @@ export class InicioPage implements OnInit {
   setOpen(isOpen: boolean,i:any,numeroservicio:any,tipoOperacion:string,idagenda:any) {
     this.target=i
     this.isModalOpen = isOpen;
+      
+      
 
     if(tipoOperacion == "Solicitud de instalación"){
 
@@ -105,14 +107,21 @@ export class InicioPage implements OnInit {
 
     }
 
-
-
-
     localStorage.setItem('numserv',numeroservicio)
-    console.log(localStorage.getItem('numserv'));
-
+    localStorage.setItem('idagenda',idagenda)
+    this.agenda()
+   
+    this.agview(localStorage.getItem('numserv'))
   }
 
+    agview(serv:any){
+      let authorization = localStorage.getItem('token')
+      this.apiService.opview(authorization,serv).subscribe({
+        next: (res) =>{
+          console.log(res);
+        }
+      })
+    }
 
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },
@@ -127,7 +136,7 @@ export class InicioPage implements OnInit {
 
 
   ngOnInit() {
-    console.log(localStorage.getItem('idcuadrillas'));
+
     this.listargenda(this.credenciales)
   }
 
@@ -153,17 +162,22 @@ export class InicioPage implements OnInit {
 
 
 
-  agenda(target:any) {
-    //console.log(target);
-
-    this.target=target
-   // this.router.navigate(["detalleop"])
+  agenda() {
+  let idagenda=localStorage.getItem('idagenda')
+  let idcuadrilla=localStorage.getItem('idcuadrilla')
+  let authorization = localStorage.getItem('token')
+  console.log(idagenda);
+  
+      this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe({
+        next: (res) =>{  
+          console.log(res);
+          
+         }
+      })
   }
 
 
   listargenda(credeagenda: credeagenda) {
-
-
 
     credeagenda.idcuadrilla=localStorage.getItem('idcuadrilla')
     credeagenda.estado = "pendientes"

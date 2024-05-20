@@ -27,34 +27,7 @@
 
 
     <div class="container mt-3">
-      <ion-tabs>
-        <ion-tab-bar slot="top">
-          <ion-tab-button (click)="labores()">
-            <ion-icon name="archive"></ion-icon>
-            labores
-          </ion-tab-button>
-          <ion-tab-button (click)="consumos()">
-            <ion-icon name="library"></ion-icon>
-            consumos
-          </ion-tab-button>
 
-          <ion-tab-button (click)="desplaza()">
-            <ion-icon name="paper-plane"></ion-icon>
-            desplazamientos
-          </ion-tab-button>
-          <ion-tab-button (click)="observ()">
-            <ion-icon name="eye"></ion-icon>
-            Observacion
-          </ion-tab-button>
-          <ion-tab-button (click)="casos()">
-            <ion-icon name="warning"></ion-icon>
-            casos especiales
-          </ion-tab-button>
-
-        </ion-tab-bar>
-      </ion-tabs>
-      <br>
-      <br>
 
       <div class="no-refresh">
         <div *ngIf="opcionSoporteTraslado">
@@ -168,7 +141,4 @@
   </ion-content>
 
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" style="margin-left: 5%;">
-    <ion-fab-button (click)="acta()" id="open-toast">
-      <ion-icon name="checkmark-outline" size="large"></ion-icon>
-    </ion-fab-button>
+

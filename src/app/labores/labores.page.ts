@@ -95,7 +95,7 @@ export class LaboresPage implements OnInit {
 
   listlab(){
     let authorization = localStorage.getItem('token')
-    let id=807
+    let id=localStorage.getItem('numserv')
     this.apiService.labsop(authorization,id).subscribe({
       next:(res) => {
         this.datalabores = normalab(res);
@@ -113,7 +113,7 @@ export class LaboresPage implements OnInit {
 
   agregar(creaLabor: creaLabor) {
     creaLabor.idlabor = this.cant
-    creaLabor.idoperacionservicio = 1
+    creaLabor.idoperacionservicio = localStorage.getItem('numserv')
     console.log(this.cant==null);
     if (this.cant==null) {
       this.error()

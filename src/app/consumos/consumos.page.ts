@@ -80,7 +80,7 @@ export class ConsumosPage implements OnInit {
 
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
-    this.apiService.eliminarconsumo(authorization, id).subscribe({
+    this.apiService.eliminarconsumo(authorization, localStorage.getItem('numserv')).subscribe({
       next: (res)=> {
         this.cards = normacons(res);
         console.log(this.cards);
@@ -98,7 +98,7 @@ export class ConsumosPage implements OnInit {
 
   agregar(crearconsum: creaconsumo) {
 
-    crearconsum.idoperacionservicio = 1
+    crearconsum.idoperacionservicio = localStorage.getItem('numserv')
     crearconsum.idmaterial = this.idaa
     crearconsum.cantidad = this.cant
     
@@ -132,7 +132,7 @@ export class ConsumosPage implements OnInit {
 
   listcons(){
     let authorization = localStorage.getItem('token')
-    let id=807
+    let id=localStorage.getItem('numserv')
     this.apiService.consum(authorization,id).subscribe({
       next:(res) => {
         this.cards = normacons(res);
