@@ -15,7 +15,10 @@ export class InicioPage implements OnInit {
   modal!: IonModal;
   isModalOpen = false;
   agendaData: AgendaData[] = [];
+  operacionEnProgreso: any;
+  errorMessage: string = '';
   target =0
+  estado=""
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name: string="";
 
@@ -61,6 +64,7 @@ export class InicioPage implements OnInit {
   }
   setOpen(isOpen: boolean,i:any,numeroservicio:any,tipoOperacion:string,idagenda:any) {
     this.target=i
+    this.agenda()
     this.isModalOpen = isOpen;
       
       
@@ -109,7 +113,7 @@ export class InicioPage implements OnInit {
 
     localStorage.setItem('numserv',numeroservicio)
     localStorage.setItem('idagenda',idagenda)
-    this.agenda()
+
    
     this.agview(localStorage.getItem('numserv'))
   }
@@ -136,7 +140,7 @@ export class InicioPage implements OnInit {
 
 
   ngOnInit() {
-
+  this.agendaData=[]
     this.listargenda(this.credenciales)
   }
 
@@ -162,20 +166,46 @@ export class InicioPage implements OnInit {
 
 
 
-  agenda() {
+  agendas() {
   let idagenda=localStorage.getItem('idagenda')
   let idcuadrilla=localStorage.getItem('idcuadrilla')
   let authorization = localStorage.getItem('token')
-  console.log(idagenda);
-  
+  console.log(idagenda)
       this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe({
-        next: (res) =>{  
-          console.log(res);
-          
+       next: (res) =>{  
+        console.log(res);
+        
          }
+         
       })
   }
 
+    
+  agenda(): void {
+    let idagenda=localStorage.getItem('idagenda')
+    let idcuadrilla=localStorage.getItem('idcuadrilla')
+    let authorization = localStorage.getItem('token')
+    this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe(
+      response => {
+        // Asegúrate de que response esté definido y tenga la estructura esperada
+        if (response && response.operacionenprogreso !== undefined) {
+          this.operacionEnProgreso = response.operacionenprogreso;
+          if (this.operacionEnProgreso==null) {
+            this.estado="Iniciar Operacion"
+          }else{
+            this.estado="Reanudar Operacion"
+          }
+          
+        } else {
+          this.errorMessage = 'La propiedad "operacionenprogreso" no está definida en la respuesta.';
+        }
+      },
+      error => {
+        this.errorMessage = 'Error al cargar los datos: ' + error.message;
+        console.error(error);
+      }
+    );
+  }
 
   listargenda(credeagenda: credeagenda) {
 
@@ -185,6 +215,7 @@ export class InicioPage implements OnInit {
 
     this.apiService.agendabuscar(authorization, credeagenda).subscribe({
       next:(res) => {
+
         console.log(res);
 
 

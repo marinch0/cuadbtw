@@ -146,6 +146,13 @@ export class ApiService {
     formData.append('json', JSON.stringify(consumoscredenciales))
     return this.http.post(this.API_URL+'operacionesservicios/create',formData);
   }
+  /////////////////////////
+  observcuad(authorization:any,observ:observ){
+    let formData = new FormData();
+    formData.append('authorization',authorization)
+    formData.append('json', JSON.stringify(observ))
+    return this.http.post(this.API_URL+'operacionesservicios/editfield',formData);
+  }
 ////////////////////////////////
   opview(authorization:any,idagenda:any):Observable<any>{
     let formData = new FormData();
@@ -153,7 +160,7 @@ export class ApiService {
     return this.http.post(this.API_URL+'operacionesservicios/view/'+idagenda,formData);
   }
 ////////////////////////////////////////////////
-agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
+agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
   let formData = new FormData();
   formData.append('authorization',authorization)
   formData.append('idagenda',idagenda)
@@ -237,7 +244,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any){
     formData.append('json', JSON.stringify(credeagenda))
     formData.append('authorization',authorization)
 
-    return this.http.post(this.API_URL+'agenda/listbytercero',formData);
+    return this.http.post('https://www.bitwan.info/api/public/agenda/listbytercero',formData);
 
   }
 
@@ -449,6 +456,12 @@ export interface consumoscredenciales {
   fecha?:any;
   fecha2?:any;
   idcuadrilla?:any;
+}
+
+export interface observ {
+  idoperacionservicio?:any;
+  observaciones?:any;
+
 }
 export interface consumosData {
   nombre?:any;
