@@ -1,19 +1,21 @@
-FROM node:14-alpine
+FROM node:latest AS build-stage
 
-# Instala dependencias
-RUN npm install -g @ionic/cli
-
-# Establece el directorio de trabajo en /app
 WORKDIR /app
 
-# Copia el código de la aplicación al contenedor
-COPY . .
+COPY package*.json ./
 
-# Instala dependencias de la aplicación
 RUN npm install
 
-# Expone el puerto en el que se ejecutará la aplicación
-EXPOSE 8100
+COPY . .
 
-# Comando para iniciar la aplicación
-CMD ["ionic", "serve", "--port=8100", "--address=0.0.0.0"]
+RUN npm run build
+
+FROM nginx:latest
+
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build-stage /app/www/ /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
