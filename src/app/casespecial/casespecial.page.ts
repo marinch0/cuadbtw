@@ -60,6 +60,11 @@ export class CasespecialPage implements OnInit {
 );
 
 }
+logout(compare:any){
+  if (compare=="Cerrar Sesión") {
+    localStorage.setItem('token',"")
+  }
+}
 home() {
   this.router.navigate(["inicio"])
 }

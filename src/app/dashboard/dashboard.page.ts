@@ -187,7 +187,11 @@ export class DashboardPage implements OnInit {
       }
       );
     }
-  
+    logout(compare:any){
+      if (compare=="Cerrar Sesión") {
+        localStorage.setItem('token',"")
+      }
+    }
 
   /*datgraf(credgraf: credgraf) {
     const self = this;

@@ -126,7 +126,11 @@ agregar(creacasoez: creacasoez) {
 }
 
 }
-
+logout(compare:any){
+  if (compare=="Cerrar Sesión") {
+    localStorage.setItem('token',"")
+  }
+}
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },
     { title: 'Dashboard', url: '/dashboard', icon: 'paper-plane' },

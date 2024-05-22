@@ -92,6 +92,11 @@ export class LaboresPage implements OnInit {
       err => console.log(err)
     );
   }*/
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
 
   listlab(){
     let authorization = localStorage.getItem('token')

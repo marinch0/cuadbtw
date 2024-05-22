@@ -210,7 +210,11 @@ home() {
 
   }
 
-
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
 
   ngOnInit() {
     this.listarentidadamterial(this.credenciales)

@@ -95,6 +95,11 @@ export class ConsumosPage implements OnInit {
     );
   }
 
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
 
   agregar(crearconsum: creaconsumo) {
 

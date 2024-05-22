@@ -237,4 +237,9 @@ home() {
   actas(){
     this.router.navigate(["actinstalacion"])
   }
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
 }

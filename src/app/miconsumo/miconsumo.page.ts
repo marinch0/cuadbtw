@@ -32,6 +32,11 @@ export class MiconsumoPage implements OnInit {
     fecha2:'',
     idcuadrilla: '',
   }
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
   filtrar(consumoscredenciales:consumoscredenciales){
     let authorization = localStorage.getItem('token')
     this.consumoscredenciales.idcuadrilla=localStorage.getItem("idcuadrilla")

@@ -54,6 +54,12 @@ export class MidesplzamientoPage implements OnInit {
     }
     );
   }
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
+
   home() {
     this.router.navigate(["menupersonal"])
   }

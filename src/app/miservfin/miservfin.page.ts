@@ -34,6 +34,11 @@ export class MiservfinPage implements OnInit {
   fecha:'',
   fecha2:''
 }
+logout(compare:any){
+  if (compare=="Cerrar Sesión") {
+    localStorage.setItem('token',"")
+  }
+}
 
 async presentAlert() {
   const alert = await this.alertController.create({

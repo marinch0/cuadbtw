@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService, dezplaData, dezplacre, misservcred, normalizeDataservfin, servfin } from '../api.service';
+import { ApiService} from '../api.service';
 import * as moment from 'moment';
 
 @Component({
@@ -49,4 +49,10 @@ export class MenupersonalPage implements OnInit {
   labores(){
     this.router.navigate(["inicio"])
   }
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
+
 }

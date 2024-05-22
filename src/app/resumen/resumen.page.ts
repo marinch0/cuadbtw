@@ -34,7 +34,7 @@ export class ResumenPage implements OnInit {
     this.finalagenda.fechafinal=new Date().getTime()
     this.finalagenda.coordenadas=this.coordenadas
     this.finalagenda.idoperacion=localStorage.getItem('idoperacion')
-    this.finalagenda.idagenda=localStorage.getItem('idagendafinal')
+    this.finalagenda.idagenda=localStorage.getItem('idagenda')
     this.apiService.finaloperacion(authorization,this.finalagenda).subscribe({
       next:(res) => {
         console.log(res);
@@ -51,7 +51,11 @@ export class ResumenPage implements OnInit {
     this.router.navigate(["inicio"])
   }
 
-
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
   listlab(){
     let authorization = localStorage.getItem('token')
     let id=localStorage.getItem('numserv')
