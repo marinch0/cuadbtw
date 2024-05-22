@@ -2,7 +2,7 @@ import { Component, OnInit,ViewChild  } from '@angular/core';
 import {  Router } from '@angular/router';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
-import { AgendaData, ApiService, agenda, credeagenda, normalizeData } from '../api.service';
+import { AgendaData, ApiService, agenda, credeagenda, iniopera, normalizeData } from '../api.service';
 
 
 @Component({
@@ -15,6 +15,8 @@ export class InicioPage implements OnInit {
   modal!: IonModal;
   isModalOpen = false;
   agendaData: AgendaData[] = [];
+  idServicioCuadrilla=""
+  idsolicitudservicio=""
   operacionEnProgreso: any;
   errorMessage: string = '';
   target =0
@@ -50,8 +52,28 @@ export class InicioPage implements OnInit {
     }
     this.confirm()
   }
-
+  iniopera:iniopera={
+    fechainicial:'',
+    idtipooperacionservicio:'',
+    idclaseoperacionservicio:'',
+    idsolicitudservicio:'',
+    idserviciocuadrilla:''
+  }
   confirm() {
+    this.iniopera.fechainicial= new Date().getTime()
+    this.iniopera.idtipooperacionservicio=1
+    this.iniopera.idclaseoperacionservicio=1
+    this.iniopera.idsolicitudservicio=this.idsolicitudservicio
+    this.iniopera.idserviciocuadrilla=this.idServicioCuadrilla
+    let authorization = localStorage.getItem('token')
+    
+    this.apiService.crearoperacion(authorization,this.iniopera ).subscribe({
+      next: (res) =>{  
+       console.log(res);
+       
+        }
+        
+     })
     this.modal.dismiss(null, 'confirm');
     this.router.navigate(["labores"])
   }
@@ -60,6 +82,11 @@ export class InicioPage implements OnInit {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
       this.message = `Hello, ${ev.detail.data}!`;
+    }
+  }
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
     }
   }
   setOpen(isOpen: boolean,i:any,numeroservicio:any,tipoOperacion:string,idagenda:any) {
@@ -122,7 +149,11 @@ export class InicioPage implements OnInit {
       let authorization = localStorage.getItem('token')
       this.apiService.opview(authorization,serv).subscribe({
         next: (res) =>{
-          console.log(res);
+           this.idServicioCuadrilla = res.data.idserviciocuadrilla.idservicio;
+           this.idsolicitudservicio=res.data.idsolicitudservicio.idsolicitudservicio
+           console.log(this.idsolicitudservicio);
+           
+          console.log(this.idServicioCuadrilla);
         }
       })
     }
@@ -188,6 +219,9 @@ export class InicioPage implements OnInit {
     this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe(
       response => {
         // Asegúrate de que response esté definido y tenga la estructura esperada
+        console.log(response);
+        
+        
         if (response && response.operacionenprogreso !== undefined) {
           this.operacionEnProgreso = response.operacionenprogreso;
           if (this.operacionEnProgreso==null) {

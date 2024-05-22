@@ -140,10 +140,11 @@ export class ApiService {
 
   }
   ///////////////////////////////////////////////////
-  crearoperacion(authorization:any,consumoscredenciales:consumoscredenciales){
+  crearoperacion(authorization:any,iniopera:iniopera){
     let formData = new FormData();
+    formData.append('json', JSON.stringify(iniopera))
     formData.append('authorization',authorization)
-    formData.append('json', JSON.stringify(consumoscredenciales))
+   
     return this.http.post(this.API_URL+'operacionesservicios/create',formData);
   }
   /////////////////////////
@@ -171,6 +172,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
   finaloperacion(authorization:any,json:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
+    formData.append('json',json)
     return this.http.post(this.API_URL+'operacionesservicios/edit',formData);
   }
 
@@ -434,7 +436,21 @@ export interface creadez{
   idserviciocuadrilla?:any;
   idoperacionservicio?:any;
 }
+export interface finalagenda{
+  fechafinal?:any;
+  coordenadas?:any;
+  idoperacion?:any;
+  idagenda?:any;
+}
 
+export interface iniopera{
+  fechainicial?:any;
+  idtipooperacionservicio?:any;
+  idclaseoperacionservicio?:any;
+  idsolicitudservicio?:any;
+  idserviciocuadrilla?:any;
+
+}
 
 export interface credenciales{
   alias?:any;
