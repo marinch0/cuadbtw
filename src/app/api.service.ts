@@ -198,13 +198,14 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
     return this.http.post(this.API_URL+'consumosopservicios/consumosbycuadrilla',formData);
 
   }
-  casobuscar(authorization:any,casoscre:casoscre){
+  casobuscar(authorization:any,casoscre:casoscre):Observable<any>{
     let formData = new FormData();
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(casoscre))
     return this.http.post(this.API_URL+'casosespeciales/casosbycuadrilla',formData);
 
   }
+
 
   //datos grafica
   grafbuscar(authorization:any,credgraf:credgraf):Observable<any>{

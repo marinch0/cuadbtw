@@ -39,6 +39,7 @@ export class MicasoespPage implements OnInit {
     }
   }
   casData: casosData[] = [];
+  sumatoria=0
 
   filtrar(casoscre:casoscre){
     let authorization = localStorage.getItem('token')
@@ -50,7 +51,33 @@ export class MicasoespPage implements OnInit {
     this.apiService.casobuscar(authorization, casoscre).subscribe({
       next:(res) => {
         this.casData=normalizacasos(res);
+        console.log(res.data.tiempo);
+      },
+      error: (err) =>{console.log(err);
+      },
+      complete() {
+
+      }
+    }
+    );
+  }
+
+  filtrarr(casoscre:casoscre){
+    let authorization = localStorage.getItem('token')
+    this.casoscre.idCuadrilla=localStorage.getItem("idcuadrilla")
+    this.casoscre.fecha=moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
+    this.casoscre.fecha2=moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
+    this.casoscre.estadolabor="["+2+"]"
+    
+    this.apiService.casobuscar(authorization, casoscre).subscribe({
+      next:(res) => {
+
+        this.casData=normalizacasos(res);
         console.log(this.casData);
+        const tiempos = this.casData.map(item => item.tiempo);
+
+        const suma = tiempos.reduce((acc, val) => acc + Number(val), 0);        
+        this.sumatoria=parseInt((suma/60).toFixed(1))
         
       },
       error: (err) =>{console.log(err);
@@ -60,5 +87,7 @@ export class MicasoespPage implements OnInit {
       }
     }
     );
+    console.log(this.sumatoria);
+    
   }
 }

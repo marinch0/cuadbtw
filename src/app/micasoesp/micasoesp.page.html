@@ -27,7 +27,7 @@
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
         <ion-datetime  presentation="date" id="datetime" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada"></ion-datetime>
-        <ion-button (click)="filtrar(casoscre)">filtro</ion-button>
+        <ion-button (click)="filtrarr(casoscre)">filtro</ion-button>
       </ng-template>
     </ion-modal>
     
@@ -36,12 +36,12 @@
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
         <ion-datetime  presentation="date" id="datetime1" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada2"></ion-datetime>
-        <ion-button (click)="filtrar(casoscre)">filtro</ion-button>
+        <ion-button (click)="filtrarr(casoscre)">filtro</ion-button>
       </ng-template>
       
     </ion-modal>
 
-    <h2>Horas Totales Aceptadas: ##</h2>
+    <h2>Horas Totales Aceptadas: {{sumatoria}}</h2>
 
     <ion-card style="margin-top: 2%;" *ngFor="let casData of casData">
       <ion-card-header>
