@@ -169,10 +169,10 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
   return this.http.post('https://www.bitwan.info/api/public/agenda/agendaoperacion',formData);
 }
 ////////////////////////////////////////////////
-  finaloperacion(authorization:any,json:any){
+  finaloperacion(authorization:any,finalagenda:finalagenda){
     let formData = new FormData();
     formData.append('authorization',authorization)
-    formData.append('json',json)
+    formData.append('json',JSON.stringify(finalagenda))
     return this.http.post(this.API_URL+'operacionesservicios/edit',formData);
   }
 
@@ -404,6 +404,7 @@ export interface creaconsumo{
   idmaterial?:any;
   cantidad?:any;
 }
+
 
 export interface datalabor{
   idlaborop?:any;

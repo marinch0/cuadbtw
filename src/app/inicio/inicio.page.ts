@@ -219,9 +219,11 @@ export class InicioPage implements OnInit {
     this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe(
       response => {
         // Asegúrate de que response esté definido y tenga la estructura esperada
+
         console.log(response);
-        
-        
+
+        localStorage.setItem('idoperacion',response.agenda.idoperacionservicio)
+
         if (response && response.operacionenprogreso !== undefined) {
           this.operacionEnProgreso = response.operacionenprogreso;
           if (this.operacionEnProgreso==null) {

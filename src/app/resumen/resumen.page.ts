@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService, normacasoses, normacons, normadezdez, normalab } from '../api.service';
+import { ApiService, finalagenda, normacasoses, normacons, normadezdez, normalab } from '../api.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,6 +12,7 @@ export class ResumenPage implements OnInit {
   cons:any[]=[];
   cases:any[]=[];
   desplaz:any[]=[];
+  coordenadas: string = "39.9390731,116.1172782";
   constructor(private apiService: ApiService,private router: Router) { }
 
   ngOnInit() {
@@ -21,9 +22,32 @@ export class ResumenPage implements OnInit {
     this.listcases()
 
   }
+  finalagenda:finalagenda={
+    fechafinal:'',
+    coordenadas:'',
+    idoperacion:'',
+    idagenda:''
+   }
 
   home(){
-    console.log("finalizado");
+    let authorization = localStorage.getItem('token')
+    this.finalagenda.fechafinal=new Date().getTime()
+    this.finalagenda.coordenadas=this.coordenadas
+    this.finalagenda.idoperacion=localStorage.getItem('idoperacion')
+    this.finalagenda.idagenda=localStorage.getItem('idagendafinal')
+    this.apiService.finaloperacion(authorization,this.finalagenda).subscribe({
+      next:(res) => {
+        console.log(res);
+        
+  },
+  error: (err) =>{console.log(err);
+  },
+  complete() {
+
+  }
+}
+);
+
     this.router.navigate(["inicio"])
   }
 
@@ -90,6 +114,7 @@ complete() {
 );
 
 }
+
 
 listcases(){
   let authorization = localStorage.getItem('token')
