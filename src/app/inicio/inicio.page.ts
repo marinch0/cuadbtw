@@ -26,6 +26,7 @@ export class InicioPage implements OnInit {
 
   cancel() {
     this.isModalOpen = false;
+    
   }
 
   laborselect(tipolabor:any){
@@ -75,6 +76,7 @@ export class InicioPage implements OnInit {
         
      })
     this.modal.dismiss(null, 'confirm');
+    this.isModalOpen = false;
     this.router.navigate(["labores"])
   }
 
@@ -150,10 +152,7 @@ export class InicioPage implements OnInit {
       this.apiService.opview(authorization,serv).subscribe({
         next: (res) =>{
            this.idServicioCuadrilla = res.data.idserviciocuadrilla.idservicio;
-           this.idsolicitudservicio=res.data.idsolicitudservicio.idsolicitudservicio
-           console.log(this.idsolicitudservicio);
-           
-          console.log(this.idServicioCuadrilla);
+           this.idsolicitudservicio=res.data.idsolicitudservicio.idsolicitudservicio;
         }
       })
     }

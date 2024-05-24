@@ -90,8 +90,6 @@ export class HomePage {
         this.respuesta=<any>res
         if (this.respuesta.code==200) {
           
-          
-
           this.apiService.obtenerDatosTecnico(res.data.numerotercero).subscribe((nomTecnico:any)=>{
 
             this.router.navigate(["inicio"])
