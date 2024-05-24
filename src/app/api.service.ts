@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 
 export class ApiService {
 
-  urlActivosFijos:string = "http://192.168.50.46:4001"
+  urlActivosFijos:string = "http://192.168.50.46:4001/api"
 
   API_URL='http://104.131.8.122:8000/';
 
@@ -144,7 +144,7 @@ export class ApiService {
     let formData = new FormData();
     formData.append('json', JSON.stringify(iniopera))
     formData.append('authorization',authorization)
-   
+
     return this.http.post(this.API_URL+'operacionesservicios/create',formData);
   }
   /////////////////////////

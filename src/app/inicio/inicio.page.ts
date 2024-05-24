@@ -66,16 +66,24 @@ export class InicioPage implements OnInit {
     this.iniopera.idsolicitudservicio=this.idsolicitudservicio
     this.iniopera.idserviciocuadrilla=this.idServicioCuadrilla
     let authorization = localStorage.getItem('token')
-    
+
     this.apiService.crearoperacion(authorization,this.iniopera ).subscribe({
-      next: (res) =>{  
+      next: (res) =>{
+
+
        console.log(res);
-       
+
         }
-        
+
      })
-    this.modal.dismiss(null, 'confirm');
-    this.router.navigate(["labores"])
+
+     this.isModalOpen = false;
+
+     setTimeout(()=>{
+      this.router.navigate(['/labores'])
+     },1000 )
+
+
   }
 
   onWillDismiss(event: Event) {
@@ -93,8 +101,8 @@ export class InicioPage implements OnInit {
     this.target=i
     this.agenda()
     this.isModalOpen = isOpen;
-      
-      
+
+
 
     if(tipoOperacion == "Solicitud de instalación"){
 
@@ -141,7 +149,7 @@ export class InicioPage implements OnInit {
     localStorage.setItem('numserv',numeroservicio)
     localStorage.setItem('idagenda',idagenda)
 
-   
+
     this.agview(localStorage.getItem('numserv'))
   }
 
@@ -152,7 +160,7 @@ export class InicioPage implements OnInit {
            this.idServicioCuadrilla = res.data.idserviciocuadrilla.idservicio;
            this.idsolicitudservicio=res.data.idsolicitudservicio.idsolicitudservicio
            console.log(this.idsolicitudservicio);
-           
+
           console.log(this.idServicioCuadrilla);
         }
       })
@@ -203,15 +211,15 @@ export class InicioPage implements OnInit {
   let authorization = localStorage.getItem('token')
   console.log(idagenda)
       this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe({
-       next: (res) =>{  
+       next: (res) =>{
         console.log(res);
-        
+
          }
-         
+
       })
   }
 
-    
+
   agenda(): void {
     let idagenda=localStorage.getItem('idagenda')
     let idcuadrilla=localStorage.getItem('idcuadrilla')
@@ -231,7 +239,7 @@ export class InicioPage implements OnInit {
           }else{
             this.estado="Reanudar Operacion"
           }
-          
+
         } else {
           this.errorMessage = 'La propiedad "operacionenprogreso" no está definida en la respuesta.';
         }
