@@ -82,7 +82,7 @@ export class InicioPage implements OnInit {
 
      setTimeout(()=>{
       this.router.navigate(['/labores'])
-     },1000 )
+     },10 )
 
 
   }
