@@ -180,8 +180,26 @@ export class InicioPage implements OnInit {
 
 
   ngOnInit() {
+    
+    let token=localStorage.getItem('token')
+
+    this.apiService.checktoken(token).subscribe(
+      res=>{
+
+        let respuesta=<any>res
+        console.log(respuesta.code);
+        
+        if (respuesta.code==400) {
+          this.router.navigate(["home"])
+        }
+
+      },
+      err=> console.log(err)
+    );
+
   this.agendaData=[]
     this.listargenda(this.credenciales)
+
   }
 
   credenciales: credeagenda = {

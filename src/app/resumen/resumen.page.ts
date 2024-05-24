@@ -16,6 +16,19 @@ export class ResumenPage implements OnInit {
   constructor(private apiService: ApiService,private router: Router) { }
 
   ngOnInit() {
+    let token=localStorage.getItem('token')
+
+    this.apiService.checktoken(token).subscribe(
+      res=>{
+
+        const respuesta=<any>res
+        if (respuesta.code==400) {
+          this.router.navigate(["home"])
+        }
+
+      },
+      err=> console.log(err)
+    );
     this.listlab()
     this.listcons()
     this.listdez()

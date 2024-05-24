@@ -66,7 +66,7 @@ export class ActinstalacionPage implements OnInit {
     }
   }
   ngOnInit() {
-
+    
     if(this.contadorOperaciones == 2){
       this.router.navigate(["inicio"])
     }

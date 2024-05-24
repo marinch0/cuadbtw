@@ -27,6 +27,18 @@ export class MiservfinPage implements OnInit {
   constructor(private router: Router,private apiService: ApiService, private alertController: AlertController) { }
 
   ngOnInit() {
+    let token=localStorage.getItem('token')
+
+    this.apiService.checktoken(token).subscribe(
+      res=>{
+
+        const respuesta=<any>res
+        if (respuesta.code==400) {
+          this.router.navigate(["home"])
+        }
+      },
+      err=> console.log(err)
+    );
   }
   dezData: any[] = [];
   dezplacre:misservcred = {

@@ -26,6 +26,19 @@ export class DetalleopPage implements OnInit {
   listaAgenda:AgendaData[] = [];
 
   ngOnInit() {
+    let token=localStorage.getItem('token')
+
+    this.apiService.checktoken(token).subscribe(
+      res=>{
+
+        const respuesta=<any>res
+        if (respuesta.code==400) {
+          this.router.navigate(["home"])
+        }
+
+      },
+      err=> console.log(err)
+    );
     console.log(localStorage.getItem('token'));
     this.listargenda(this.credenciales)
     this.index=parseInt(localStorage.getItem('target')+"")

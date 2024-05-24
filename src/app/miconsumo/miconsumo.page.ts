@@ -22,6 +22,18 @@ export class MiconsumoPage implements OnInit {
   constructor(private router: Router,private apiService: ApiService) { }
 
   ngOnInit() {
+    let token=localStorage.getItem('token')
+
+    this.apiService.checktoken(token).subscribe(
+      res=>{
+
+        const respuesta=<any>res
+        if (respuesta.code==400) {
+          this.router.navigate(["home"])
+        }
+      },
+      err=> console.log(err)
+    );
   }
   home() {
     this.router.navigate(["menupersonal"])

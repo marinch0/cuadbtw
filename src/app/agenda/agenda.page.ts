@@ -19,6 +19,7 @@ export class AgendaPage implements OnInit {
   constructor( private router:Router) { }
 
   ngOnInit() {
+    
   }
   
   labores(){

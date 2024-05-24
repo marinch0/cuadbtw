@@ -26,6 +26,19 @@ export class MenupersonalPage implements OnInit {
   fechaHoraSeleccionada2: string = new Date().toISOString();
 
   ngOnInit() {
+    let token=localStorage.getItem('token')
+
+    this.apiService.checktoken(token).subscribe(
+      res=>{
+
+        const respuesta=<any>res
+        if (respuesta.code==400) {
+          this.router.navigate(["home"])
+        }
+
+      },
+      err=> console.log(err)
+    );
   }
 
   casoesp(){
