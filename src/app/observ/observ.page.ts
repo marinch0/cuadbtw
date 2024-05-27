@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService, creacasoez, normacasoses } from '../api.service';
+import { ApiService,creaobservaciones, creacasoez, normacasoses } from '../api.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -65,46 +65,23 @@ home() {
   this.router.navigate(["inicio"])
 }
 
-  eliminar(id: any) {
-    let authorization = localStorage.getItem('token')
-    this.apiService.eliminarcasoez(authorization, id).subscribe({
-      next:(res) => {
-        this.cards = normacasoses(res);
-        console.log(this.cards);
-        this.elimi()
-      },
-      error: (err) =>{console.log(err);
-      },
-      complete() {
 
-      }
-    }
-    );
-  }
 
-  creacaso: creacasoez = {
-    descripcion: '',
-    tiempo: '',
-    idserviciocuadrilla: '',
-    idoperacionservicio:''
+  creaobservaciones: creaobservaciones={
+    idoperacionservicio:'',
+    observaciones:''
   }
 
 
-  agregar(creacasoez: creacasoez) {
-
-    creacasoez.descripcion = this.descrip
-    creacasoez.tiempo = this.minutos
-    creacasoez.idserviciocuadrilla = 1
-    creacasoez.idoperacionservicio = localStorage.getItem("idcuadrilla")
-
-
+  agregar(creaobservaciones: creaobservaciones) {
+    creaobservaciones.idoperacionservicio = localStorage.getItem("idoperacionservicio")
+    creaobservaciones.observaciones = this.descrip
     let authorization = localStorage.getItem('token')
-    this.apiService.crearcasoez(authorization, creacasoez).subscribe({
+    this.apiService.observcuad(authorization, creaobservaciones).subscribe({
       next: (res) => {
-        this.cards = normacasoses(res);
-        console.log(this.cards);
+        console.log(res);
+        
         this.agreg()
-
       },
       error: (err) =>{console.log(err);
       },
@@ -136,7 +113,7 @@ home() {
   async agreg() {
     const alert = await this.alertController.create({
       header: 'CASOS ESPECIALES',
-      subHeader: 'Se agrego un caso a la operacion',
+      subHeader: 'Se agrego un observacion a la operacion',
       buttons: ['OK'],
     });
   

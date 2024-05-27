@@ -72,8 +72,8 @@ export class InicioPage implements OnInit {
       next: (res) =>{
 
 
-       console.log(res);
-
+       console.log(res.idoperacionservicio);
+       localStorage.setItem('idoperacionservicio',res.idoperacionservicio)
         }
 
      })
@@ -160,9 +160,8 @@ export class InicioPage implements OnInit {
         next: (res) =>{
            this.idServicioCuadrilla = res.data.idserviciocuadrilla.idservicio;
            this.idsolicitudservicio=res.data.idsolicitudservicio.idsolicitudservicio
-           console.log(this.idsolicitudservicio);
-
-          console.log(this.idServicioCuadrilla);
+          console.log(res);
+          
         }
       })
     }

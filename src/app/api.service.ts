@@ -140,7 +140,7 @@ export class ApiService {
 
   }
   ///////////////////////////////////////////////////
-  crearoperacion(authorization:any,iniopera:iniopera){
+  crearoperacion(authorization:any,iniopera:iniopera):Observable<any>{
     let formData = new FormData();
     formData.append('json', JSON.stringify(iniopera))
     formData.append('authorization',authorization)
@@ -247,7 +247,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
     formData.append('json', JSON.stringify(credeagenda))
     formData.append('authorization',authorization)
 
-    return this.http.post('https://www.bitwan.info/api/public/agenda/listbytercero',formData);
+    return this.http.post(this.API_URL+'agenda/listbytercero',formData);
 
   }
 
@@ -432,6 +432,12 @@ export interface creacasoez{
   tiempo?:any;
   idserviciocuadrilla?:any;
   idoperacionservicio?:any;
+}
+
+export interface creaobservaciones{
+  idoperacionservicio?:any;
+  observaciones?:any;
+
 }
 export interface creadez{
   iddesplazamiento?:any;

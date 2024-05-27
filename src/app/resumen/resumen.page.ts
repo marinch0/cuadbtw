@@ -46,7 +46,7 @@ export class ResumenPage implements OnInit {
     let authorization = localStorage.getItem('token')
     this.finalagenda.fechafinal=new Date().getTime()
     this.finalagenda.coordenadas=this.coordenadas
-    this.finalagenda.idoperacion=localStorage.getItem('idoperacion')
+    this.finalagenda.idoperacion=32510//localStorage.getItem('idoperacion')
     this.finalagenda.idagenda=localStorage.getItem('idagenda')
     this.apiService.finaloperacion(authorization,this.finalagenda).subscribe({
       next:(res) => {
