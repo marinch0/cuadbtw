@@ -10,7 +10,7 @@ export class ApiService {
 
   urlActivosFijos:string = "http://192.168.50.46:4001/api"
 
-  API_URL='http://104.131.8.122:8000/';
+  API_URL='https://serviciostest.bitwan.info/api/public/';
 
   //solo para hacer la prueba de los tecnicos
   urlServicios:string = "https://www.bitwan.info/api/public/login"
