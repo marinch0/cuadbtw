@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class ApiService {
 
   urlActivosFijos:string = "http://192.168.50.46:4001/api"
-
+//appapuntador
   API_URL='https://serviciostest.bitwan.info/api/public/';
 
   //solo para hacer la prueba de los tecnicos
