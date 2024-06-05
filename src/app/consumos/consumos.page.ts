@@ -80,10 +80,11 @@ export class ConsumosPage implements OnInit {
 
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
-    this.apiService.eliminarconsumo(authorization, localStorage.getItem('numserv')).subscribe({
+    this.apiService.eliminarconsumo(authorization, id).subscribe({
       next: (res)=> {
         this.cards = normacons(res);
-        console.log(this.cards);
+        
+        console.log(res);
         this.elimi()
       },
       error: (err) =>{console.log(err);

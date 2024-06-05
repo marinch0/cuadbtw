@@ -153,9 +153,10 @@ home() {
 
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
-    this.apiService.eliminardez(authorization, localStorage.getItem('numserv')).subscribe({
+    this.apiService.eliminardez(authorization, id).subscribe({
       next:(res) => {
-
+        console.log(res);
+        
         this.cardss = normadezdez(res);
         this.elimi()
 

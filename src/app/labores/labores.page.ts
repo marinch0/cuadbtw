@@ -147,7 +147,9 @@ export class LaboresPage implements OnInit {
 
   ngOnInit() {
     let token=localStorage.getItem('token')
-
+    
+    console.log(localStorage.getItem('numserv'));
+    
     this.apiService.checktoken(token).subscribe(
       res=>{
 

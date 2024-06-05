@@ -80,7 +80,7 @@ home() {
     this.apiService.observcuad(authorization, creaobservaciones).subscribe({
       next: (res) => {
         console.log(res);
-        
+        localStorage.setItem('observ',this.descrip)
         this.agreg()
       },
       error: (err) =>{console.log(err);
@@ -135,7 +135,7 @@ home() {
   }
   ngOnInit() {
     let token=localStorage.getItem('token')
-
+    this.descrip=localStorage.getItem('observ')
     this.apiService.checktoken(token).subscribe(
       res=>{
 
