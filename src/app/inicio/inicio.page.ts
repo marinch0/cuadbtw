@@ -272,7 +272,7 @@ export class InicioPage implements OnInit {
   listargenda(credeagenda: credeagenda) {
 
     credeagenda.idcuadrilla=localStorage.getItem('idcuadrilla')
-    credeagenda.estado = "pendientes"
+    credeagenda.estado = "Pendiente"
     let authorization = localStorage.getItem('token')
 
     this.apiService.agendabuscar(authorization, credeagenda).subscribe({

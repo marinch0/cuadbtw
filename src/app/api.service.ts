@@ -371,7 +371,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'desplazamientoscuadrillas/desplazamientobyoperacion',formData);
   }
-  listarcasesop(authorization:any,idcasoespecial:any){
+  listarcasesop(authorization:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'casosespeciales/casosespecialesbyoperacion',formData);

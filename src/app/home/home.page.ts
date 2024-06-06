@@ -85,10 +85,11 @@ export class HomePage {
   login(alias:any,password:any){
     this.credenciales.alias=alias
     this.credenciales.password=password
-    this.apiService.login(this.credenciales).subscribe(
+    this.apiService.loginn(this.credenciales).subscribe(
       (res:any)=>{
         this.respuesta=<any>res
         if (this.respuesta.code==200) {
+          
           
           this.apiService.obtenerDatosTecnico(res.data.numerotercero).subscribe((nomTecnico:any)=>{
 
