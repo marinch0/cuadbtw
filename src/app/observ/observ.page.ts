@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class ObservPage implements OnInit {
 
   descrip: any;
+  observacion: any;
   minutos: any;
   cards: any[] = [];
 
@@ -81,6 +82,7 @@ home() {
       next: (res) => {
         console.log(res);
         localStorage.setItem('observ',this.descrip)
+        this.observacion=this.descrip
         this.agreg()
       },
       error: (err) =>{console.log(err);
@@ -90,7 +92,7 @@ home() {
       }
     }
     );
-
+   
   }
 
   clean(){
@@ -112,7 +114,7 @@ home() {
 
   async agreg() {
     const alert = await this.alertController.create({
-      header: 'CASOS ESPECIALES',
+      header: 'OBSERVACIONES',
       subHeader: 'Se agrego un observacion a la operacion',
       buttons: ['OK'],
     });
@@ -122,7 +124,7 @@ home() {
 
   async elimi() {
     const alert = await this.alertController.create({
-      header: 'CASOS ESPECIALES',
+      header: 'OBSERVACIONES',
       subHeader: 'Se elimino un caso a la operacion',
       buttons: ['OK'],
     });
@@ -135,7 +137,7 @@ home() {
   }
   ngOnInit() {
     let token=localStorage.getItem('token')
-    this.descrip=localStorage.getItem('observ')
+    this.observacion=localStorage.getItem('observ')
     this.apiService.checktoken(token).subscribe(
       res=>{
 

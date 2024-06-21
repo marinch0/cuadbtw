@@ -27,6 +27,7 @@ export class DashboardPage implements OnInit {
   metast:any[]=[];
   acumulad:any[]=[];
   total:number=0;
+  validacion:any=true;
   
   fechaHoraSeleccionada: string = new Date().toISOString();
   fechaHoraSeleccionada2: string = new Date().toISOString();
@@ -157,15 +158,15 @@ export class DashboardPage implements OnInit {
 
   //////////////////////////////////////////////////////////////////////
   dashboard(credashboard:credashboard){
-
+    this.total=0
+    this.acumulad=[]
     const self = this;
-
     this.fechast=[]
     this.tiempost=[]
     credashboard.finicial=moment(this.fechaHoraSeleccionada).format('YYYY-MM-DD');
     credashboard.ffinal=moment(this.fechaHoraSeleccionada2).format('YYYY-MM-DD');
     credashboard.idcuadrilla=localStorage.getItem('idcuadrilla')
-    credashboard.validaciondocumento=false
+    credashboard.validaciondocumento=this.validacion
     let authorization = localStorage.getItem('token')
       this.apiService.dashboardtime(authorization, credashboard).subscribe({
         next: (res) =>{

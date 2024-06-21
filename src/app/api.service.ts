@@ -155,7 +155,8 @@ export class ApiService {
     return this.http.post(this.API_URL+'operacionesservicios/editfield',formData);
   }
 ////////////////////////////////
-  opview(authorization:any,idagenda:any):Observable<any>{
+  
+opview(authorization:any,idagenda:any):Observable<any>{
     let formData = new FormData();
     formData.append('authorization',authorization)
     return this.http.post(this.API_URL+'operacionesservicios/view/'+idagenda,formData);
@@ -216,7 +217,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
 
   }
 
-  entidadesBuscar(authorization:any,entidadescre:entidadescre){
+  entidadesBuscar(authorization:any,entidadescre:entidadescre):Observable<any>{
     let formData = new FormData();
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(entidadescre))
@@ -319,7 +320,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
     return this.http.post(this.API_URL+'consumosopservicios/create',formData);
   }
 
-  creardesplaz(authorization:any,creadez:creadez){
+  creardesplaz(authorization:any,creadez:creadez):Observable<any>{
     let formData = new FormData();
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(creadez))
@@ -329,6 +330,8 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
     let formData = new FormData();
     formData.append('authorization',authorization)
     formData.append('json', JSON.stringify(creacasoez))
+    console.log(JSON.stringify(creacasoez));
+    
     return this.http.post(this.API_URL+'casosespeciales/create',formData);
   }
 
@@ -683,6 +686,32 @@ export function normalizaentidez(respuestaAPI: any): entimatdata[] {
     }
   }));
 }
+
+export function agiledez(respuestaAPI: any): entimatdata[] {
+  if (!respuestaAPI || !respuestaAPI.desplazamientos || !Array.isArray(respuestaAPI.desplazamientos)) {
+    return [];
+  }
+
+  // Suponiendo que el array de datos se encuentra en respuestaAPI.materiales
+  return respuestaAPI.desplazamientos.map((item: any) => ({
+    iddesplazamiento: item.iddesplazamiento,
+    kilometros: item.kilometros,
+    tiempo: item.tiempo,
+    municipioinicio: {
+      idmunicipio: item.municipioinicio.idmunicipio,
+      nombre: item.municipioinicio.nombre,
+      iddepartamento: item.municipioinicio.iddepartamento
+    },
+    municipiofin: {
+      idmunicipio: item.municipiofin.idmunicipio,
+      nombre: item.municipiofin.nombre,
+      iddepartamento: item.municipiofin.iddepartamento
+    }
+  }));
+}
+
+
+
 
 export interface  credgraf {
   idCuadrilla?:any;

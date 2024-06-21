@@ -16,6 +16,9 @@ export class DesplnewPage implements OnInit {
   cardss: any[] = [];
   muni: any[] = [];
   apuntador: any[]=[];
+  filtrado:any[]=[];
+  arregloSinDuplicados:any[]=[]
+
   
 
   public appPages = [
@@ -39,7 +42,7 @@ export class DesplnewPage implements OnInit {
   async agreg() {
     const alert = await this.alertController.create({
       header: 'DESPLAZAMIENTOS',
-      subHeader: 'Se agrego un desplazamiento a la operacion',
+      subHeader: 'Se agrego un desplazamiento ',
       buttons: ['OK'],
     });
   
@@ -49,17 +52,16 @@ export class DesplnewPage implements OnInit {
   async elimi() {
     const alert = await this.alertController.create({
       header: 'DESPLAZAMIENTOS',
-      subHeader: 'Se elimino un desplazamiento a la operacion',
+      subHeader: 'Se elimino un desplazamiento ',
       buttons: ['OK'],
     });
   
     await alert.present();
   }
-
   async error() {
     const alert = await this.alertController.create({
       header: 'DESPLAZAMIENTOS',
-      subHeader: 'Error al seleccionar desplazamiento a la operacion',
+      subHeader: 'Error al seleccionar desplazamiento ',
       buttons: ['OK'],
     });
   
@@ -68,7 +70,7 @@ export class DesplnewPage implements OnInit {
 
   listdez(){
     let authorization = localStorage.getItem('token')
-    let id=369688
+    let id=1
     this.apiService.dezpl(authorization,id).subscribe({
       next:(res) => {
         this.cardss = normadezdez(res);
@@ -102,7 +104,15 @@ home() {
     this.apiService.entidadesBuscar(authorization, entidadescre).subscribe({
       next:(res) => {
         this.laboress=normalizaentidez(res);
+        console.log(  this.laboress);
+        this.laboress.map(item=>{
+          
+          this.filtrado.push(item['municipioinicio']['nombre'])
+        })
         
+        console.log( this.filtrado);
+         this.arregloSinDuplicados = [...new Set(this.filtrado)];
+        console.log(this.arregloSinDuplicados);
         
       },
       error: (err) =>{console.log(err);
@@ -156,7 +166,8 @@ home() {
     let authorization = localStorage.getItem('token')
     this.apiService.eliminardez(authorization, id).subscribe({
       next:(res) => {
-
+        console.log(res);
+        
         this.cardss = normadezdez(res);
         this.elimi()
 
@@ -172,32 +183,37 @@ home() {
 
 
   agregar(creadez: creadez) {
-    
+    creadez.iddesplazamiento=0
   
-    creadez.idserviciocuadrilla = 1
+    creadez.idserviciocuadrilla = localStorage.getItem('idcuadrilla')
     creadez.idoperacionservicio = 1
     let authorization = localStorage.getItem('token')
-    console.log(this.laboress)
+
     for (let i = 0; i < this.laboress.length; i++) {
-      
+
       if (this.laboress[i].municipioinicio.nombre==this.cant && this.laboress[i].municipiofin.nombre==this.cantt) {
-        console.log(this.laboress[i].iddesplazamiento);
         creadez.iddesplazamiento=this.laboress[i].iddesplazamiento
-        this.apuntador=this.laboress[i].iddesplazamiento
+        this.apuntador=this.laboress[i].iddesplazamiento     
+        console.log(this.laboress[i].iddesplazamiento);
+        
       }
     }
-   
-    
-    if (this.apuntador==null&&creadez.iddesplazamiento==null) {
+    if (creadez.iddesplazamiento==0) {
+
       this.error()
     }else{
       this.apiService.creardesplaz(authorization, creadez).subscribe({
         next: (res) => {
           console.log(res);
           
-          this.cardss = normadezdez(res);
-          this.agreg()
-                
+          if (res.code=!200) {
+            this.error()
+          }else{
+            this.cardss = normadezdez(res);
+            this.agreg()
+
+            creadez.iddesplazamiento=0
+          }      
         },
         error: (err) =>{console.log(err);
         },
@@ -207,11 +223,14 @@ home() {
       }
       );
     }
-
-
+      creadez.iddesplazamiento=0
   }
 
-
+  logout(compare:any){
+    if (compare=="Cerrar Sesión") {
+      localStorage.setItem('token',"")
+    }
+  }
 
   ngOnInit() {
     let token=localStorage.getItem('token')
@@ -226,6 +245,7 @@ home() {
       },
       err=> console.log(err)
     );
+    
     this.listarentidadamterial(this.credenciales)
     this.listdez()
     this.desplz()
@@ -248,10 +268,5 @@ home() {
   }
   actas(){
     this.router.navigate(["actinstalacion"])
-  }
-  logout(compare:any){
-    if (compare=="Cerrar Sesión") {
-      localStorage.setItem('token',"")
-    }
   }
 }

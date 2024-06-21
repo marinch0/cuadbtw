@@ -67,11 +67,13 @@ export class InicioPage implements OnInit {
     this.iniopera.idsolicitudservicio=this.idsolicitudservicio
     this.iniopera.idserviciocuadrilla=this.idServicioCuadrilla
     let authorization = localStorage.getItem('token')
-
+    console.log(this.iniopera);
+    
     this.apiService.crearoperacion(authorization,this.iniopera ).subscribe({
       next: (res) =>{
 
-
+        console.log(res);
+        
        console.log(res.idoperacionservicio);
        localStorage.setItem('idoperacionservicio',res.idoperacionservicio)
         }
