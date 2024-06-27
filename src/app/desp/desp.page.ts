@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, creadez, entidadescre, normadezdez, normalizaentidez } from '../api.service';
 import { AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-desp',
@@ -29,7 +31,9 @@ export class DespPage implements OnInit {
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
   
-  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController) { }
+  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController, private menuCtrl: MenuController) { }
+
+
 
   credenciales: entidadescre={
     materiales:'',
@@ -242,23 +246,60 @@ home() {
     this.listdez()
     this.desplz()
   }
-  labores(){
-    this.router.navigate(["labores"])
 
+  openFirst() {
+    this.menuCtrl.enable(true, 'first');
+    this.menuCtrl.open('first');
+  }
+
+  openEnd() {
+    this.menuCtrl.close();
+  }
+
+  openCustom() {
+    this.menuCtrl.close();
+    this.menuCtrl.enable(true, 'custom');
+    this.menuCtrl.open('custom');
+  }
+  labores(){
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["labores"])
+     },10 )
   }
   consumos(){
-    this.router.navigate(["consumos"])
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["consumos"])
+     },10 )
+    
   }
   desplaza(){
-    this.router.navigate(["desp"])
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["desp"])
+     },10 )
+    
   }
   casos(){
-    this.router.navigate(["casespecial"])
+    setTimeout(()=>{
+      this.router.navigate(["casespecial"])
+     },10 )
+    
   }
   observ(){
-    this.router.navigate(["observ"])
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["observ"])
+     },10 )
+    
   }
   actas(){
-    this.router.navigate(["actinstalacion"])
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["actinstalacion"])
+     },10 )
+   
   }
+
 }

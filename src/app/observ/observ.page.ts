@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService,creaobservaciones, creacasoez, normacasoses } from '../api.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,22 +15,63 @@ export class ObservPage implements OnInit {
   minutos: any;
   cards: any[] = [];
 
-
-  labores() {
-    this.router.navigate(["labores"])
-
+  labores(){
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["labores"])
+     },10 )
   }
-  consumos() {
-    this.router.navigate(["consumos"])
+  consumos(){
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["consumos"])
+     },10 )
+    
   }
-  desplaza() {
-    this.router.navigate(["desp"])
+  desplaza(){
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["desp"])
+     },10 )
+    
   }
-  casos() {
-    this.router.navigate(["casespecial"])
+  casos(){
+    setTimeout(()=>{
+      this.router.navigate(["casespecial"])
+     },10 )
+    
+  }
+  observ(){
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["observ"])
+     },10 )
+    
   }
   actas(){
-    this.router.navigate(["actinstalacion"])
+    setTimeout(()=>{
+      this.openEnd()
+      this.router.navigate(["actinstalacion"])
+     },10 )
+   
+  }
+
+  openFirst() {
+    this.menuCtrl.enable(true, 'first');
+    this.menuCtrl.open('first');
+  }
+
+  openEnd() {
+    this.menuCtrl.close();
+  }
+
+  openCustom() {
+    this.menuCtrl.close();
+    this.menuCtrl.enable(true, 'custom');
+    this.menuCtrl.open('custom');
+  }
+  EndMenu() {
+    this.menuCtrl.close('first-menu');
   }
   logout(compare:any){
     if (compare=="Cerrar Sesión") {
@@ -110,7 +151,7 @@ home() {
     await alert.present();
   }
   
-  constructor(private router:Router,private apiService: ApiService, private alertController: AlertController  ) { }
+  constructor(private router:Router,private apiService: ApiService, private alertController: AlertController, private menuCtrl: MenuController  ) { }
 
   async agreg() {
     const alert = await this.alertController.create({

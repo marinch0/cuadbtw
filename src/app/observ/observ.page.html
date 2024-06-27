@@ -1,19 +1,24 @@
-<ion-menu contentId="main-content">
+<ion-menu side="start" menuId="first" contentId="main-content" >
   <ion-header>
-
-    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-      <ion-item routerDirection="root" (click)="logout(p.title)" [href]="[p.url]" lines="none" detail="false" routerLinkActive="selected" style="margin-top: 5%;margin-left: 5%;margin-right: 5%;">
-        <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-        <ion-label>{{ p.title }}</ion-label>
-      </ion-item>
-    </ion-menu-toggle>
+    <ion-toolbar >
+      <ion-title>Labores</ion-title>
+    </ion-toolbar>
   </ion-header>
-
+  <ion-content>
+    <ion-list>
+      <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+        <ion-item [routerLink]="p.url" (click)="logout(p.title)" routerDirection="root">
+          <ion-icon slot="start" [name]="p.icon"></ion-icon>
+          <ion-label>{{ p.title }}</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+  </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar>
-      <ion-buttons slot="start">
+      <ion-buttons slot="start" (onclick)=openCustom()>
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title> Observaciones</ion-title>
