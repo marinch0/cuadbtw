@@ -31,7 +31,7 @@
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
         <ion-datetime  id="datetime" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada" ></ion-datetime>
-        <ion-button (click)="dashboard(credashboard)" >filtro</ion-button>
+
       </ng-template>
     </ion-modal>
     
@@ -40,13 +40,14 @@
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
         <ion-datetime  id="datetime1" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada2"></ion-datetime>
-        <ion-button (click)="dashboard(credashboard)" >filtro</ion-button>
+
       </ng-template>
       
     </ion-modal>
     
     <br>
-    <ion-toggle [checked]="true">Documento validado</ion-toggle><br /><br />
+    <ion-toggle [checked]="true" [(ngModel)]="validacion">Documento validado</ion-toggle><br /><br />
+    <ion-button (click)="dashboard(credashboard)" style="width: 100%;" >filtro</ion-button>
     <ion-content>
       <canvas
       baseChart
