@@ -82,10 +82,9 @@ export class CasespecialPage implements OnInit {
     { title: 'Acta instalacion', url: '/actinstalacion', icon:"document"},
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
-  
   listcons(){
     let authorization = localStorage.getItem('token')
-    let id= localStorage.getItem("idcuadrilla")
+    let id=localStorage.getItem('numserv')
     this.apiService.casoses(authorization,id).subscribe({
       next:(res) => {
         this.cards = normacasoses(res);
@@ -110,10 +109,8 @@ home() {
 
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
-    this.apiService.eliminarcasoez(authorization,id).subscribe({
+    this.apiService.eliminarcasoez(authorization, localStorage.getItem('numserv')).subscribe({
       next:(res) => {
-        console.log(res);
-        
         this.cards = normacasoses(res);
         console.log(this.cards);
         this.elimi()
@@ -139,10 +136,8 @@ home() {
 
     creacasoez.descripcion = this.descrip
     creacasoez.tiempo = this.minutos
-    creacasoez.idserviciocuadrilla = localStorage.getItem("idcuadrilla")
+    creacasoez.idserviciocuadrilla = localStorage.getItem('numserv')
     creacasoez.idoperacionservicio = localStorage.getItem("idcuadrilla")
-    console.log(localStorage.getItem("numserv"));
-    
     if (this.descrip==null) {
       this.error1()
     }else if(this.minutos==null){
@@ -151,8 +146,6 @@ home() {
       let authorization = localStorage.getItem('token')
       this.apiService.crearcasoez(authorization, creacasoez).subscribe({
         next: (res) => {
-          console.log(res);
-          
           this.cards = normacasoses(res);
           console.log(this.cards);
           this.agreg()

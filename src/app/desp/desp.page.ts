@@ -11,15 +11,12 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./desp.page.scss'],
 })
 export class DespPage implements OnInit {
-   cant: any;
+  cant: any;
   cantt: any;
   laboress: any[] = [];
   cardss: any[] = [];
   muni: any[] = [];
   apuntador: any[]=[];
-  filtrado:any[]=[];
-  arregloSinDuplicados:any[]=[]
-
   
 
   public appPages = [
@@ -61,6 +58,7 @@ export class DespPage implements OnInit {
   
     await alert.present();
   }
+
   async error() {
     const alert = await this.alertController.create({
       header: 'DESPLAZAMIENTOS',
@@ -73,7 +71,7 @@ export class DespPage implements OnInit {
 
   listdez(){
     let authorization = localStorage.getItem('token')
-    let id=localStorage.getItem('idcuadrilla')
+    let id=localStorage.getItem('numserv')
     this.apiService.dezpl(authorization,id).subscribe({
       next:(res) => {
         this.cardss = normadezdez(res);
@@ -107,15 +105,7 @@ home() {
     this.apiService.entidadesBuscar(authorization, entidadescre).subscribe({
       next:(res) => {
         this.laboress=normalizaentidez(res);
-        console.log(  this.laboress);
-        this.laboress.map(item=>{
-          
-          this.filtrado.push(item['municipioinicio']['nombre'])
-        })
         
-        console.log( this.filtrado);
-         this.arregloSinDuplicados = [...new Set(this.filtrado)];
-        console.log(this.arregloSinDuplicados);
         
       },
       error: (err) =>{console.log(err);
@@ -151,6 +141,13 @@ home() {
     );
   }
 
+
+
+
+
+
+
+
   creadez: creadez = {
     iddesplazamiento: '',
     idserviciocuadrilla: '',
@@ -179,37 +176,32 @@ home() {
 
 
   agregar(creadez: creadez) {
-    creadez.iddesplazamiento=0
+    
   
     creadez.idserviciocuadrilla = localStorage.getItem('idcuadrilla')
-    creadez.idoperacionservicio = localStorage.getItem('idcuadrilla')
+    creadez.idoperacionservicio = localStorage.getItem('numserv')
     let authorization = localStorage.getItem('token')
-
+    console.log(this.laboress)
     for (let i = 0; i < this.laboress.length; i++) {
-
+      
       if (this.laboress[i].municipioinicio.nombre==this.cant && this.laboress[i].municipiofin.nombre==this.cantt) {
-        creadez.iddesplazamiento=this.laboress[i].iddesplazamiento
-        this.apuntador=this.laboress[i].iddesplazamiento     
         console.log(this.laboress[i].iddesplazamiento);
-        
+        creadez.iddesplazamiento=this.laboress[i].iddesplazamiento
+        this.apuntador=this.laboress[i].iddesplazamiento
       }
     }
-    if (creadez.iddesplazamiento==0) {
-
+   
+    
+    if (this.apuntador==null&&creadez.iddesplazamiento==null) {
       this.error()
     }else{
       this.apiService.creardesplaz(authorization, creadez).subscribe({
         next: (res) => {
           console.log(res);
           
-          if (res.code=!200) {
-            this.error()
-          }else{
-            this.cardss = normadezdez(res);
-            this.agreg()
-
-            creadez.iddesplazamiento=0
-          }      
+          this.cardss = normadezdez(res);
+          this.agreg()
+                
         },
         error: (err) =>{console.log(err);
         },
@@ -219,7 +211,8 @@ home() {
       }
       );
     }
-      creadez.iddesplazamiento=0
+
+
   }
 
   logout(compare:any){
@@ -241,7 +234,6 @@ home() {
       },
       err=> console.log(err)
     );
-    
     this.listarentidadamterial(this.credenciales)
     this.listdez()
     this.desplz()

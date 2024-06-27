@@ -27,7 +27,7 @@
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
         <ion-datetime presentation="date" id="datetime" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada"></ion-datetime>
-        
+        <ion-button (click)="filtrar(dezplacre)">filtro</ion-button>
       </ng-template>
     </ion-modal>
     
@@ -39,13 +39,13 @@
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
         <ion-datetime presentation="date" id="datetime1" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada2"></ion-datetime>
-
+        <ion-button (click)="filtrar(dezplacre)">filtro</ion-button>
       </ng-template>
       
     </ion-modal>
 
     <br>
-    <ion-button (click)="filtrar(dezplacre)" style="width: 100%;">filtro</ion-button>
+    
     <ion-card style="margin-top: 2%;" *ngFor="let dezData of dezData">
       <ion-card-header>
         <ion-card-title>{{dezData.nombremunicipioinicio}}-{{dezData.nombremunicipiofin}}</ion-card-title>

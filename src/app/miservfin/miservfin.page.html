@@ -28,7 +28,7 @@
     <ion-modal [keepContentsMounted]="true" >
       <ng-template>
         <ion-datetime presentation="date" id="datetime" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada"></ion-datetime>
-
+        <ion-button id="open-loading" (click)="filtrar(dezplacre)">filtro</ion-button>
       </ng-template>
     </ion-modal>
     
@@ -37,12 +37,11 @@
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
         <ion-datetime presentation="date" id="datetime1" displayFormat="DD/MM/YYYY" [(ngModel)]="fechaHoraSeleccionada2"></ion-datetime>
-
+        <ion-button id="open-loading" (click)="filtrar(dezplacre)">filtro</ion-button>
       </ng-template>
-
+      
     </ion-modal>
-    <br>
-    <ion-button id="open-loading" (click)="filtrar(dezplacre)" style="width: 100%;">filtro</ion-button>
+
     <ion-loading trigger="open-loading" message="Loading..." [duration]="3000" spinner="circles"></ion-loading>
 
 
