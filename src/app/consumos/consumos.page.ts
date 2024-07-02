@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, creaconsumo, entidadescre, normacons, normalizamaterialess } from '../api.service';
 import { FormsModule } from '@angular/forms';
-import { AlertController, InfiniteScrollCustomEvent, MenuController } from '@ionic/angular';
+import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-consumos',
@@ -22,7 +22,7 @@ export class ConsumosPage implements OnInit {
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
-  constructor(private router: Router, private apiService: ApiService,private alertController: AlertController, private menuCtrl: MenuController) { }
+  constructor(private router: Router, private apiService: ApiService,private alertController: AlertController) { }
 
 
 
@@ -80,11 +80,10 @@ export class ConsumosPage implements OnInit {
 
   eliminar(id: any) {
     let authorization = localStorage.getItem('token')
-    this.apiService.eliminarconsumo(authorization, id).subscribe({
+    this.apiService.eliminarconsumo(authorization, localStorage.getItem('numserv')).subscribe({
       next: (res)=> {
         this.cards = normacons(res);
-        
-        console.log(res);
+        console.log(this.cards);
         this.elimi()
       },
       error: (err) =>{console.log(err);
@@ -182,64 +181,44 @@ export class ConsumosPage implements OnInit {
   ngOnInit() {
     this.listarentidadamterial(this.credenciales)
     this.listcons()
+    let token=localStorage.getItem('token')
+
+    this.apiService.checktoken(token).subscribe(
+      res=>{
+
+        const respuesta=<any>res
+        if (respuesta.code==200) {
+
+          this.router.navigate(["inicio"])
+        }
+
+      },
+      err=> console.log(err)
+    );
 
   }
-  labores(){
-    setTimeout(()=>{
-      this.openEnd()
-      this.router.navigate(["labores"])
-     },10 )
+  labores() {
+    this.router.navigate(["labores"])
+
   }
-  consumos(){
-    setTimeout(()=>{
-      this.openEnd()
-      this.router.navigate(["consumos"])
-     },10 )
-    
+  consumos() {
+    this.router.navigate(["consumos"])
   }
-  desplaza(){
-    setTimeout(()=>{
-      this.openEnd()
-      this.router.navigate(["desp"])
-     },10 )
-    
+  desplaza() {
+    this.router.navigate(["desp"])
   }
-  casos(){
-    setTimeout(()=>{
-      this.router.navigate(["casespecial"])
-     },10 )
-    
+  casos() {
+    this.router.navigate(["casespecial"])
+  }
+  home() {
+    this.router.navigate(["inicio"])
   }
   observ(){
-    setTimeout(()=>{
-      this.openEnd()
-      this.router.navigate(["observ"])
-     },10 )
-    
+    this.router.navigate(["observ"])
   }
   actas(){
-    setTimeout(()=>{
-      this.openEnd()
-      this.router.navigate(["actinstalacion"])
-     },10 )
-   
+    this.router.navigate(["actinstalacion"])
   }
-  openFirst() {
-    this.menuCtrl.enable(true, 'first');
-    this.menuCtrl.open('first');
-  }
-
-  openEnd() {
-    this.menuCtrl.close();
-  }
-
-  openCustom() {
-    this.menuCtrl.close();
-    this.menuCtrl.enable(true, 'custom');
-    this.menuCtrl.open('custom');
-  }
-  EndMenu() {
-    this.menuCtrl.close();
-  }
+  
 
 }

@@ -79,7 +79,6 @@ export class CasespecialPage implements OnInit {
     { title: 'Mis Servicios', url: '/menupersonal', icon: 'archive' },
     { title: 'Excépciones', url: '/mislab', icon: 'warning' },
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
-    { title: 'Acta instalacion', url: '/actinstalacion', icon:"document"},
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
   
