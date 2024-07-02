@@ -187,7 +187,7 @@ export class ConsumosPage implements OnInit {
       res=>{
 
         const respuesta=<any>res
-        if (respuesta.code==200) {
+        if (respuesta.code==400) {
 
           this.router.navigate(["inicio"])
         }

@@ -173,7 +173,7 @@ export class InicioPage implements OnInit {
     { title: 'Dashboard', url: '/dashboard', icon: 'paper-plane' },
     { title: 'Mis Servicios', url: '/menupersonal', icon: 'archive' },
     { title: 'Excépciones', url: '/mislab', icon: 'warning' },
-    { title: 'Desplazamiento', url: '/mislab', icon: 'car' },
+    { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
 
