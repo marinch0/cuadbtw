@@ -30,15 +30,28 @@ export class LaboresPage implements OnInit {
     idtipooperacion:'',
     desplazamientos:''
   }
+//////////////////////
+openMenu() {
+  this.menuCtrl.open('lab');
+}
 
 
+closeMenu() {
+  this.menuCtrl.close('lab');
+}
+
+
+toggleMenu() {
+  this.menuCtrl.toggle('lab');
+}
+////////////////////////
   async agreg() {
     const alert = await this.alertController.create({
       header: 'LABORES',
       subHeader: 'Se agrego una labor a la operacion',
       buttons: ['OK'],
     });
-  
+    
     await alert.present();
   }
 
@@ -130,7 +143,7 @@ export class LaboresPage implements OnInit {
           this.datalabores = normalab(res);
           console.log(this.datalabores);
           this.agreg()
-  
+          this.cant=null
         },
         error: (err) =>{console.log(err);
         },
@@ -170,20 +183,20 @@ export class LaboresPage implements OnInit {
 
   labores(){
     setTimeout(()=>{
-      this.openEnd()
+     
       this.router.navigate(["labores"])
      },10 )
   }
   consumos(){
     setTimeout(()=>{
-      this.openEnd()
+    
       this.router.navigate(["consumos"])
      },10 )
     
   }
   desplaza(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["desp"])
      },10 )
     
@@ -196,31 +209,18 @@ export class LaboresPage implements OnInit {
   }
   observ(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["observ"])
      },10 )
     
   }
   actas(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["actinstalacion"])
      },10 )
    
   }
 
-  openFirst() {
-    this.menuCtrl.enable(true, 'first');
-    this.menuCtrl.open('first');
-  }
 
-  openEnd() {
-    this.menuCtrl.close();
-  }
-
-  openCustom() {
-    this.menuCtrl.close();
-    this.menuCtrl.enable(true, 'custom');
-    this.menuCtrl.open('custom');
-  }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, creacasoez, normacasoses } from '../api.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mislab',
@@ -14,6 +14,19 @@ export class MislabPage implements OnInit {
   minutos: any;
   cards: any[] = [];
 
+  openMenu() {
+    this.menuCtrl.open('mislab');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('mislab');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('mislab');
+  }
 
   labores() {
     this.router.navigate(["labores"])
@@ -41,7 +54,7 @@ export class MislabPage implements OnInit {
     { title: 'Mis Servicios', url: '/menupersonal', icon: 'archive' },
     { title: 'Excépciones', url: '/mislab', icon: 'warning' },
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
-    { title: 'Acta instalacion', url: '/actinstalacion', icon:"document"},
+
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
   listcons(){
@@ -132,7 +145,7 @@ home() {
 
 
   
-  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController) { }
+  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController, private menuCtrl: MenuController) { }
 
   async agreg() {
     const alert = await this.alertController.create({

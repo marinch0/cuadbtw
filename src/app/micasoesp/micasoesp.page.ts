@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, casosData, casoscre, normalizacasos } from '../api.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-micasoesp',
@@ -19,7 +20,7 @@ export class MicasoespPage implements OnInit {
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
-  constructor(private router: Router,private apiService: ApiService) { }
+  constructor(private router: Router,private apiService: ApiService, private menuCtrl: MenuController) { }
 
   ngOnInit() {
     let token=localStorage.getItem('token')
@@ -35,7 +36,19 @@ export class MicasoespPage implements OnInit {
       err=> console.log(err)
     );
   }
-
+  openMenu() {
+    this.menuCtrl.open('miscasosesp');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('miscasosesp');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('miscasosesp');
+  }
   casoscre:casoscre = {
     idCuadrilla: '',
     fecha:'',

@@ -4,7 +4,7 @@ import { BaseChartDirective } from 'ng2-charts';
 
 import { ApiService, credashboard, credgraf } from '../api.service';
 import * as moment from 'moment';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 
@@ -33,10 +33,22 @@ export class DashboardPage implements OnInit {
   fechaHoraSeleccionada2: string = new Date().toISOString();
   grafica: any;
 
-  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController) {
+  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController, private menuCtrl: MenuController) {
     Chart.register();
   }
-
+  openMenu() {
+    this.menuCtrl.open('dashboard');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('dashboard');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('dashboard');
+  }
   ngOnInit() {
     let token=localStorage.getItem('token')
 

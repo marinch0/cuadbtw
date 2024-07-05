@@ -15,22 +15,44 @@ export class ObservPage implements OnInit {
   minutos: any;
   cards: any[] = [];
 
+////////////
+
+adjustHeight(event: any): void {
+  const element = event.target;
+  element.style.height = 'auto';
+  element.style.height = element.scrollHeight + 'px';
+}
+
+  openMenu() {
+    this.menuCtrl.open('observ');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('observ');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('observ');
+  }
+  //////////
   labores(){
     setTimeout(()=>{
-      this.openEnd()
+      
       this.router.navigate(["labores"])
      },10 )
   }
   consumos(){
     setTimeout(()=>{
-      this.openEnd()
+      
       this.router.navigate(["consumos"])
      },10 )
     
   }
   desplaza(){
     setTimeout(()=>{
-      this.openEnd()
+      
       this.router.navigate(["desp"])
      },10 )
     
@@ -43,33 +65,24 @@ export class ObservPage implements OnInit {
   }
   observ(){
     setTimeout(()=>{
-      this.openEnd()
+     
       this.router.navigate(["observ"])
      },10 )
     
   }
   actas(){
     setTimeout(()=>{
-      this.openEnd()
+   
       this.router.navigate(["actinstalacion"])
      },10 )
    
   }
 
-  openFirst() {
-    this.menuCtrl.enable(true, 'first');
-    this.menuCtrl.open('first');
+  edit() {
+    this.descrip=this.observacion
   }
 
-  openEnd() {
-    this.menuCtrl.close();
-  }
 
-  openCustom() {
-    this.menuCtrl.close();
-    this.menuCtrl.enable(true, 'custom');
-    this.menuCtrl.open('custom');
-  }
   EndMenu() {
     this.menuCtrl.close('first-menu');
   }
@@ -116,6 +129,9 @@ home() {
 
 
   agregar(creaobservaciones: creaobservaciones) {
+    if (this.observacion!=null) {
+      
+    }
     creaobservaciones.idoperacionservicio = localStorage.getItem("idoperacionservicio")
     creaobservaciones.observaciones = this.descrip
     let authorization = localStorage.getItem('token')
@@ -124,7 +140,13 @@ home() {
         console.log(res);
         localStorage.setItem('observ',this.descrip)
         this.observacion=this.descrip
-        this.agreg()
+        if (this.observacion!=null) {
+          this.Edit()
+        }else{
+          this.agreg()
+          
+        }
+        this.descrip=null
       },
       error: (err) =>{console.log(err);
       },
@@ -133,9 +155,9 @@ home() {
       }
     }
     );
-   
+    
   }
-
+  
   clean(){
     this.descrip=""
   }
@@ -163,10 +185,10 @@ home() {
     await alert.present();
   }
 
-  async elimi() {
+  async Edit() {
     const alert = await this.alertController.create({
       header: 'OBSERVACIONES',
-      subHeader: 'Se elimino un caso a la operacion',
+      subHeader: 'Se Edito el caso de la operacion',
       buttons: ['OK'],
     });
   

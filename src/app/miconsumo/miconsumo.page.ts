@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, consumosData, consumoscredenciales, normalizaconsumos } from '../api.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-miconsumo',
@@ -19,8 +20,20 @@ export class MiconsumoPage implements OnInit {
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
-  constructor(private router: Router,private apiService: ApiService) { }
-
+  constructor(private router: Router,private apiService: ApiService, private menuCtrl: MenuController) { }
+  openMenu() {
+    this.menuCtrl.open('miconsumo');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('miconsumo');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('miconsumo');
+  }
   ngOnInit() {
     let token=localStorage.getItem('token')
 

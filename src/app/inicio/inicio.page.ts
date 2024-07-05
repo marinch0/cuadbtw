@@ -246,7 +246,7 @@ export class InicioPage implements OnInit {
     let authorization = localStorage.getItem('token')
     this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe(
       response => {
-        // Asegúrate de que response esté definido y tenga la estructura esperada
+       
 
         console.log(response);
 

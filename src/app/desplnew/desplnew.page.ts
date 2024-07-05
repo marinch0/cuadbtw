@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, creadez, dezplaData, dezplacre, entidadescre, normadezdez, normalizaentidez, normalizardezpla } from '../api.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController,MenuController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-desplnew',
@@ -30,13 +31,26 @@ export class DesplnewPage implements OnInit {
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
   
-  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController) { }
+  constructor(private router:Router,private apiService: ApiService,private alertController: AlertController, private menuCtrl: MenuController) { }
 
   credenciales: entidadescre={
     materiales:'',
     labores:'',
     idtipooperacion:'',
     desplazamientos:''
+  }
+  openMenu() {
+    this.menuCtrl.open('desplnew');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('desplnew');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('desplnew');
   }
 
   async agreg() {
@@ -223,6 +237,8 @@ home() {
       }
       );
     }
+    this.cant=null
+    this.cantt=null
       creadez.iddesplazamiento=0
   }
 

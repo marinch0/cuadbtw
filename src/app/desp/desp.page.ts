@@ -34,6 +34,21 @@ export class DespPage implements OnInit {
   constructor(private router:Router,private apiService: ApiService,private alertController: AlertController, private menuCtrl: MenuController) { }
 
 
+  /////////////////////
+  openMenu() {
+    this.menuCtrl.open('desp');
+  }
+
+
+  closeMenu() {
+    this.menuCtrl.close('desp');
+  }
+
+
+  toggleMenu() {
+    this.menuCtrl.toggle('desp');
+  }
+///////////////////////////
 
   credenciales: entidadescre={
     materiales:'',
@@ -219,6 +234,8 @@ home() {
       }
       );
     }
+    this.cant=null
+    this.cantt=null
       creadez.iddesplazamiento=0
   }
 
@@ -247,36 +264,23 @@ home() {
     this.desplz()
   }
 
-  openFirst() {
-    this.menuCtrl.enable(true, 'first');
-    this.menuCtrl.open('first');
-  }
-
-  openEnd() {
-    this.menuCtrl.close();
-  }
-
-  openCustom() {
-    this.menuCtrl.close();
-    this.menuCtrl.enable(true, 'custom');
-    this.menuCtrl.open('custom');
-  }
+  
   labores(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["labores"])
      },10 )
   }
   consumos(){
     setTimeout(()=>{
-      this.openEnd()
+ 
       this.router.navigate(["consumos"])
      },10 )
     
   }
   desplaza(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["desp"])
      },10 )
     
@@ -289,14 +293,14 @@ home() {
   }
   observ(){
     setTimeout(()=>{
-      this.openEnd()
+   
       this.router.navigate(["observ"])
      },10 )
     
   }
   actas(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["actinstalacion"])
      },10 )
    

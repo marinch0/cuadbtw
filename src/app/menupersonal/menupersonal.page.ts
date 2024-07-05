@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService} from '../api.service';
 import * as moment from 'moment';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menupersonal',
@@ -19,9 +20,22 @@ export class MenupersonalPage implements OnInit {
   ];
 
 
-  constructor(private router:Router, private apiService: ApiService) { }
+  constructor(private router:Router, private apiService: ApiService, private menuCtrl: MenuController) { }
 
-
+  openMenu() {
+    this.menuCtrl.open('menupersonal');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('menupersonal');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('menupersonal');
+  }
+  
   fechaHoraSeleccionada: string = new Date().toISOString();
   fechaHoraSeleccionada2: string = new Date().toISOString();
 

@@ -13,23 +13,37 @@ export class CasespecialPage implements OnInit {
   descrip: any;
   minutos: any;
   cards: any[] = [];
+//////////////////////////
+openMenu() {
+  this.menuCtrl.open('cases');
+}
 
+
+closeMenu() {
+  this.menuCtrl.close('cases');
+}
+
+
+toggleMenu() {
+  this.menuCtrl.toggle('cases');
+}
+////////////////////////////
   labores(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["labores"])
      },10 )
   }
   consumos(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["consumos"])
      },10 )
     
   }
   desplaza(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["desp"])
      },10 )
     
@@ -42,36 +56,20 @@ export class CasespecialPage implements OnInit {
   }
   observ(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["observ"])
      },10 )
     
   }
   actas(){
     setTimeout(()=>{
-      this.openEnd()
+
       this.router.navigate(["actinstalacion"])
      },10 )
    
   }
 
-  openFirst() {
-    this.menuCtrl.enable(true, 'first');
-    this.menuCtrl.open('first');
-  }
 
-  openEnd() {
-    this.menuCtrl.close();
-  }
-
-  openCustom() {
-    this.menuCtrl.close();
-    this.menuCtrl.enable(true, 'custom');
-    this.menuCtrl.open('custom');
-  }
-  EndMenu() {
-    this.menuCtrl.close();
-  }
 
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'Home' },
@@ -84,7 +82,7 @@ export class CasespecialPage implements OnInit {
   
   listcons(){
     let authorization = localStorage.getItem('token')
-    let id= localStorage.getItem("idcuadrilla")
+    let id= localStorage.getItem('numserv')
     this.apiService.casoses(authorization,id).subscribe({
       next:(res) => {
         this.cards = normacasoses(res);
@@ -139,7 +137,7 @@ home() {
     creacasoez.descripcion = this.descrip
     creacasoez.tiempo = this.minutos
     creacasoez.idserviciocuadrilla = localStorage.getItem("idcuadrilla")
-    creacasoez.idoperacionservicio = localStorage.getItem("idcuadrilla")
+    creacasoez.idoperacionservicio = localStorage.getItem('numserv')
     console.log(localStorage.getItem("numserv"));
     
     if (this.descrip==null) {
@@ -155,7 +153,8 @@ home() {
           this.cards = normacasoses(res);
           console.log(this.cards);
           this.agreg()
-  
+          this.descrip=null
+          this.minutos=null
         },
         error: (err) =>{console.log(err);
         },

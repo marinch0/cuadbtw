@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, dezplacre,normalizardezpla,dezplaData } from '../api.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 
 @Component({
@@ -22,8 +23,20 @@ export class MidesplzamientoPage implements OnInit {
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
-  constructor(private router: Router,private apiService: ApiService) { }
-
+  constructor(private router: Router,private apiService: ApiService, private menuCtrl: MenuController) { }
+  openMenu() {
+    this.menuCtrl.open('midesplazamiento');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('midesplazamiento');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('midesplazamiento');
+  }
   ngOnInit() {
 
     let token=localStorage.getItem('token')

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, creaconsumo, entidadescre, normacons, normalizamaterialess } from '../api.service';
 import { FormsModule } from '@angular/forms';
-import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
+import { AlertController,MenuController, InfiniteScrollCustomEvent } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-consumos',
@@ -22,10 +23,22 @@ export class ConsumosPage implements OnInit {
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
-  constructor(private router: Router, private apiService: ApiService,private alertController: AlertController) { }
+  constructor(private router: Router, private apiService: ApiService,private alertController: AlertController, private menuCtrl: MenuController) { }
+//////////////////////////
+openMenu() {
+  this.menuCtrl.open('consum');
+}
 
 
+closeMenu() {
+  this.menuCtrl.close('consum');
+}
 
+
+toggleMenu() {
+  this.menuCtrl.toggle('consum');
+}
+////////////////////////////
   credenciales: entidadescre = {
     materiales: '',
     labores: '',
@@ -120,7 +133,8 @@ export class ConsumosPage implements OnInit {
           this.cards = normacons(res);
           console.log(this.cards);
           this.agreg()
-  
+          this.idaa=null
+          this.cant=null
         },
         error: (err) =>{console.log(err);
         },

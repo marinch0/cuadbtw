@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService, dezplacre, misservcred, normalizeDataservfin, servfin } from '../api.service';
 import * as moment from 'moment';
-import { IonModal } from '@ionic/angular';
+import { IonModal, MenuController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -24,8 +24,20 @@ export class MiservfinPage implements OnInit {
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
     { title: 'Cerrar Sesión', url: '/home', icon: 'warning' },
   ];
-  constructor(private router: Router,private apiService: ApiService, private alertController: AlertController) { }
-
+  constructor(private router: Router,private apiService: ApiService, private alertController: AlertController, private menuCtrl: MenuController) { }
+  openMenu() {
+    this.menuCtrl.open('miservfin');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('miservfin');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('miservfin');
+  }
   ngOnInit() {
     let token=localStorage.getItem('token')
 

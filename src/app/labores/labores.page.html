@@ -1,4 +1,4 @@
-<ion-menu contentId="main-content">
+<ion-menu contentId="main-content" menuId="lab">
   <ion-header>
 
     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
@@ -14,7 +14,7 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-menu-button (click)="toggleMenu()"></ion-menu-button>
       </ion-buttons>
       <ion-title>Labores</ion-title>
     </ion-toolbar>
@@ -47,7 +47,7 @@
 </ion-tabs>
 
 <ion-item style="margin-top: 20%;">
- <ion-select label="Labor"  label-placement="fixed" placeholder="Labor Realizada" [(ngModel)]="cant">
+ <ion-select label="Labor"  label-placement="fixed" placeholder="Labor Realizada"  [(ngModel)]="cant">
    <ion-select-option  value="{{laboress.id}}" *ngFor="let laboress of laboress">{{laboress.nombre}}</ion-select-option>
  </ion-select>
 </ion-item>
