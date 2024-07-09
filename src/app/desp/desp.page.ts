@@ -93,7 +93,7 @@ export class DespPage implements OnInit {
     this.apiService.dezpl(authorization,id).subscribe({
       next:(res) => {
         this.cardss = normadezdez(res);
-        console.log(res);
+
         
   },
   error: (err) =>{console.log(err);

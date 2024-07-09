@@ -220,7 +220,7 @@ home() {
     this.router.navigate(["inicio"])
   }
   acta(){
-    this.router.navigate(["actinstalacion"])
+    this.router.navigate(["resumen"])
   }
   ngOnInit() {
     this.listcons()

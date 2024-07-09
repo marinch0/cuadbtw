@@ -100,22 +100,7 @@ adjustHeight(event: any): void {
     { title: 'Desplazamiento', url: '/desplnew', icon: 'car' },
     { title: 'Cerrar Session', url: '/home', icon: 'warning' },
   ];
-  listcons(){
-    let authorization = localStorage.getItem('token')
-    let id=367971
-    this.apiService.casoses(authorization,id).subscribe({
-      next:(res) => {
-        this.cards = normacasoses(res);
-  },
-  error: (err) =>{console.log(err);
-  },
-  complete() {
 
-  }
-}
-);
-
-}
 home() {
   this.router.navigate(["inicio"])
 }
@@ -232,7 +217,7 @@ home() {
       },
       err=> console.log(err)
     );
-    this.listcons()
+
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, finalagenda, normacasoses, normacons, normadezdez, normalab } from '../api.service';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-resumen',
@@ -13,8 +14,22 @@ export class ResumenPage implements OnInit {
   cases:any[]=[];
   desplaz:any[]=[];
   coordenadas: string = "39.9390731,116.1172782";
-  constructor(private apiService: ApiService,private router: Router) { }
+  constructor(private apiService: ApiService,private router: Router, private menuCtrl: MenuController) { }
 
+
+  openMenu() {
+    this.menuCtrl.open('resumen');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('resumen');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('resumen');
+  }
   ngOnInit() {
     let token=localStorage.getItem('token')
 
@@ -115,7 +130,7 @@ complete() {
 
 listdez(){
   let authorization = localStorage.getItem('token')
-  let id=localStorage.getItem('numserv')
+  let id=localStorage.getItem('idcuadrilla')
   this.apiService.dezpl(authorization,id).subscribe({
     next:(res) => {
       this.desplaz = normadezdez(res);
