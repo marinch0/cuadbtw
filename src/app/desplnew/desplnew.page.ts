@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, creadez, dezplaData, dezplacre, entidadescre, normadezdez, normalizaentidez, normalizardezpla } from '../api.service';
-import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { AlertController,MenuController } from '@ionic/angular';
 
@@ -19,6 +18,7 @@ export class DesplnewPage implements OnInit {
   apuntador: any[]=[];
   filtrado:any[]=[];
   arregloSinDuplicados:any[]=[]
+  isButtonDisabled = false
 
   
 
@@ -177,6 +177,13 @@ home() {
   
 
   eliminar(id: any) {
+    this.isButtonDisabled = true;
+
+    
+    setTimeout(() => {
+      this.isButtonDisabled = false;
+    }, 300);
+
     let authorization = localStorage.getItem('token')
     this.apiService.eliminardez(authorization, id).subscribe({
       next:(res) => {

@@ -1,6 +1,6 @@
 import { Component, OnInit,ViewChild  } from '@angular/core';
 import {  Router } from '@angular/router';
-import { IonModal } from '@ionic/angular';
+import { IonModal, MenuController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { AgendaData, ApiService, agenda, credeagenda, iniopera, normalizeData } from '../api.service';
 
@@ -23,6 +23,22 @@ export class InicioPage implements OnInit {
   estado=""
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name: string="";
+
+  openMenu() {
+    this.menuCtrl.open('ini');
+  }
+  
+  
+  closeMenu() {
+    this.menuCtrl.close('ini');
+  }
+  
+  
+  toggleMenu() {
+    this.menuCtrl.toggle('ini');
+  }
+
+
 
   cancel() {
     this.isModalOpen = false;
@@ -296,5 +312,5 @@ export class InicioPage implements OnInit {
     );
   }
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private apiService: ApiService, private router: Router, private menuCtrl: MenuController) { }
 }

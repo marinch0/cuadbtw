@@ -19,6 +19,7 @@ export class DespPage implements OnInit {
   apuntador: any[]=[];
   filtrado:any[]=[];
   arregloSinDuplicados:any[]=[]
+  isButtonDisabled = false;
 
   
 
@@ -174,6 +175,12 @@ home() {
   
 
   eliminar(id: any) {
+    this.isButtonDisabled = true;
+
+    
+    setTimeout(() => {
+      this.isButtonDisabled = false;
+    }, 300);
     let authorization = localStorage.getItem('token')
     this.apiService.eliminardez(authorization, id).subscribe({
       next:(res) => {

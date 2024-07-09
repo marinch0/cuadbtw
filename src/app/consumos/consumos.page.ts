@@ -11,6 +11,8 @@ import { AlertController,MenuController, InfiniteScrollCustomEvent } from '@ioni
   styleUrls: ['./consumos.page.scss'],
 })
 export class ConsumosPage implements OnInit {
+  isButtonDisabled = false
+
   cant: any;
   idaa: any = 0;
   laboress: any[] = [];
@@ -92,8 +94,15 @@ toggleMenu() {
   }
 
   eliminar(id: any) {
+    this.isButtonDisabled = true;
+
+    
+    setTimeout(() => {
+      this.isButtonDisabled = false;
+    }, 300);
+
     let authorization = localStorage.getItem('token')
-    this.apiService.eliminarconsumo(authorization, localStorage.getItem('numserv')).subscribe({
+    this.apiService.eliminarconsumo(authorization,id).subscribe({
       next: (res)=> {
         this.cards = normacons(res);
         console.log(this.cards);

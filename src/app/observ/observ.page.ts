@@ -127,6 +127,8 @@ home() {
     observaciones:''
   }
 
+  
+
 
   agregar(creaobservaciones: creaobservaciones) {
     if (this.observacion!=null) {
@@ -161,6 +163,24 @@ home() {
   clean(){
     this.descrip=""
   }
+
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        console.log('Alert confirmed');
+        this.agregar(this.creaobservaciones);
+      },
+    },
+  ];
 
 
   async error() {

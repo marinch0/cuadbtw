@@ -46,7 +46,7 @@
       <ion-card-content>
         
         <h3>{{cards.tiempo}}</h3>
-        <ion-button  fill="clear" style="padding-right: 3px;" (click)="eliminar(cards.idcasoespeciales)">
+        <ion-button  fill="clear" style="padding-right: 3px;" [disabled]="isButtonDisabled" (click)="eliminar(cards.idcasoespeciales)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
       </ion-card-content>

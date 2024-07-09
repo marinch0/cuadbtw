@@ -1,4 +1,4 @@
-<ion-menu contentId="main-content">
+<ion-menu contentId="main-content" menuId="ini">
   <ion-header>
 
     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
@@ -14,7 +14,7 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-menu-button (click)="toggleMenu()"></ion-menu-button>
       </ion-buttons>
       <ion-title>Agendas</ion-title>
     </ion-toolbar>

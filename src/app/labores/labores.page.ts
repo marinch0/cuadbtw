@@ -131,6 +131,8 @@ toggleMenu() {
 
 
   agregar(creaLabor: creaLabor) {
+    
+
     creaLabor.idlabor = this.cant
     creaLabor.idoperacionservicio = localStorage.getItem('numserv')
     console.log(this.cant==null);

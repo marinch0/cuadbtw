@@ -9,7 +9,7 @@ import { AlertController, MenuController } from '@ionic/angular';
   styleUrls: ['./mislab.page.scss'],
 })
 export class MislabPage implements OnInit {
-
+  isButtonDisabled = false;
   descrip: any;
   minutos: any;
   cards: any[] = [];
@@ -83,13 +83,20 @@ home() {
 }
 
   eliminar(id: any) {
+    this.isButtonDisabled = true;
+
+    
+    setTimeout(() => {
+      this.isButtonDisabled = false;
+    }, 300);
+
     let authorization = localStorage.getItem('token')
     this.apiService.eliminarcasoez(authorization,id).subscribe({
       next:(res) => {
-        console.log(res);
+       
         
         this.cards = normacasoses(res);
-        console.log(this.cards);
+        
         this.elimi()
       },
       error: (err) =>{console.log(err);
@@ -115,7 +122,7 @@ home() {
     creacasoez.tiempo = this.minutos
     creacasoez.idserviciocuadrilla = localStorage.getItem("idcuadrilla")
     creacasoez.idoperacionservicio = 1
-    console.log(localStorage.getItem("numserv"));
+   
     
     if (this.descrip==null) {
       this.error1()
@@ -125,10 +132,10 @@ home() {
       let authorization = localStorage.getItem('token')
       this.apiService.crearcasoez(authorization, creacasoez).subscribe({
         next: (res) => {
-          console.log(res);
+         
           
           this.cards = normacasoses(res);
-          console.log(this.cards);
+          
           this.agreg()
   
         },

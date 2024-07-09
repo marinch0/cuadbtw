@@ -48,7 +48,7 @@
         <ion-row>
           <ion-col><h3>{{cardss.municipioinicio}}</h3></ion-col>
           <ion-col><h3>{{cardss.municipiofin}}</h3></ion-col>
-          <ion-col><ion-button  fill="clear"    (click)="eliminar(cardss.iddesplazamientocuadrilla)">
+          <ion-col><ion-button  fill="clear"  [disabled]="isButtonDisabled"  (click)="eliminar(cardss.iddesplazamientocuadrilla)">
             <ion-icon slot="icon-only" name="trash-outline"  size="large"></ion-icon>
           </ion-button></ion-col>
         </ion-row>

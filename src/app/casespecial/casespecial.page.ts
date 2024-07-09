@@ -9,7 +9,7 @@ import { AlertController, MenuController } from '@ionic/angular';
   styleUrls: ['./casespecial.page.scss'],
 })
 export class CasespecialPage implements OnInit {
-
+  isButtonDisabled = false
   descrip: any;
   minutos: any;
   cards: any[] = [];
@@ -106,6 +106,13 @@ home() {
 }
 
   eliminar(id: any) {
+    this.isButtonDisabled = true;
+
+    
+    setTimeout(() => {
+      this.isButtonDisabled = false;
+    }, 300);
+
     let authorization = localStorage.getItem('token')
     this.apiService.eliminarcasoez(authorization,id).subscribe({
       next:(res) => {
