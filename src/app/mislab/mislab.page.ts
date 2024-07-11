@@ -137,7 +137,8 @@ home() {
           this.cards = normacasoses(res);
           
           this.agreg()
-  
+          this.descrip=null
+          this.minutos=null
         },
         error: (err) =>{console.log(err);
         },

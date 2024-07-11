@@ -119,7 +119,7 @@ home() {
     if (this.observacion!=null) {
       
     }
-    creaobservaciones.idoperacionservicio = localStorage.getItem("idoperacionservicio")
+    creaobservaciones.idoperacionservicio =localStorage.getItem("idoperacionservicio")
     creaobservaciones.observaciones = this.descrip
     let authorization = localStorage.getItem('token')
     this.apiService.observcuad(authorization, creaobservaciones).subscribe({
