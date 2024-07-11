@@ -121,7 +121,7 @@ export class ApiService {
   obtercero(authorization:any,tercero:any){
     let formData = new FormData();
     formData.append('authorization',authorization)
-    return this.http.post('https://www.bitwan.info/api/public/terceros/servicioscuadrillabytercero/'+tercero,formData);
+    return this.http.post(this.API_URL+'terceros/servicioscuadrillabytercero/'+tercero,formData);
   }
 
 /////////////////////////////////
@@ -167,7 +167,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
   formData.append('authorization',authorization)
   formData.append('idagenda',idagenda)
   formData.append('idcuadrilla',idcuadrilla)
-  return this.http.post('https://www.bitwan.info/api/public/agenda/agendaoperacion',formData);
+  return this.http.post(this.API_URL+'agenda/agendaoperacion',formData);
 }
 ////////////////////////////////////////////////
   finaloperacion(authorization:any,finalagenda:finalagenda){
@@ -187,7 +187,7 @@ agendacheck(authorization:any,idagenda:any,idcuadrilla:any):Observable<any>{
     body.set('json', JSON.stringify({"criteria":["numerotercero"],"value":credenciale,"onlyusers":true,"page":0,"limit":10}));
     body.set('authorization',token!)
 
-    return this.http.post("https://www.bitwan.info/api/public/terceros/searchbycriteria", body.toString() ,
+    return this.http.post(this.API_URL+'terceros/searchbycriteria', body.toString() ,
       this.httpOptions
     );
   }

@@ -3,6 +3,7 @@ import {  Router } from '@angular/router';
 import { IonModal, MenuController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { AgendaData, ApiService, agenda, credeagenda, iniopera, normalizeData } from '../api.service';
+import { isEmpty } from 'rxjs';
 
 
 @Component({
@@ -114,6 +115,7 @@ export class InicioPage implements OnInit {
   logout(compare:any){
     if (compare=="Cerrar Sesión") {
       localStorage.setItem('token',"")
+
     }
   }
   setOpen(isOpen: boolean,i:any,numeroservicio:any,tipoOperacion:string,idagenda:any) {
@@ -173,13 +175,18 @@ export class InicioPage implements OnInit {
   }
 
     agview(serv:any){
+      
       let authorization = localStorage.getItem('token')
       this.apiService.opview(authorization,serv).subscribe({
         next: (res) =>{
            this.idServicioCuadrilla = res.data.idserviciocuadrilla.idservicio;
            this.idsolicitudservicio=res.data.idsolicitudservicio.idsolicitudservicio
-          console.log(res);
-          
+           console.log(res.labores[999]==undefined);
+          if (res.labores[0]==undefined || res.consumos[0]==undefined) {
+            this.estado="iniciar Operacion"
+          }else{
+            this.estado="Reanudar Operacion"
+          }
         }
       })
     }
@@ -215,7 +222,10 @@ export class InicioPage implements OnInit {
     );
 
   this.agendaData=[]
+  setTimeout(() => {
     this.listargenda(this.credenciales)
+    }, 300);
+    
 
   }
 
@@ -270,10 +280,11 @@ export class InicioPage implements OnInit {
 
         if (response && response.operacionenprogreso !== undefined) {
           this.operacionEnProgreso = response.operacionenprogreso;
+          
           if (this.operacionEnProgreso==null) {
-            this.estado="Iniciar Operacion"
+            //this.estado="Iniciar Operacion"
           }else{
-            this.estado="Reanudar Operacion"
+            //this.estado="Reanudar Operacion"
           }
 
         } else {
@@ -292,7 +303,8 @@ export class InicioPage implements OnInit {
     credeagenda.idcuadrilla=localStorage.getItem('idcuadrilla')
     credeagenda.estado = "Pendientes"
     let authorization = localStorage.getItem('token')
-
+    console.log(credeagenda);
+    
     this.apiService.agendabuscar(authorization, credeagenda).subscribe({
       next:(res) => {
 

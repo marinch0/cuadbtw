@@ -66,6 +66,51 @@ export class HomePage {
     await alert.present();
   }
 
+
+
+  login(alias:any,password:any){
+
+    this.credenciales.alias=alias
+    this.credenciales.password=password
+    this.apiService.login(this.credenciales).subscribe(
+      (res:any)=>{
+        this.respuesta=<any>res
+        console.log(res);
+        
+        if (this.respuesta.code==200) {
+        
+          localStorage.setItem('respuesta',JSON.stringify(this.respuesta))
+          localStorage.setItem('token',this.respuesta.data.token)
+          localStorage.setItem('idtercero',this.respuesta.data.idtercero)
+          localStorage.setItem('idusuario',this.respuesta.data.idusuario)
+          localStorage.setItem('numerotercero', res.data.numerotercero)
+          setTimeout(() => {
+          this.guardaridcuadrilla();
+          }, 300);
+            /*this.apiService.obtenerDatosTecnico(res.data.numerotercero).subscribe((nomTecnico:any)=>{
+            
+
+              localStorage.setItem('nombres',nomTecnico.data[0].nombres.toLowerCase().trim() +" "+ nomTecnico.data[0].apellidos.toLowerCase().trim())
+              
+              
+            })*/
+
+
+
+        }else{
+          this.fal()
+          alias=""
+          password=""
+        }
+
+      },
+      err=> console.log(err)
+    );
+
+  }
+  
+
+
   guardaridcuadrilla(){
     console.log(localStorage.getItem('idtercero'));
     this.apiService.obtercero(localStorage.getItem('token'),localStorage.getItem('idtercero')).subscribe(
@@ -79,39 +124,10 @@ export class HomePage {
           console.log(localStorage.getItem('idcuadrilla'));
         })
       }
-    );
-  }
-
-  login(alias:any,password:any){
-    this.credenciales.alias=alias
-    this.credenciales.password=password
-    this.apiService.loginn(this.credenciales).subscribe(
-      (res:any)=>{
-        this.respuesta=<any>res
-        if (this.respuesta.code==200) {
-          
-          
-          this.apiService.obtenerDatosTecnico(res.data.numerotercero).subscribe((nomTecnico:any)=>{
-
-            this.router.navigate(["inicio"])
-            localStorage.setItem('respuesta',JSON.stringify(this.respuesta))
-            localStorage.setItem('token',this.respuesta.data.token)
-            localStorage.setItem('idtercero',this.respuesta.data.idtercero)
-            localStorage.setItem('idusuario',this.respuesta.data.idusuario)
-            localStorage.setItem('numerotercero', res.data.numerotercero)
-            localStorage.setItem('nombres',nomTecnico.data[0].nombres.toLowerCase().trim() +" "+ nomTecnico.data[0].apellidos.toLowerCase().trim())
-            this.guardaridcuadrilla();
-          })
-          
-        }else{
-          this.fal()
-          alias=""
-          password=""
-        }
-
-      },
-      err=> console.log(err)
-    );
+    );    
+    setTimeout(() => {
+      this.router.navigate(["inicio"])
+    }, 300);
 
   }
 
