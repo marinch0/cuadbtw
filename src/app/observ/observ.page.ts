@@ -119,6 +119,8 @@ home() {
     if (this.observacion!=null) {
       
     }
+    console.log(localStorage.getItem("idoperacionservicio"));
+    
     creaobservaciones.idoperacionservicio =localStorage.getItem("idoperacionservicio")
     creaobservaciones.observaciones = this.descrip
     let authorization = localStorage.getItem('token')

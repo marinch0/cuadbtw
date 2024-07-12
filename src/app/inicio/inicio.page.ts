@@ -84,15 +84,15 @@ export class InicioPage implements OnInit {
     this.iniopera.idsolicitudservicio=this.idsolicitudservicio
     this.iniopera.idserviciocuadrilla=this.idServicioCuadrilla
     let authorization = localStorage.getItem('token')
-    console.log(this.iniopera);
+    
     
     this.apiService.crearoperacion(authorization,this.iniopera ).subscribe({
       next: (res) =>{
 
-        console.log(res);
         
-       console.log(res.idoperacionservicio);
-       localStorage.setItem('idoperacionservicio',res.idoperacionservicio)
+        
+
+       
         }
 
      })
@@ -179,9 +179,12 @@ export class InicioPage implements OnInit {
       let authorization = localStorage.getItem('token')
       this.apiService.opview(authorization,serv).subscribe({
         next: (res) =>{
+          
+          localStorage.setItem('observ',res.data.observaciones)
+          localStorage.setItem('idoperacionservicio',res.data.idoperacionservicio)
            this.idServicioCuadrilla = res.data.idserviciocuadrilla.idservicio;
            this.idsolicitudservicio=res.data.idsolicitudservicio.idsolicitudservicio
-           console.log(res.labores[999]==undefined);
+           
           if (res.labores[0]==undefined || res.consumos[0]==undefined) {
             this.estado="iniciar Operacion"
           }else{
@@ -211,7 +214,7 @@ export class InicioPage implements OnInit {
       res=>{
 
         let respuesta=<any>res
-        console.log(respuesta.code);
+
         
         if (respuesta.code==400) {
           this.router.navigate(["home"])
@@ -251,32 +254,22 @@ export class InicioPage implements OnInit {
 
 
 
-  agendas() {
-  let idagenda=localStorage.getItem('idagenda')
-  let idcuadrilla=localStorage.getItem('idcuadrilla')
-  let authorization = localStorage.getItem('token')
-  console.log(idagenda)
-      this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe({
-       next: (res) =>{
-        console.log(res);
 
-         }
-
-      })
-  }
 
 
   agenda(): void {
     let idagenda=localStorage.getItem('idagenda')
     let idcuadrilla=localStorage.getItem('idcuadrilla')
     let authorization = localStorage.getItem('token')
+   
+    
     this.apiService.agendacheck(authorization,idagenda,idcuadrilla ).subscribe(
       response => {
        
 
-        console.log(response);
+       
 
-        localStorage.setItem('idoperacion',response.agenda.idoperacionservicio)
+        
 
         if (response && response.operacionenprogreso !== undefined) {
           this.operacionEnProgreso = response.operacionenprogreso;
@@ -303,12 +296,12 @@ export class InicioPage implements OnInit {
     credeagenda.idcuadrilla=localStorage.getItem('idcuadrilla')
     credeagenda.estado = "Pendientes"
     let authorization = localStorage.getItem('token')
-    console.log(credeagenda);
+    
     
     this.apiService.agendabuscar(authorization, credeagenda).subscribe({
       next:(res) => {
 
-        console.log(res);
+   
 
 
         this.agendaData=normalizeData(res);
